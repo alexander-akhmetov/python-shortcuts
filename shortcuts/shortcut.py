@@ -2,8 +2,8 @@ import plistlib
 import logging
 from typing import List, Dict, Union
 
-from loader import TomlLoader, PListLoader
-from dump import PListDumper, TomlDumper
+from shortcuts.loader import TomlLoader, PListLoader
+from shortcuts.dump import PListDumper, TomlDumper
 
 
 logger = logging.getLogger(__name__)

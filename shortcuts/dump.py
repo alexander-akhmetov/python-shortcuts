@@ -5,7 +5,7 @@ import toml
 
 
 class BaseDumper:
-    def __init__(self, shortcut: 'shortcuts.Shortcut') -> None:
+    def __init__(self, shortcut: 'shortcuts.shortcut.Shortcut') -> None:
         self.shortcut = shortcut
 
     def dump(self, file_obj) -> str:
