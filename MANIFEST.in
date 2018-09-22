@@ -1,0 +1,10 @@
+# Include the README
+include *.md
+
+# Include the license file
+include LICENSE.txt
+
+recursive-include shortcuts *.py
+recursive-include docs *
+
+global-exclude *.pyc .git .tox __pycache__

@@ -1,0 +1,5 @@
+.tox
+*.pyc
+.plist
+build
+dist

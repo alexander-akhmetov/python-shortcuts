@@ -1,0 +1,8 @@
+[[action]]
+type = "comment"
+text = """
+Hi!
+This is an example shortcut, created with python-shortcuts.
+
+See more here: https://github.com/alexander-akhmetov/python-shortcuts
+"""

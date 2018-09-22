@@ -1,0 +1,33 @@
+name = "Base64 Example"
+
+[[action]]
+type = "text"
+text = "ping"
+
+[[action]]
+type = "set_variable"
+name = "variable"
+
+[[action]]
+type = "base64_encode"
+
+[[action]]
+type = "set_variable"
+name = "variable_encoded"
+
+[[action]]
+type = "base64_decode"
+
+[[action]]
+type = "set_variable"
+name = "variable_decoded"
+
+[[action]]
+type = "show_result"
+text = """
+Hello, world!
+
+original_variable: {{variable}}
+variable_encoded: {{variable_encoded}}
+variable_decoded: {{variable_decoded}}
+"""

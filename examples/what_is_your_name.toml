@@ -1,0 +1,13 @@
+name = "What is your name?"
+
+[[action]]
+type = "ask"
+question = "What is your name?"
+
+[[action]]
+type = "set_variable"
+name = "name"
+
+[[action]]
+type = "show_result"
+text = "Hello, {{name}}!"
