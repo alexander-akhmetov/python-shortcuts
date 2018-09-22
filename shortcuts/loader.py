@@ -54,7 +54,6 @@ class PListLoader(BaseLoader):
             client_version=shortcut_dict['WFWorkflowClientVersion'],
         )
 
-        import pdb; pdb.set_trace()
         for action in shortcut_dict['WFWorkflowActions']:
             shortcut.actions.append(cls._action_from_dict(action))
 

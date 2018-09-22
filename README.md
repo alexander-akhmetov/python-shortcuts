@@ -25,6 +25,12 @@ I wanted to convert my shortcut to a file in human-readable format. :)
 This library requires `plutil` tool, which should be installed on MacOS by default.
 On Linux, you should be able to use `plistutil` instead.
 
+### Installation
+
+```bash
+pip install python-shortcuts
+```
+
 ### Usage
 
 ### shortcut → toml
@@ -36,7 +42,7 @@ Convert `toml` file with shortcut description to a real shortcut file.
 After you need to open the file with iOS Shortcuts app.
 
 ```bash
-python src/cli.py examples/test.toml my_first_shortcut.shortcut
+shortcuts examples/test.toml my_first_shortcut.shortcut
 ```
 
 ### toml → shortcut
@@ -44,7 +50,7 @@ python src/cli.py examples/test.toml my_first_shortcut.shortcut
 Also, you can convert shortcut file to a `toml`:
 
 ```bash
-python src/cli.py examples/test.shortcut test.toml
+shortcuts examples/test.shortcut test.toml
 ```
 
 More examples of `toml` files you can find [here](examples/).
@@ -62,8 +68,9 @@ tox
 
 ### TODO
 
-* ☐ Conditionals
+* ☐ Conditionals: if-else, menu
+* ☐ Support variables in every field which support them in Shortcuts app
+* ☐ Workflow types: widget, etc.
 * ☐ Describe all actions
 * ☐ Support magic variables
 * ☐ Support all current actions from Shortcuts app
-* ☐ Support common action format (with default `WFTextActionText...` field names), so it will not be necessary to create mappings

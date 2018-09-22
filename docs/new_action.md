@@ -3,7 +3,7 @@
 Sometimes (in the current state of the library - very often, honestly :) ), when you are trying to convert a shortcut to a toml file with this command you will see an error if the action is not supported by the library:
 
 ```bash
-$ python src/cli.py myshortcut.shortcut myshortcut.toml
+$ shortcuts myshortcut.shortcut myshortcut.toml
 
 RuntimeError:
 
@@ -42,7 +42,7 @@ If this parameter is not required, you can pass `required=False` to the `Field`.
 That's all, now this action is supported by the library, and you can convert your shortcut:
 
 ```bash
-$ python src/cli.py myshortcut.shortcut myshortcut.toml
+$ shortcuts myshortcut.shortcut myshortcut.toml
 $ cat myshortcut.toml
 
 [[action]]

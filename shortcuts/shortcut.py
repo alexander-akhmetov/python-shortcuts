@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 class Shortcut:
     def __init__(self,
-                 name: str,
+                 name: str = '',
                  client_release: str = '2.0',
                  client_version: str = '700',
                  minimal_client_version: int = 411,

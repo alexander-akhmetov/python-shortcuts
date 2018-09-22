@@ -11,7 +11,7 @@ shortcuts/cli.py
 shortcuts/docs.py
 shortcuts/dump.py
 shortcuts/loader.py
-shortcuts/shortcuts.py
+shortcuts/shortcut.py
 shortcuts/actions/__init__.py
 shortcuts/actions/base.py
 shortcuts/actions/base64.py
