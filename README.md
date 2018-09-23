@@ -1,5 +1,8 @@
 # WIP: python-shortcuts
 
+[![Build Status](https://travis-ci.org/alexander-akhmetov/python-shortcuts.svg?branch=master)](https://travis-ci.org/alexander-akhmetov/python-shortcuts)
+[![PyPI](https://img.shields.io/pypi/v/python-shortcuts.svg)](https://pypi.python.org/pypi/python-shortcuts)
+
 🍏 + 🐍 = ❤️
 
 **python-shortcuts** is a library to create [Siri Shortcuts](https://support.apple.com/en-ae/guide/shortcuts/welcome/ios) on your laptop with your favourite text editor.
