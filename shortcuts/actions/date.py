@@ -1,10 +1,12 @@
-from shortcuts.actions.base import BaseAction, Field
+from shortcuts.actions.base import BaseAction, Field, VariablesField
 
 
 class DateAction(BaseAction):
     '''Date'''
     type = 'is.workflow.actions.date'
     keyword = 'date'
+
+    default_answer = VariablesField('WFAskActionDefaultAnswer', required=False)
 
 
 class FormatDateAction(BaseAction):

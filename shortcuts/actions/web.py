@@ -37,3 +37,16 @@ class GetURLAction(BaseAction):
     method = HTTPMethodField('WFHTTPMethod', required=False)
     headers = DictionaryField('WFHTTPHeaders', required=False)
     json = DictionaryField('WFJSONValues', required=False)  # todo: array or dict
+    form = DictionaryField('WFFormValues', required=False)  # todo: array or dict
+
+    def __init__(self, data: Union[Dict, None] = None) -> None:
+        self.default_fields = {}
+        super().__init__(data=data)
+
+        if data and data.get('form'):
+            self.default_fields['WFHTTPBodyType'] = 'Form'
+        elif data and data.get('json'):
+            self.default_fields['WFHTTPBodyType'] = 'Json'
+
+        if data and data.get('headers'):
+            self.default_fields['ShowHeaders'] = True

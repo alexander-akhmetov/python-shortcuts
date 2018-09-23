@@ -97,11 +97,21 @@ class PListLoader(BaseLoader):
         type = action_dict['WFWorkflowActionIdentifier']
         action_class = TYPE_TO_ACTION_MAP.get(type)
 
+        # todo: action-based common solution
+
         if type == 'is.workflow.actions.conditional':
             from shortcuts.actions.conditions import IfAction, ElseAction, EndIfAction
             flow_to_action = {a.default_fields['WFControlFlowMode']: a for a in (IfAction, ElseAction, EndIfAction)}
             action_params = action_dict['WFWorkflowActionParameters']
             action_class = flow_to_action[action_params['WFControlFlowMode']]
+
+        if type == 'is.workflow.actions.base64encode':
+            from shortcuts.actions.base64 import Base64EncodeAction, Base64DecodeAction
+            action_params = action_dict['WFWorkflowActionParameters']
+            if action_params.get('WFEncodeMode') == 'Encode':
+                action_class = Base64EncodeAction
+            elif action_params.get('WFEncodeMode') == 'Decode':
+                action_class = Base64DecodeAction
 
         return action_class
 
@@ -120,6 +130,8 @@ class PListLoader(BaseLoader):
             return cls._load_dictionary(value)
         elif serialization_type == 'WFTextTokenAttachment':
             return cls._load_text_token_attachment(value)
+        elif serialization_type == 'WFTokenAttachmentParameterState':
+            return cls._load_parameter_value(value['Value'])
         else:
             raise RuntimeError(f'Unknown parameter serialization type: {value.get("WFSerializationType")}')
 
@@ -127,8 +139,8 @@ class PListLoader(BaseLoader):
     def _load_dictionary(cls, variable_dict):
         result = []
         for item in variable_dict['Value']['WFDictionaryFieldValueItems']:
-            key = cls._get_variable_string(item['WFKey'])
-            value = cls._get_variable_string(item['WFValue'])
+            key = cls._load_parameter_value(item['WFKey'])
+            value = cls._load_parameter_value(item['WFValue'])
             result.append({'key': key, 'value': value})
         return result
 
