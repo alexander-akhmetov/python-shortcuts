@@ -69,6 +69,7 @@ tox
 ### TODO
 
 * ☐ Conditionals: if-else, menu
+* ☐ Nested fields: dict/array/etc
 * ☐ Support variables in every field which support them in Shortcuts app
 * ☐ Workflow types: widget, etc.
 * ☐ Describe all actions

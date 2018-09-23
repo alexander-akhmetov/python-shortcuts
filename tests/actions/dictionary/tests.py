@@ -59,6 +59,7 @@ class TestShortcutWithDictionary:
     toml_string = '''
         [[action]]
         type = "dictionary"
+
             [[action.items]]
             key = "some key"
             value = "some value"

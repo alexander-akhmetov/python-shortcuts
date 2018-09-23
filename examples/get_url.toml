@@ -1,0 +1,24 @@
+[[action]]
+type = "url"
+url = "http://ipinfo.io/ip"
+
+[[action]]
+type = "get_url"
+method = "GET"
+advanced = true
+
+    [[action.headers]]
+    key = "header1"
+    value = "value1"
+
+    [[action.headers]]
+    key = "authorization"
+    value = "{{authorization}}"
+
+[[action]]
+type = "set_variable"
+name = "var"
+
+[[action]]
+type = "show_result"
+text = "response: {{var}}"
