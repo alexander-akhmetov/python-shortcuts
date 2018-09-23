@@ -89,19 +89,16 @@ class VariablesField(Field):
     _regexp = re.compile(r'({{[A-Za-z0-9_-]+}})')
 
     def process_value(self, value):
-        attachments_by_range, string = self._get_variables_from_text(value)
-
-        if not attachments_by_range:
-            # if we don't have variables in the string,
-            # just return the value
-            return value
-
         return {
-            'Value': {
-                'attachmentsByRange': attachments_by_range,
-                'string': string,
-            },
+            'Value': self._get_variables_dict(value),
             'WFSerializationType': 'WFTextTokenString',
+        }
+
+    def _get_variables_dict(self, value):
+        attachments_by_range, string = self._get_variables_from_text(value)
+        return {
+            'attachmentsByRange': attachments_by_range,
+            'string': string,
         }
 
     def _get_variables_from_text(self, value: str) -> List[Tuple[str, str]]:
@@ -117,3 +114,43 @@ class VariablesField(Field):
         # replacing all variables with char 65523 (OBJECT REPLACEMENT CHARACTER)
         string = self._regexp.sub('￼', value)
         return attachments_by_range, string
+
+
+class DictionaryField(VariablesField):
+    '''
+        {
+            'Value': {
+                'WFDictionaryFieldValueItems': [
+                    {
+                        'WFItemType': 0,
+                        'WFKey': {
+                            'Value': {'attachmentsByRange': {},  'string': 'k'},
+                            'WFSerializationType': 'WFTextTokenString'
+                        },
+                        'WFValue': {
+                            'Value': {'attachmentsByRange': {}, 'string': 'v'},
+                            'WFSerializationType': 'WFTextTokenString'
+                        }
+                    }
+                ]
+            },
+            'WFSerializationType': 'WFDictionaryFieldValue'
+        }
+    '''
+
+    def process_value(self, value):
+        return {
+            'Value': {
+                'WFDictionaryFieldValueItems': [self._process_single_value(v) for v in value],
+            },
+            'WFSerializationType': 'WFDictionaryFieldValue',
+        }
+
+    def _process_single_value(self, value):
+        key = super().process_value(value['key'])
+        value = super().process_value(value['value'])
+        return {
+            'WFItemType': 0,  # text
+            'WFKey': key,
+            'WFValue': value,
+        }

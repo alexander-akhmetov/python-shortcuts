@@ -1,0 +1,9 @@
+[[action]]
+type = "dictionary"
+    [[action.items]]
+    key = "some key"
+    value = "some value"
+
+    [[action.items]]
+    key = "another key"
+    value = "{{x}}"
