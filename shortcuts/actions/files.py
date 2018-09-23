@@ -1,4 +1,4 @@
-from shortcuts.actions.base import BaseAction, Field, BooleanField
+from shortcuts.actions.base import BaseAction, Field, BooleanField, VariablesField
 
 
 class ReadFileAction(BaseAction):
@@ -6,9 +6,9 @@ class ReadFileAction(BaseAction):
     type = 'is.workflow.actions.documentpicker.open'
     keyword = 'read_file'
 
-    path = Field('WFFileDestinationPath')
+    path = VariablesField('WFGetFilePath')
     not_found_error = BooleanField('WFFileErrorIfNotFound')
-    show_picker = BooleanField('WFAskWhereToSave')
+    show_picker = BooleanField('WFShowFilePicker')
 
 
 class SaveFileAction(BaseAction):
@@ -16,7 +16,7 @@ class SaveFileAction(BaseAction):
     type = 'is.workflow.actions.documentpicker.save'
     keyword = 'save_file'
 
-    path = Field('WFFileDestinationPath')
+    path = VariablesField('WFFileDestinationPath')
     overwrite = Field('WFSaveFileOverwrite')
     show_picker = BooleanField('WFAskWhereToSave')
 
@@ -26,4 +26,10 @@ class CreateFolderAction(BaseAction):
     type = 'is.workflow.actions.file.createfolder'
     keyword = 'create_folder'
 
-    path = Field('WFFilePath')
+    path = VariablesField('WFFilePath')
+
+
+class PreviewDocumentAction(BaseAction):
+    '''Preview document'''
+    type = 'is.workflow.actions.previewdocument'
+    keyword = 'preview'

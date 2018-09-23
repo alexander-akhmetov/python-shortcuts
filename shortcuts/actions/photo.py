@@ -1,4 +1,4 @@
-from shortcuts.actions.base import BaseAction
+from shortcuts.actions.base import BaseAction, BooleanField, Field
 
 
 class CameraAction(BaseAction):
@@ -17,3 +17,13 @@ class SelectPhotoAction(BaseAction):
     '''Select photos'''
     type = 'is.workflow.actions.selectphoto'
     keyword = 'select_photo'
+
+
+class ImageConvertAction(BaseAction):
+    '''Image convert'''
+    type = 'is.workflow.actions.image.convert'
+    keyword = 'convert_image'
+
+    compression_quality = Field('WFImageCompressionQuality')
+    format = Field('WFImageFormat')
+    preserve_metadata = BooleanField('WFImagePreserveMetadata')

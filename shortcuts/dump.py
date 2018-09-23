@@ -36,7 +36,7 @@ class TomlDumper(BaseDumper):
 
     def _process_action(self, action) -> Dict[str, Any]:
         data = {
-            f._attr: action.data[f._attr] for f in action.fields
+            f._attr: action.data[f._attr] for f in action.fields if f._attr in action.data
         }
         data['type'] = action.keyword
         return data

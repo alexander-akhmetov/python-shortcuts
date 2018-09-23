@@ -29,6 +29,9 @@ class TomlLoader(BaseLoader):
         shortcut_dict = toml.loads(string)
         shortcut = Shortcut(name=shortcut_dict.get('name', 'python-shortcuts'))
 
+        if not isinstance(shortcut_dict.get('action'), list):
+            raise ValueError('toml file must contain "action" array with actions')
+
         for action in shortcut_dict['action']:
             action_params = copy.deepcopy(action)
             del action_params['type']
@@ -60,9 +63,9 @@ class PListLoader(BaseLoader):
         return shortcut
 
     @classmethod
-    def _action_from_dict(self, action_dict: Dict):
-        type = action_dict['WFWorkflowActionIdentifier']
-        action_class = TYPE_TO_ACTION_MAP.get(type)
+    def _action_from_dict(cls, action_dict: Dict):
+        action_class = cls._get_action_class(action_dict)
+
         if not action_class:
             msg = f'''
             Unknown shortcut action: {type}
@@ -82,7 +85,7 @@ class PListLoader(BaseLoader):
             f.name: f._attr for f in action_class().fields
         }
         params = {
-            shortcut_name_to_field_name[p]: self._load_parameter_value(v)
+            shortcut_name_to_field_name[p]: cls._load_parameter_value(v)
             for p, v in action_dict['WFWorkflowActionParameters'].items()
             if p in shortcut_name_to_field_name
         }
@@ -90,35 +93,76 @@ class PListLoader(BaseLoader):
         return action_class(data=params)
 
     @classmethod
+    def _get_action_class(cls, action_dict):
+        type = action_dict['WFWorkflowActionIdentifier']
+        action_class = TYPE_TO_ACTION_MAP.get(type)
+
+        if type == 'is.workflow.actions.conditional':
+            from shortcuts.actions.conditions import IfAction, ElseAction, EndIfAction
+            flow_to_action = {a.default_fields['WFControlFlowMode']: a for a in (IfAction, ElseAction, EndIfAction)}
+            action_params = action_dict['WFWorkflowActionParameters']
+            action_class = flow_to_action[action_params['WFControlFlowMode']]
+
+        return action_class
+
+    @classmethod
     def _load_parameter_value(cls, value):
         # todo: move to fields
         if not isinstance(value, dict):
             return value
 
-        if value.get('WFSerializationType') == 'WFTextTokenString':
-            # if thhis field is a string with variables,
-            # we need to convert it to our representation
-            value = value['Value']
-            value_string = value['string']
+        serialization_type = value.get('WFSerializationType')
 
-            positions = {}
+        # todo: refactor
+        if serialization_type == 'WFTextTokenString':
+            return cls._get_variable_string(value)
+        elif serialization_type == 'WFDictionaryFieldValue':
+            return cls._load_dictionary(value)
+        elif serialization_type == 'WFTextTokenAttachment':
+            return cls._load_text_token_attachment(value)
+        else:
+            raise RuntimeError(f'Unknown parameter serialization type: {value.get("WFSerializationType")}')
 
-            for variable_range, variable_data in value['attachmentsByRange'].items():
-                if variable_data['Type'] != 'Variable':
-                    # it doesn't support magic variables yet
-                    raise RuntimeError(f'Unsupported variable type: {variable_data["Type"]}')
+    @classmethod
+    def _load_dictionary(cls, variable_dict):
+        result = []
+        for item in variable_dict['Value']['WFDictionaryFieldValueItems']:
+            key = cls._get_variable_string(item['WFKey'])
+            value = cls._get_variable_string(item['WFValue'])
+            result.append({'key': key, 'value': value})
+        return result
 
-                # let's find positions of all variables in the string
-                position = cls._get_position(variable_range)
-                positions[position] = '{{%s}}' % variable_data['VariableName']
+    @classmethod
+    def _load_text_token_attachment(cls, variable_dict):
+        return variable_dict['Value']['VariableName']
 
-            # and then replace them with '{{variable_name}}'
-            offset = 0
-            for pos, variable in collections.OrderedDict(sorted(positions.items())).items():
-                value_string = value_string[:pos + offset] + variable + value_string[pos + offset:]
-                offset += len(variable)
+    @classmethod
+    def _get_variable_string(cls, variable_dict):
+        # if this field is a string with variables,
+        # we need to convert it to our representation
+        value = variable_dict['Value']
+        value_string = value['string']
 
-            return value_string
+        positions = {}
+
+        for variable_range, variable_data in value['attachmentsByRange'].items():
+            if variable_data['Type'] != 'Variable':
+                # it doesn't support magic variables yet
+                raise RuntimeError(
+                    f'Unsupported variable type: {variable_data["Type"]} (possibly it is a magic variable)',
+                )
+
+            # let's find positions of all variables in the string
+            position = cls._get_position(variable_range)
+            positions[position] = '{{%s}}' % variable_data['VariableName']
+
+        # and then replace them with '{{variable_name}}'
+        offset = 0
+        for pos, variable in collections.OrderedDict(sorted(positions.items())).items():
+            value_string = value_string[:pos + offset] + variable + value_string[pos + offset:]
+            offset += len(variable)
+
+        return value_string
 
     @classmethod
     def _get_position(cls, range_str) -> int:

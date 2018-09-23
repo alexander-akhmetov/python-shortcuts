@@ -1,4 +1,4 @@
-# python-shortcuts
+# WIP: python-shortcuts
 
 🍏 + 🐍 = ❤️
 
@@ -68,7 +68,7 @@ tox
 
 ### TODO
 
-* ☐ Conditionals: if-else, menu
+* ☐ Conditionals with auto-group_id: if-else, menu
 * ☐ Nested fields: dict/array/etc
 * ☐ Support variables in every field which support them in Shortcuts app
 * ☐ Workflow types: widget, etc.

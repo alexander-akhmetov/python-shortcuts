@@ -1,7 +1,10 @@
-from shortcuts.actions import (
+import types
+
+from shortcuts.actions import (  # noqa
     base,
     base64,
     calculation,
+    conditions,
     date,
     dictionary,
     files,
@@ -19,20 +22,11 @@ TYPE_TO_ACTION_MAP = {}
 
 
 def _create_map():
-    modules = (
-        base,
-        base64,
-        calculation,
-        date,
-        dictionary,
-        files,
-        input,
-        photo,
-        text,
-        out,
-        variables,
-        web,
-    )
+    modules = []
+    for name, val in globals().items():
+        if isinstance(val, types.ModuleType):
+            modules.append(val)
+
     for module in modules:
         _parse_module(module)
 
