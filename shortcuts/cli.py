@@ -1,7 +1,7 @@
 import argparse
 import os.path
 
-from shortcuts import Shortcut
+import shortcuts
 from shortcuts.utils import (
     convert_plist_to_xml,
     convert_plist_to_binary,
@@ -16,7 +16,7 @@ def convert_shortcut(input_filepath, out_filepath):
         convert_plist_to_xml(input_filepath)
 
     with open(input_filepath, 'rb') as f:
-        sc = Shortcut.load(f, file_format=input_format)
+        sc = shortcuts.Shortcut.load(f, file_format=input_format)
     with open(out_filepath, 'w') as f:
         sc.dump(f, file_format=out_format)
 
@@ -37,10 +37,18 @@ def _get_format(filepath):
 
 def main():
     parser = argparse.ArgumentParser(description='Shortcuts: Siri shortcuts creator')
-    parser.add_argument('file', help='shortcut source file')
-    parser.add_argument('output', help='shortcut output file')
+    parser.add_argument('file', nargs='?', help='Input file: *.(toml|shortcut)')
+    parser.add_argument('output', nargs='?', help='Output file: *.(toml|shortcut)')
+    parser.add_argument('--version', action='store_true', help='Version information')
 
     args = parser.parse_args()
+
+    if not any([args.version, args.file, args.output]):
+        parser.error('the following arguments are required: file, output')
+
+    if args.version:
+        print(f'Shortcuts v{shortcuts.VERSION}')
+        return
 
     convert_shortcut(args.file, args.output)
 
