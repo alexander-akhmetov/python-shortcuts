@@ -51,6 +51,19 @@ params:
 
 * text
 
+## ImageConvertAction
+
+Image convert
+
+**keyword**: `convert_image`
+**shortcuts identifier**: `is.workflow.actions.image.convert`
+
+params:
+
+* compression_quality
+* format
+* preserve_metadata
+
 ## CountAction
 
 Count
@@ -80,6 +93,10 @@ Date
 **keyword**: `date`
 **shortcuts identifier**: `is.workflow.actions.date`
 
+params:
+
+* default_answer
+
 ## DictionaryAction
 
 Dictionary
@@ -90,6 +107,46 @@ Dictionary
 params:
 
 * items
+
+## ElseAction
+
+Else: else for a specified group_id
+
+**keyword**: `else`
+**shortcuts identifier**: `is.workflow.actions.conditional`
+
+params:
+
+* group_id
+
+## EndIfAction
+
+EndIf: end a condition with specified group_id
+
+**keyword**: `endif`
+**shortcuts identifier**: `is.workflow.actions.conditional`
+
+params:
+
+* group_id
+
+## ExitAction
+
+Exit
+
+**keyword**: `exit`
+**shortcuts identifier**: `is.workflow.actions.exit`
+
+## FormatDateAction
+
+Format date
+
+**keyword**: `format_date`
+**shortcuts identifier**: `is.workflow.actions.format.date`
+
+params:
+
+* format
 
 ## GetLastPhotoAction
 
@@ -108,6 +165,7 @@ Get URL
 params:
 
 * advanced
+* form
 * headers
 * json
 * method
@@ -122,6 +180,37 @@ Get dictionary value
 params:
 
 * key
+
+## GetVariableAction
+
+Get variable: returns variable with name=`name` in the output
+
+**keyword**: `get_variable`
+**shortcuts identifier**: `is.workflow.actions.getvariable`
+
+params:
+
+* name
+
+## IfAction
+
+If: you must specify group_id of this if condition
+
+**keyword**: `if`
+**shortcuts identifier**: `is.workflow.actions.conditional`
+
+params:
+
+* compare_with
+* condition
+* group_id
+
+## PreviewDocumentAction
+
+Preview document
+
+**keyword**: `preview`
+**shortcuts identifier**: `is.workflow.actions.previewdocument`
 
 ## ReadFileAction
 
@@ -206,3 +295,10 @@ URL: returns url as an output
 params:
 
 * url
+
+## VibrateAction
+
+Vibrate
+
+**keyword**: `vibrate`
+**shortcuts identifier**: `is.workflow.actions.vibrate`
