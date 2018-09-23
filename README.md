@@ -21,6 +21,22 @@ The library is in a very early development state (PR welcome!), so it does not s
 
 I wanted to convert my shortcut to a file in human-readable format. :)
 
+From the code below this library can create a working shortcut:
+
+```toml
+[[action]]
+type = "ask"
+question = "What is your name?"
+
+[[action]]
+type = "set_variable"
+name = "name"
+
+[[action]]
+type = "show_result"
+text = "Hello, {{name}}!"
+```
+
 ## How to use
 
 ### Requirements
@@ -45,7 +61,7 @@ Convert `toml` file with shortcut description to a real shortcut file.
 After you need to open the file with iOS Shortcuts app.
 
 ```bash
-shortcuts examples/test.toml my_first_shortcut.shortcut
+shortcuts what_is_your_name.shortcut what_is_your_name.toml
 ```
 
 ### toml → shortcut
@@ -53,7 +69,7 @@ shortcuts examples/test.toml my_first_shortcut.shortcut
 Also, you can convert shortcut file to a `toml`:
 
 ```bash
-shortcuts examples/test.shortcut test.toml
+shortcuts examples/what_is_your_name.toml what_is_your_name.shortcut
 ```
 
 More examples of `toml` files you can find [here](examples/).
