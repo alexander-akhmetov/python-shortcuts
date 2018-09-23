@@ -26,6 +26,9 @@ setup(
         'shortcuts',
         'shortcuts.actions',
     ],
+    install_requires=[
+        'toml',
+    ],
     entry_points={
         'console_scripts': [
             'shortcuts = shortcuts.cli:main',
