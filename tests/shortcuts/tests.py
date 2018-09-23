@@ -1,5 +1,5 @@
 from shortcuts import Shortcut
-from actions.text import TextAction
+from shortcuts.actions.text import TextAction
 
 
 class TestShortcutDumps:

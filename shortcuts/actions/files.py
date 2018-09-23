@@ -1,4 +1,4 @@
-from shortcuts.actions.base import BaseAction, Field
+from shortcuts.actions.base import BaseAction, Field, BooleanField
 
 
 class ReadFileAction(BaseAction):
@@ -7,8 +7,8 @@ class ReadFileAction(BaseAction):
     keyword = 'read_file'
 
     path = Field('WFFileDestinationPath')
-    not_found_error = Field('WFFileErrorIfNotFound')
-    show_picker = Field('WFAskWhereToSave')
+    not_found_error = BooleanField('WFFileErrorIfNotFound')
+    show_picker = BooleanField('WFAskWhereToSave')
 
 
 class SaveFileAction(BaseAction):
@@ -18,7 +18,7 @@ class SaveFileAction(BaseAction):
 
     path = Field('WFFileDestinationPath')
     overwrite = Field('WFSaveFileOverwrite')
-    show_picker = Field('WFAskWhereToSave')
+    show_picker = BooleanField('WFAskWhereToSave')
 
 
 class CreateFolderAction(BaseAction):

@@ -1,4 +1,4 @@
-from shortcuts.actions.base import BaseAction, Field, VariablesField
+from shortcuts.actions.base import BaseAction, Field, VariablesField, BooleanField
 
 
 class ShowResultAction(BaseAction):
@@ -14,6 +14,6 @@ class ShowAlertAction(BaseAction):
     type = 'is.workflow.actions.alert'
     keyword = 'alert'
 
-    show_cancel_button = Field('WFAlertActionCancelButtonShown')
+    show_cancel_button = BooleanField('WFAlertActionCancelButtonShown')
     text = Field('WFAlertActionMessage')
     title = Field('WFAlertActionTitle')

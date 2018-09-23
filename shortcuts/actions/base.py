@@ -71,6 +71,20 @@ class Field:
         return value
 
 
+class BooleanField(Field):
+    def process_value(self, value):
+        if isinstance(value, bool):
+            return value
+
+        value = value.lower().strip()
+        if value == 'true':
+            return True
+        elif value == 'false':
+            return False
+
+        raise ValueError(f'BooleanField: incorrect value: {value} type: {type(value)}')
+
+
 class VariablesField(Field):
     _regexp = re.compile(r'({{[A-Za-z0-9_-]+}})')
 
