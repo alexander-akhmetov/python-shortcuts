@@ -80,12 +80,37 @@ Date
 **keyword**: `date`
 **shortcuts identifier**: `is.workflow.actions.date`
 
+## DictionaryAction
+
+Dictionary
+
+**keyword**: `dictionary`
+**shortcuts identifier**: `is.workflow.actions.dictionary`
+
+params:
+
+* items
+
 ## GetLastPhotoAction
 
 Get latest photos
 
 **keyword**: `get_last_photo`
 **shortcuts identifier**: `is.workflow.actions.getlastphoto`
+
+## GetURLAction
+
+Get URL
+
+**keyword**: `get_url`
+**shortcuts identifier**: `is.workflow.actions.downloadurl`
+
+params:
+
+* advanced
+* headers
+* json
+* method
 
 ## GetDictionaryValueAction
 

@@ -85,6 +85,17 @@ class BooleanField(Field):
         raise ValueError(f'BooleanField: incorrect value: {value} type: {type(value)}')
 
 
+class WFVariableField(Field):
+    def process_value(self, value):
+        return {
+            'Value': {
+                'Type': 'Variable',
+                'VariableName': super().process_value(value),
+            },
+            'WFSerializationType': 'WFTextTokenAttachment',
+        }
+
+
 class VariablesField(Field):
     _regexp = re.compile(r'({{[A-Za-z0-9_-]+}})')
 

@@ -1,4 +1,4 @@
-from shortcuts.actions.base import BaseAction, Field
+from shortcuts.actions.base import BaseAction, Field, WFVariableField
 
 
 class SetVariableAction(BaseAction):
@@ -7,3 +7,11 @@ class SetVariableAction(BaseAction):
     keyword = 'set_variable'
 
     name = Field('WFVariableName')
+
+
+class GetVariableAction(BaseAction):
+    '''Get variable: returns variable with name=`name` in the output'''
+    type = 'is.workflow.actions.getvariable'
+    keyword = 'get_variable'
+
+    name = WFVariableField('WFVariable')

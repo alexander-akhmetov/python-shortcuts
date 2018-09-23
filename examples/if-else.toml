@@ -1,0 +1,25 @@
+[[action]]
+type = "text"
+text = "test"
+
+[[action]]
+type = "if"
+condition = "equals"
+compare_with = "test"
+group_id = "1"
+
+[[action]]
+type = "show_result"
+text = "true!"
+
+[[action]]
+type = "else"
+group_id = "1"
+
+[[action]]
+type = "show_result"
+text = "false :("
+
+[[action]]
+type = "endif"
+group_id = "1"

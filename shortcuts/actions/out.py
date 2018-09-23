@@ -17,3 +17,15 @@ class ShowAlertAction(BaseAction):
     show_cancel_button = BooleanField('WFAlertActionCancelButtonShown')
     text = Field('WFAlertActionMessage')
     title = Field('WFAlertActionTitle')
+
+
+class ExitAction(BaseAction):
+    '''Exit'''
+    type = 'is.workflow.actions.exit'
+    keyword = 'exit'
+
+
+class VibrateAction(BaseAction):
+    '''Vibrate'''
+    type = 'is.workflow.actions.vibrate'
+    keyword = 'vibrate'

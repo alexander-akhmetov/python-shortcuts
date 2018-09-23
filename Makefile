@@ -1,5 +1,5 @@
 generate_docs:
-	python src/docs.py docs/actions.md
+	python docs.py docs/actions.md
 
 tests:
 	tox
