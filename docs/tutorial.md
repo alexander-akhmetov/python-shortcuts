@@ -35,6 +35,14 @@ text = "Hello, {{name}}!"
 The most important thing here is `{{name}}`. We took our variable `name` and put it to the text string.
 And the user will see something like `Hello, Alexander!`.
 
+Now, convert the file to a shortcut:
+
+```bash
+shortcuts t.toml t.shortcut
+```
+
+And open the `t.shortcut` file in the Shortcuts app.
+
 ## Full toml file
 
 ```toml
