@@ -1,5 +1,11 @@
 from shortcuts import Shortcut
-from shortcuts.actions import TextAction, SetVariableAction
+from shortcuts.actions import (
+    TextAction,
+    SetVariableAction,
+    IfAction,
+    ElseAction,
+    EndIfAction,
+)
 
 
 class TestShortcutDumps:
@@ -77,3 +83,43 @@ class TestShortcutLoadsAndDumps:
         exp_dump = '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<plist version="1.0">\n<dict>\n\t<key>WFWorkflowActions</key>\n\t<array>\n\t\t<dict>\n\t\t\t<key>WFWorkflowActionIdentifier</key>\n\t\t\t<string>is.workflow.actions.ask</string>\n\t\t\t<key>WFWorkflowActionParameters</key>\n\t\t\t<dict>\n\t\t\t\t<key>WFAskActionPrompt</key>\n\t\t\t\t<string>What is your name?</string>\n\t\t\t</dict>\n\t\t</dict>\n\t</array>\n\t<key>WFWorkflowClientRelease</key>\n\t<string>2.0</string>\n\t<key>WFWorkflowClientVersion</key>\n\t<string>700</string>\n\t<key>WFWorkflowIcon</key>\n\t<dict>\n\t\t<key>WFWorkflowIconGlyphNumber</key>\n\t\t<integer>59511</integer>\n\t\t<key>WFWorkflowIconImageData</key>\n\t\t<data>\n\t\t</data>\n\t\t<key>WFWorkflowIconStartColor</key>\n\t\t<integer>431817727</integer>\n\t</dict>\n\t<key>WFWorkflowImportQuestions</key>\n\t<array/>\n\t<key>WFWorkflowInputContentItemClasses</key>\n\t<array>\n\t\t<string>WFAppStoreAppContentItem</string>\n\t\t<string>WFArticleContentItem</string>\n\t\t<string>WFContactContentItem</string>\n\t\t<string>WFDateContentItem</string>\n\t\t<string>WFEmailAddressContentItem</string>\n\t\t<string>WFGenericFileContentItem</string>\n\t\t<string>WFImageContentItem</string>\n\t\t<string>WFiTunesProductContentItem</string>\n\t\t<string>WFLocationContentItem</string>\n\t\t<string>WFDCMapsLinkContentItem</string>\n\t\t<string>WFAVAssetContentItem</string>\n\t\t<string>WFPDFContentItem</string>\n\t\t<string>WFPhoneNumberContentItem</string>\n\t\t<string>WFRichTextContentItem</string>\n\t\t<string>WFSafariWebPageContentItem</string>\n\t\t<string>WFStringContentItem</string>\n\t\t<string>WFURLContentItem</string>\n\t</array>\n\t<key>WFWorkflowTypes</key>\n\t<array>\n\t\t<string>NCWidget</string>\n\t\t<string>WatchKit</string>\n\t</array>\n</dict>\n</plist>\n'
 
         assert dump == exp_dump
+
+
+class TestShortcut:
+    def test_set_group_ids_for_empty_shortcut(self):
+        sc = Shortcut()
+
+        assert len(sc.actions) == 0
+        sc._set_group_ids()
+        assert len(sc.actions) == 0
+
+    def test_set_group_ids(self):
+        # test that _set_group_ids sets group_ids correctly
+        sc = Shortcut()
+        sc.actions = [
+            IfAction(data={'condition': 'equals', 'compare_with': 'test'}),
+
+            IfAction(data={'condition': 'equals', 'compare_with': 'test'}),
+            EndIfAction(data={}),
+
+            ElseAction(data={}),
+            # pass
+            EndIfAction(data={}),
+        ]
+
+        # all actions are without group_id info
+        assert any([a.data.get('group_id') for a in sc.actions]) is False
+
+        sc._set_group_ids()
+
+        # now all actions are with group_id info
+        assert all([a.data.get('group_id') for a in sc.actions]) is True
+
+        # first cycle check
+        assert sc.actions[0].data['group_id'] == sc.actions[3].data['group_id'] == sc.actions[4].data['group_id']
+
+        # second cycle
+        assert sc.actions[1].data['group_id'] == sc.actions[2].data['group_id']
+
+        # ids are different
+        assert sc.actions[0].data['group_id'] != sc.actions[1].data['group_id']

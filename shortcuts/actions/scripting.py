@@ -1,4 +1,4 @@
-from shortcuts.actions.base import BaseAction, FloatField
+from shortcuts.actions.base import BaseAction, FloatField, GroupIDField, IntegerField
 
 
 class NothingAction(BaseAction):
@@ -50,3 +50,28 @@ class WaitToReturnAction(BaseAction):
     '''Wait to return'''
     itype = 'is.workflow.actions.waittoreturn'
     keyword = 'wait_to_return'
+
+
+class RepeatStartAction(BaseAction):
+    '''Repeat'''
+    itype = 'is.workflow.actions.repeat.count'
+    keyword = 'repeat_start'
+
+    group_id = GroupIDField('GroupingIdentifier')
+    count = IntegerField('WFRepeatCount')
+
+    default_fields = {
+        'WFControlFlowMode': 0,
+    }
+
+
+class RepeatEndAction(BaseAction):
+    '''Repeat'''
+    itype = 'is.workflow.actions.repeat.count'
+    keyword = 'repeat_end'
+
+    group_id = GroupIDField('GroupingIdentifier')
+
+    default_fields = {
+        'WFControlFlowMode': 2,
+    }

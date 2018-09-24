@@ -1,4 +1,4 @@
-from shortcuts.actions.base import BaseAction, Field
+from shortcuts.actions.base import BaseAction, ChoiceField, Field, GroupIDField
 
 
 class IfAction(BaseAction):
@@ -6,9 +6,9 @@ class IfAction(BaseAction):
     itype = 'is.workflow.actions.conditional'
     keyword = 'if'
 
-    condition = Field('WFCondition', capitalize=True)
+    condition = ChoiceField('WFCondition', choices=('Equals', 'Contains'), capitalize=True)
     compare_with = Field('WFConditionalActionString')
-    group_id = Field('GroupingIdentifier')
+    group_id = GroupIDField('GroupingIdentifier')
 
     default_fields = {
         'WFControlFlowMode': 0,
@@ -20,7 +20,7 @@ class ElseAction(BaseAction):
     itype = 'is.workflow.actions.conditional'
     keyword = 'else'
 
-    group_id = Field('GroupingIdentifier')
+    group_id = GroupIDField('GroupingIdentifier')
 
     default_fields = {
         'WFControlFlowMode': 1,
@@ -32,7 +32,7 @@ class EndIfAction(BaseAction):
     itype = 'is.workflow.actions.conditional'
     keyword = 'endif'
 
-    group_id = Field('GroupingIdentifier')
+    group_id = GroupIDField('GroupingIdentifier')
 
     default_fields = {
         'WFControlFlowMode': 2,

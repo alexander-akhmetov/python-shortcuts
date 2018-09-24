@@ -29,6 +29,8 @@ from shortcuts.actions.scripting import (
     ContinueInShortcutAppAction,
     DelayAction,
     NothingAction,
+    RepeatEndAction,
+    RepeatStartAction,
     SetItemNameAction,
     ViewContentGraphAction,
     WaitToReturnAction,

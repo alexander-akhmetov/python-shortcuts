@@ -75,13 +75,18 @@ class Field:
         return value
 
 
+class GroupIDField(Field):
+    def __init__(self, *args, **kwargs):
+        kwargs['required'] = False
+        super().__init__(*args, **kwargs)
+
+
 class ChoiceField(Field):
     def __init__(self, name, choices, required=True, capitalize=False, help=''):
         super().__init__(name=name, required=required, capitalize=capitalize, help=help)
         self.choices = choices
 
     def process_value(self, value):
-        # todo: test me
         value = super().process_value(value)
         if value not in self.choices:
             raise ValueError(f'Value "{value}" not in the choices list: {self.choices}')
@@ -90,8 +95,12 @@ class ChoiceField(Field):
 
 class FloatField(Field):
     def process_value(self, value):
-        # todo: test me
         return float(super().process_value(value))
+
+
+class IntegerField(Field):
+    def process_value(self, value):
+        return int(super().process_value(value))
 
 
 class BooleanField(Field):

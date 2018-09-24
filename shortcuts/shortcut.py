@@ -1,7 +1,9 @@
 import logging
 import plistlib
+import uuid
 from typing import Any, Dict, List, TextIO, Type
 
+from shortcuts.actions.base import GroupIDField
 from shortcuts.dump import BaseDumper, PListDumper, TomlDumper
 from shortcuts.loader import BaseLoader, PListLoader, TomlLoader
 
@@ -32,6 +34,7 @@ class Shortcut:
 
     @classmethod
     def _get_loader_class(self, file_format: str) -> Type[BaseLoader]:
+        """Based on file_format returns loader class"""
         supported_formats = {
             'plist': PListLoader,
             'toml': TomlLoader,
@@ -49,6 +52,7 @@ class Shortcut:
         return self._get_dumper_class(file_format)(shortcut=self).dumps()
 
     def _get_dumper_class(self, file_format: str) -> Type[BaseDumper]:
+        """Based on file_format returns dumper class"""
         supported_formats = {
             'plist': PListDumper,
             'toml': TomlDumper,
@@ -60,7 +64,40 @@ class Shortcut:
         raise RuntimeError(f'Unknown file_format: {file_format}')
 
     def _get_actions(self) -> List[str]:
+        """returns list of all actions"""
+        self._set_group_ids()
         return [a.dump() for a in self.actions]
+
+    def _set_group_ids(self):
+        """
+        Automatically sets group_id based on WFControlFlowMode param
+        Uses list as a stack to hold generated group_ids
+
+        Each cycle or condition (if-else, repeat) in Shortcuts app must have group id.
+        Start and end of the cycle must have the same group_id. To do this,
+        we use stack to save generated or readed group_id to save it to all actions of the cycle
+        """
+        ids = []
+        for action in self.actions:
+            # if action has GroupIDField, we may need to generate it's value automatically
+            if isinstance(getattr(action, 'group_id', None), GroupIDField):
+                control_mode = action.default_fields['WFControlFlowMode']
+                if control_mode == 0:
+                    # 0 means beginning of the group
+                    group_id = action.data.get('group_id', str(uuid.uuid4()))
+                    action.data['group_id'] = group_id  # if wasn't defined
+                    ids.append(group_id)
+                elif control_mode == 1:
+                    # 1 - else, so we don't need to remove group_id from the stack
+                    # we need to just use the latest one
+                    action.data['group_id'] = ids[-1]
+                elif control_mode == 2:
+                    # end of the group, we must remove group_id
+                    if len(ids) < 0:
+                        # if actions are correct, all groups must be compelted
+                        # (group complete if it has start and end actions)
+                        raise RuntimeError('Incomplete cycle')
+                    action.data['group_id'] = ids.pop()
 
     def _get_import_questions(self) -> List:
         # todo: change me

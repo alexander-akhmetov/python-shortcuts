@@ -1,0 +1,18 @@
+[[action]]
+type = "repeat_start"
+count = 3
+
+    [[action]]
+    type = "set_torch"
+    mode = "On"
+
+    [[action]]
+    type = "delay"
+    time = 1.0
+
+    [[action]]
+    type = "set_torch"
+    mode = "Off"
+
+[[action]]
+type = "repeat_end"

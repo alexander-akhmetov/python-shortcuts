@@ -26,8 +26,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - ContinueInShortcutAppAction
   - DelayAction
   - WaitToReturnAction
+  - RepeatStartAction
+  - RepeatEndAction
 - Renamed `type` to `itype` for action classes (class attribute *only*).
-- Package name changed to `shortcuts`: `pip install shortcuts` (old name will be working too as an alias)
+- Removed `required=True` from `group_id` fields, now conditional group sets automatically.
+- Package name changed to `shortcuts`: `pip install shortcuts` (old name will be working too as an alias).
 
 ## [0.5.2] - 23.09.2018
 

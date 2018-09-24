@@ -117,6 +117,12 @@ class PListLoader(BaseLoader):
             elif action_params.get('WFEncodeMode') == 'Decode':
                 action_class = Base64DecodeAction
 
+        if identifier == 'is.workflow.actions.repeat.count':
+            from shortcuts.actions import RepeatEndAction, RepeatStartAction
+            flow_to_action = {a.default_fields['WFControlFlowMode']: a for a in (RepeatEndAction, RepeatStartAction)}  # type: ignore
+            action_params = action_dict['WFWorkflowActionParameters']
+            action_class = flow_to_action[action_params['WFControlFlowMode']]
+
         return action_class
 
     @classmethod
