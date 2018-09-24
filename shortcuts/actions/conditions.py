@@ -3,7 +3,7 @@ from shortcuts.actions.base import BaseAction, Field
 
 class IfAction(BaseAction):
     '''If: you must specify group_id of this if condition'''
-    type = 'is.workflow.actions.conditional'
+    itype = 'is.workflow.actions.conditional'
     keyword = 'if'
 
     condition = Field('WFCondition', capitalize=True)
@@ -17,7 +17,7 @@ class IfAction(BaseAction):
 
 class ElseAction(BaseAction):
     '''Else: else for a specified group_id'''
-    type = 'is.workflow.actions.conditional'
+    itype = 'is.workflow.actions.conditional'
     keyword = 'else'
 
     group_id = Field('GroupingIdentifier')
@@ -29,7 +29,7 @@ class ElseAction(BaseAction):
 
 class EndIfAction(BaseAction):
     '''EndIf: end a condition with specified group_id'''
-    type = 'is.workflow.actions.conditional'
+    itype = 'is.workflow.actions.conditional'
     keyword = 'endif'
 
     group_id = Field('GroupingIdentifier')

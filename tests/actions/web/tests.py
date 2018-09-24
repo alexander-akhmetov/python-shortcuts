@@ -1,5 +1,5 @@
 from shortcuts import Shortcut
-from shortcuts.actions.web import URLAction, GetURLAction
+from shortcuts.actions import URLAction, GetURLAction
 
 
 class TestURLAction:

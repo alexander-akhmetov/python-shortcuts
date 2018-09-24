@@ -6,9 +6,14 @@ name = "pypi"
 [dev-packages]
 pytest = "*"
 mock = "*"
+mypy = "*"
+"flake8" = "*"
+isort = "*"
 
 [packages]
 toml = "*"
+"flake8" = "*"
+mypy = "*"
 
 [requires]
 python_version = "3.6"

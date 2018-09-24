@@ -3,7 +3,7 @@ from shortcuts.actions.base import BaseAction, Field, VariablesField
 
 class AskAction(BaseAction):
     '''Ask for input'''
-    type = 'is.workflow.actions.ask'
+    itype = 'is.workflow.actions.ask'
     keyword = 'ask'
 
     question = Field('WFAskActionPrompt')

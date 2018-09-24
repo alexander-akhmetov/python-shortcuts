@@ -2,10 +2,7 @@ import argparse
 import os.path
 
 import shortcuts
-from shortcuts.utils import (
-    convert_plist_to_xml,
-    convert_plist_to_binary,
-)
+from shortcuts.utils import convert_plist_to_binary, convert_plist_to_xml
 
 
 def convert_shortcut(input_filepath, out_filepath):

@@ -10,7 +10,8 @@ It uses [toml](https://github.com/toml-lang/toml) to represent shortcuts.
 
 The library is in a very early development state (PR welcome!), so it does not support all actions from Shortcuts app.
 
-* [Tutorial](docs/tutorial.md)
+* [Toml tutorial](docs/tutorial.md)
+* [Python tutorial](docs/python_tutorial.md)
 * [How to add a new action](docs/new_action.md)
 * [Supported actions](docs/actions.md)
 * [Examples](examples/)
@@ -35,6 +36,21 @@ name = "name"
 [[action]]
 type = "show_result"
 text = "Hello, {{name}}!"
+```
+
+Or the same with Python:
+
+```python
+from shortcuts import Shortcut, actions
+
+
+sc = Shortcut()
+
+sc.actions = [
+    actions.AskAction(data={'question': 'What is your name?'}),
+    actions.SetVariableAction(data={'name': 'name'}),
+    actions.ShowResultAction(data={'text': 'Hello, {{name}}!'})
+]
 ```
 
 ## How to use

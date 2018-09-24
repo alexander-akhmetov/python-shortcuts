@@ -1,9 +1,9 @@
-from shortcuts.actions.base import BaseAction, Field, VariablesField, BooleanField
+from shortcuts.actions.base import BaseAction, BooleanField, Field, VariablesField
 
 
 class ShowResultAction(BaseAction):
     '''Show result: shows a result'''
-    type = 'is.workflow.actions.showresult'
+    itype = 'is.workflow.actions.showresult'
     keyword = 'show_result'
 
     text = VariablesField('Text')
@@ -11,7 +11,7 @@ class ShowResultAction(BaseAction):
 
 class ShowAlertAction(BaseAction):
     '''Show alert'''
-    type = 'is.workflow.actions.alert'
+    itype = 'is.workflow.actions.alert'
     keyword = 'alert'
 
     show_cancel_button = BooleanField('WFAlertActionCancelButtonShown')
@@ -21,11 +21,11 @@ class ShowAlertAction(BaseAction):
 
 class ExitAction(BaseAction):
     '''Exit'''
-    type = 'is.workflow.actions.exit'
+    itype = 'is.workflow.actions.exit'
     keyword = 'exit'
 
 
 class VibrateAction(BaseAction):
     '''Vibrate'''
-    type = 'is.workflow.actions.vibrate'
+    itype = 'is.workflow.actions.vibrate'
     keyword = 'vibrate'

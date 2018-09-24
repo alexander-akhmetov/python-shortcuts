@@ -1,4 +1,4 @@
-from shortcuts.actions.dictionary import DictionaryAction
+from shortcuts.actions import DictionaryAction
 from shortcuts import Shortcut
 
 

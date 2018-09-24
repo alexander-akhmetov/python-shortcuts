@@ -1,4 +1,4 @@
-from shortcuts.actions.out import ShowResultAction, ShowAlertAction
+from shortcuts.actions import ShowResultAction, ShowAlertAction
 
 
 class TestShowResultAction:

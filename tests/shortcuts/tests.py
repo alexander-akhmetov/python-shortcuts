@@ -1,6 +1,5 @@
 from shortcuts import Shortcut
-from shortcuts.actions.text import TextAction
-from shortcuts.actions.variables import SetVariableAction
+from shortcuts.actions import TextAction, SetVariableAction
 
 
 class TestShortcutDumps:
@@ -41,15 +40,15 @@ class TestShortcutLoads:
 
         assert sc.actions[0].keyword == 'text'
         assert sc.actions[0].data['text'] == 'ping'
-        assert sc.actions[0].type == 'is.workflow.actions.gettext'
+        assert sc.actions[0].itype == 'is.workflow.actions.gettext'
 
         assert sc.actions[1].keyword == 'set_variable'
         assert sc.actions[1].data['name'] == 'variable'
-        assert sc.actions[1].type == 'is.workflow.actions.setvariable'
+        assert sc.actions[1].itype == 'is.workflow.actions.setvariable'
 
         assert sc.actions[2].keyword == 'show_result'
         assert sc.actions[2].data['text'] == 'My variable: {{variable}}'
-        assert sc.actions[2].type == 'is.workflow.actions.showresult'
+        assert sc.actions[2].itype == 'is.workflow.actions.showresult'
 
 
 class TestShortcutLoadsAndDumps:
@@ -69,7 +68,7 @@ class TestShortcutLoadsAndDumps:
 
         assert action.keyword == 'ask'
         assert action.data['question'] == question
-        assert action.type == 'is.workflow.actions.ask'
+        assert action.itype == 'is.workflow.actions.ask'
 
         assert action.data == {'question': question}
 

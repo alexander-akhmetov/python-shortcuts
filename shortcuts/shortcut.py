@@ -1,9 +1,9 @@
-import plistlib
 import logging
-from typing import List, Dict, Union
+import plistlib
+from typing import Any, Dict, List, TextIO, Type
 
-from shortcuts.loader import TomlLoader, PListLoader
-from shortcuts.dump import PListDumper, TomlDumper
+from shortcuts.dump import BaseDumper, PListDumper, TomlDumper
+from shortcuts.loader import BaseLoader, PListLoader, TomlLoader
 
 
 logger = logging.getLogger(__name__)
@@ -23,15 +23,15 @@ class Shortcut:
         self.actions = actions if actions else []
 
     @classmethod
-    def load(cls, file_object, file_format: str = 'toml') -> 'Shortcut':
-        return cls._get_loader_class(file_format)().load(file_object)
+    def load(cls, file_object: TextIO, file_format: str = 'toml') -> 'Shortcut':
+        return cls._get_loader_class(file_format).load(file_object)
 
     @classmethod
-    def loads(cls, string, file_format: str = 'toml') -> 'Shortcut':
-        return cls._get_loader_class(file_format)().loads(string)
+    def loads(cls, string: str, file_format: str = 'toml') -> 'Shortcut':
+        return cls._get_loader_class(file_format).loads(string)
 
     @classmethod
-    def _get_loader_class(self, file_format: str) -> Union[PListDumper, TomlDumper]:
+    def _get_loader_class(self, file_format: str) -> Type[BaseLoader]:
         supported_formats = {
             'plist': PListLoader,
             'toml': TomlLoader,
@@ -42,13 +42,13 @@ class Shortcut:
 
         raise RuntimeError(f'Unknown file_format: {file_format}')
 
-    def dump(self, file_object, file_format: str = 'plist') -> None:
-        return self._get_dumper_class(file_format)(shortcut=self).dump(file_object)
+    def dump(self, file_object: TextIO, file_format: str = 'plist') -> None:
+        self._get_dumper_class(file_format)(shortcut=self).dump(file_object)
 
-    def dumps(self, file_format: str = 'plist') -> None:
+    def dumps(self, file_format: str = 'plist') -> str:
         return self._get_dumper_class(file_format)(shortcut=self).dumps()
 
-    def _get_dumper_class(self, file_format: str) -> Union[PListDumper, TomlDumper]:
+    def _get_dumper_class(self, file_format: str) -> Type[BaseDumper]:
         supported_formats = {
             'plist': PListDumper,
             'toml': TomlDumper,
@@ -59,14 +59,14 @@ class Shortcut:
 
         raise RuntimeError(f'Unknown file_format: {file_format}')
 
-    def _get_actions(self) -> List:
+    def _get_actions(self) -> List[str]:
         return [a.dumps() for a in self.actions]
 
     def _get_import_questions(self) -> List:
         # todo: change me
         return []
 
-    def _get_icon(self) -> Dict:
+    def _get_icon(self) -> Dict[str, Any]:
         # todo: change me
         return {
             'WFWorkflowIconGlyphNumber': 59511,

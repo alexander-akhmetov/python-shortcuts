@@ -6,11 +6,11 @@ from shortcuts.actions.base import BaseAction, BooleanField
 class TestBaseAction:
     def test_get_parameters(self):
         base_action = BaseAction()
-        base_action.type = '123'
+        base_action.itype = '123'
         dump = base_action.dumps()
 
         exp_dump = {
-            'WFWorkflowActionIdentifier': base_action.type,
+            'WFWorkflowActionIdentifier': base_action.itype,
             'WFWorkflowActionParameters': {},
         }
         assert dump == exp_dump

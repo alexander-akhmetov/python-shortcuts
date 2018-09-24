@@ -1,15 +1,23 @@
-from typing import Any, Dict
 import plistlib
+from typing import TYPE_CHECKING, Any, Dict, TextIO, Type
 
 import toml
 
 
+if TYPE_CHECKING:
+    from shortcuts import Shortcut  # noqa
+    from shortcuts.actions.base import BaseAction  # noqa
+
+
 class BaseDumper:
-    def __init__(self, shortcut: 'shortcuts.shortcut.Shortcut') -> None:
+    def __init__(self, shortcut: 'Shortcut') -> None:
         self.shortcut = shortcut
 
-    def dump(self, file_obj) -> str:
-        return file_obj.write(self.dumps())
+    def dump(self, file_obj: TextIO) -> None:
+        file_obj.write(self.dumps())
+
+    def dumps(self) -> str:
+        raise NotImplementedError()
 
 
 class PListDumper(BaseDumper):
@@ -34,9 +42,10 @@ class TomlDumper(BaseDumper):
         }
         return toml.dumps(data)
 
-    def _process_action(self, action) -> Dict[str, Any]:
+    def _process_action(self, action: Type['BaseAction']) -> Dict[str, Any]:
         data = {
-            f._attr: action.data[f._attr] for f in action.fields if f._attr in action.data
+            # ignore: (mypy/#1465)
+            f._attr: action.data[f._attr] for f in action.fields if f._attr in action.data  # type: ignore
         }
         data['type'] = action.keyword
         return data

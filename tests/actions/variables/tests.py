@@ -1,5 +1,5 @@
 from shortcuts import Shortcut
-from shortcuts.actions.variables import SetVariableAction, GetVariableAction
+from shortcuts.actions import SetVariableAction, GetVariableAction
 
 
 class TestSetVariable:

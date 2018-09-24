@@ -1,30 +1,35 @@
+import collections
 import copy
 import plistlib
-import collections
-from typing import Dict
+from typing import TYPE_CHECKING, Any, Dict, List, TextIO, Type, Union
 
 import toml
 
-from shortcuts.actions import KEYWORD_TO_ACTION_MAP, TYPE_TO_ACTION_MAP
+from shortcuts.actions import ITYPE_TO_ACTION_MAP, KEYWORD_TO_ACTION_MAP
+
+
+if TYPE_CHECKING:
+    from shortcuts import Shortcut  # noqa
+    from shortcuts.actions.base import BaseAction  # noqa
 
 
 class BaseLoader:
     @classmethod
-    def load(cls, file_obj) -> str:
+    def load(cls, file_obj: TextIO) -> 'Shortcut':
         content = file_obj.read()
         if isinstance(content, (bytes, bytearray)):
             content = content.decode('utf-8')
         return cls.loads(content)
 
     @classmethod
-    def loads(cls, string) -> str:
+    def loads(cls, string: str) -> 'Shortcut':
         raise NotImplementedError()
 
 
 class TomlLoader(BaseLoader):
     @classmethod
-    def loads(cls, string) -> str:
-        from shortcuts import Shortcut
+    def loads(cls, string: str) -> 'Shortcut':
+        from shortcuts import Shortcut  # noqa
 
         shortcut_dict = toml.loads(string)
         shortcut = Shortcut(name=shortcut_dict.get('name', 'python-shortcuts'))
@@ -44,13 +49,13 @@ class TomlLoader(BaseLoader):
 
 class PListLoader(BaseLoader):
     @classmethod
-    def loads(cls, string) -> str:
-        from shortcuts import Shortcut
+    def loads(cls, string: Union[str, bytes]) -> 'Shortcut':
+        from shortcuts import Shortcut  # noqa
 
         if isinstance(string, str):
             string = string.encode('utf-8')
 
-        shortcut_dict = plistlib.loads(string)
+        shortcut_dict: Dict = plistlib.loads(string)
         shortcut = Shortcut(
             name=shortcut_dict.get('name', 'python-shortcuts'),
             client_release=shortcut_dict['WFWorkflowClientRelease'],
@@ -63,7 +68,7 @@ class PListLoader(BaseLoader):
         return shortcut
 
     @classmethod
-    def _action_from_dict(cls, action_dict: Dict):
+    def _action_from_dict(cls, action_dict: Dict) -> 'BaseAction':
         action_class = cls._get_action_class(action_dict)
 
         if not action_class:
@@ -93,20 +98,19 @@ class PListLoader(BaseLoader):
         return action_class(data=params)
 
     @classmethod
-    def _get_action_class(cls, action_dict):
-        type = action_dict['WFWorkflowActionIdentifier']
-        action_class = TYPE_TO_ACTION_MAP.get(type)
+    def _get_action_class(cls, action_dict: Dict) -> Union[Type['BaseAction'], None]:
+        identifier = action_dict['WFWorkflowActionIdentifier']
+        action_class = ITYPE_TO_ACTION_MAP.get(identifier)
 
         # todo: action-based common solution
-
-        if type == 'is.workflow.actions.conditional':
-            from shortcuts.actions.conditions import IfAction, ElseAction, EndIfAction
-            flow_to_action = {a.default_fields['WFControlFlowMode']: a for a in (IfAction, ElseAction, EndIfAction)}
+        if identifier == 'is.workflow.actions.conditional':
+            from shortcuts.actions import IfAction, ElseAction, EndIfAction
+            flow_to_action = {a.default_fields['WFControlFlowMode']: a for a in (IfAction, ElseAction, EndIfAction)}  # type: ignore
             action_params = action_dict['WFWorkflowActionParameters']
             action_class = flow_to_action[action_params['WFControlFlowMode']]
 
-        if type == 'is.workflow.actions.base64encode':
-            from shortcuts.actions.base64 import Base64EncodeAction, Base64DecodeAction
+        if identifier == 'is.workflow.actions.base64encode':
+            from shortcuts.actions import Base64EncodeAction, Base64DecodeAction
             action_params = action_dict['WFWorkflowActionParameters']
             if action_params.get('WFEncodeMode') == 'Encode':
                 action_class = Base64EncodeAction
@@ -116,7 +120,7 @@ class PListLoader(BaseLoader):
         return action_class
 
     @classmethod
-    def _load_parameter_value(cls, value):
+    def _load_parameter_value(cls, value: Union[Dict, str]) -> Union[str, List, Dict]:
         # todo: move to fields
         if not isinstance(value, dict):
             return value
@@ -136,7 +140,7 @@ class PListLoader(BaseLoader):
             raise RuntimeError(f'Unknown parameter serialization type: {value.get("WFSerializationType")}')
 
     @classmethod
-    def _load_dictionary(cls, variable_dict):
+    def _load_dictionary(cls, variable_dict: Dict) -> List[Dict[str, Any]]:
         result = []
         for item in variable_dict['Value']['WFDictionaryFieldValueItems']:
             key = cls._load_parameter_value(item['WFKey'])
@@ -145,11 +149,11 @@ class PListLoader(BaseLoader):
         return result
 
     @classmethod
-    def _load_text_token_attachment(cls, variable_dict):
+    def _load_text_token_attachment(cls, variable_dict: Dict):
         return variable_dict['Value']['VariableName']
 
     @classmethod
-    def _get_variable_string(cls, variable_dict):
+    def _get_variable_string(cls, variable_dict: Dict) -> str:
         # if this field is a string with variables,
         # we need to convert it to our representation
         value = variable_dict['Value']
@@ -177,6 +181,6 @@ class PListLoader(BaseLoader):
         return value_string
 
     @classmethod
-    def _get_position(cls, range_str) -> int:
+    def _get_position(cls, range_str: str) -> int:
         ranges = list(map(lambda x: int(x.strip()), range_str.strip('{} ').split(',')))
         return ranges[0]

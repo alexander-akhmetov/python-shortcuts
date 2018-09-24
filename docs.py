@@ -33,7 +33,7 @@ def _build_docs():
                 name=action.__name__,
                 doc=action.__doc__ or '',
                 keyword=action.keyword,
-                identifier=action.type,
+                identifier=action.itype,
                 params=params,
             ).strip()
         )

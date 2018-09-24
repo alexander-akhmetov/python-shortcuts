@@ -1,41 +1,36 @@
 import types
+from typing import Dict, Type
 
-from shortcuts.actions import (  # noqa
-    base,
-    base64,
-    calculation,
-    conditions,
-    date,
-    dictionary,
-    files,
-    input,
-    photo,
-    text,
-    out,
-    variables,
-    web,
-)
-
-
-KEYWORD_TO_ACTION_MAP = {}
-TYPE_TO_ACTION_MAP = {}
+from shortcuts.actions.b64 import Base64DecodeAction, Base64EncodeAction
+from shortcuts.actions.base import BaseAction
+from shortcuts.actions.calculation import CountAction
+from shortcuts.actions.conditions import ElseAction, EndIfAction, IfAction
+from shortcuts.actions.date import DateAction, FormatDateAction
+from shortcuts.actions.dictionary import DictionaryAction, GetDictionaryValueAction
+from shortcuts.actions.files import CreateFolderAction, PreviewDocumentAction, ReadFileAction, SaveFileAction
+from shortcuts.actions.input import AskAction
+from shortcuts.actions.out import ExitAction, ShowAlertAction, ShowResultAction, VibrateAction
+from shortcuts.actions.photo import CameraAction, GetLastPhotoAction, ImageConvertAction, SelectPhotoAction
+from shortcuts.actions.text import CommentAction, TextAction
+from shortcuts.actions.variables import GetVariableAction, SetVariableAction
+from shortcuts.actions.web import GetURLAction, URLAction
 
 
-def _create_map():
-    modules = []
+# flake8: noqa
+
+
+KEYWORD_TO_ACTION_MAP: Dict[str, Type[BaseAction]] = {}
+ITYPE_TO_ACTION_MAP: Dict[str, Type[BaseAction]] = {}
+
+
+def _create_maps():
+    # from all imported actions above it
+    # creates two maps: KEYWORD_TO_ACTION_MAP and ITYPE_TO_ACTION_MAP
+    # which the library uses to find action classes by keyword or type
     for name, val in globals().items():
-        if isinstance(val, types.ModuleType):
-            modules.append(val)
-
-    for module in modules:
-        _parse_module(module)
+        if isinstance(val, type) and issubclass(val, base.BaseAction) and val.keyword:
+            KEYWORD_TO_ACTION_MAP[val.keyword] = val
+            ITYPE_TO_ACTION_MAP[val.itype] = val
 
 
-def _parse_module(module):
-    for name, cls in module.__dict__.items():
-        if isinstance(cls, type) and issubclass(cls, base.BaseAction) and cls.keyword:
-            KEYWORD_TO_ACTION_MAP[cls.keyword] = cls
-            TYPE_TO_ACTION_MAP[cls.type] = cls
-
-
-_create_map()
+_create_maps()

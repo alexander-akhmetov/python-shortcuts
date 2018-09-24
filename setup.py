@@ -16,7 +16,7 @@ version = get_version('shortcuts')
 
 
 setup(
-    name='python-shortcuts',
+    name='shortcuts',
     version=version,
     description='Python library to create and parse Siri Shortcuts',
     author='Alexander Akhmetov',

@@ -1,22 +1,24 @@
 import re
-from typing import Dict, Tuple, List, Union, Any
+from copy import deepcopy
+from typing import Any, Dict, List, Tuple, Union
 
 
 class BaseAction:
-    type = None  # identificator from shortcut source
-    keyword = None  # this keyword is used in the toml file
-    default_fields = None  # dictionary with default parameters fields
+    itype: Union[str, None] = None  # identificator from shortcut source (being used by iOS app): WFWorkflowActionIdentifier
+    keyword: Union[str, None] = None  # this keyword is being used in the toml file
+    default_fields: Dict = {}  # noqa dictionary with default parameters fields
 
     def __init__(self, data: Union[Dict, None] = None) -> None:
         self.data = data if data is not None else {}
+        self.default_fields = deepcopy(self.default_fields)
 
-    def dumps(self) -> Dict:
+    def dumps(self) -> Dict:  # todo: rename
         data = {
-            'WFWorkflowActionIdentifier': self.type,
+            'WFWorkflowActionIdentifier': self.itype,
             'WFWorkflowActionParameters': {},
         }
 
-        data['WFWorkflowActionParameters'].update(
+        data['WFWorkflowActionParameters'].update(  # type: ignore
             self._get_parameters(),
         )
 
@@ -47,7 +49,7 @@ class BaseAction:
     @property
     def fields(self) -> List[Any]:
         if not hasattr(self, '_fields'):
-            self._fields = []
+            self._fields: List['Field'] = []
             for attr in dir(self):
                 field = getattr(self, attr)
                 if isinstance(field, (Field, VariablesField)):
@@ -58,6 +60,8 @@ class BaseAction:
 
 
 class Field:
+    _attr: Union[None, str] = None
+
     def __init__(self, name, required=True, capitalize=False, help=''):
         self.name = name
         self.required = required
@@ -99,20 +103,20 @@ class WFVariableField(Field):
 class VariablesField(Field):
     _regexp = re.compile(r'({{[A-Za-z0-9_-]+}})')
 
-    def process_value(self, value):
+    def process_value(self, value: str) -> Dict:
         return {
             'Value': self._get_variables_dict(value),
             'WFSerializationType': 'WFTextTokenString',
         }
 
-    def _get_variables_dict(self, value):
+    def _get_variables_dict(self, value: str) -> Dict:
         attachments_by_range, string = self._get_variables_from_text(value)
         return {
             'attachmentsByRange': attachments_by_range,
             'string': string,
         }
 
-    def _get_variables_from_text(self, value: str) -> List[Tuple[str, str]]:
+    def _get_variables_from_text(self, value: str) -> Tuple[Dict[str, Dict[str, str]], str]:
         attachments_by_range = {}
         offset = 0
         for m in self._regexp.finditer(value):

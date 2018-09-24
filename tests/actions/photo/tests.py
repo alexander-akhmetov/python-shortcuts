@@ -1,4 +1,4 @@
-from shortcuts.actions.photo import (
+from shortcuts.actions import (
     CameraAction,
     GetLastPhotoAction,
     SelectPhotoAction,

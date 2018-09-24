@@ -1,16 +1,11 @@
 from typing import Dict, Union
 
-from shortcuts.actions.base import (
-    BaseAction,
-    BooleanField,
-    Field,
-    DictionaryField,
-)
+from shortcuts.actions.base import BaseAction, BooleanField, DictionaryField, Field
 
 
 class URLAction(BaseAction):
     '''URL: returns url as an output'''
-    type = 'is.workflow.actions.url'
+    itype = 'is.workflow.actions.url'
     keyword = 'url'
 
     url = Field('WFURLActionURL')
@@ -30,7 +25,7 @@ class HTTPMethodField(Field):
 
 class GetURLAction(BaseAction):
     '''Get URL'''
-    type = 'is.workflow.actions.downloadurl'
+    itype = 'is.workflow.actions.downloadurl'
     keyword = 'get_url'
 
     advanced = BooleanField('Advanced', required=False)
