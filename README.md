@@ -15,7 +15,7 @@ The library is in a very early development state (PR welcome!), so it does not s
 * [How to add a new action](docs/new_action.md)
 * [Supported actions](docs/actions.md)
 * [Examples](examples/)
-* [Changelog](docs/CHANGELOG.md)
+* [Changelog](CHANGELOG.md)
 * [Documentation](docs/)
 
 ## Why
