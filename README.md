@@ -73,16 +73,15 @@ pip install shortcuts
 If you need to convert existing shortcut to a toml file, at first you need to export it.
 Go into Shortcuts app, open the shortcut and share it. Choose "Share as file" and use this file with this library.
 
-Convert `toml` file with shortcut description to a real shortcut file.
-After you need to open the file with iOS Shortcuts app.
-
+Convert shortcut file to `toml`:
 ```bash
 shortcuts what_is_your_name.shortcut what_is_your_name.toml
 ```
 
 ### toml → shortcut
 
-Also, you can convert shortcut file to a `toml`:
+Convert a `toml` file to a shortcut file.
+After you will need to open the file with iOS Shortcuts app.
 
 ```bash
 shortcuts examples/what_is_your_name.toml what_is_your_name.shortcut
