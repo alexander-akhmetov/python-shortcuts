@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.6.0] - 24.09.2018
 
 - Renamed `type` to `itype` for action classes.
+- Package name changed to `shortcuts`: `pip install shortcuts` (old name will be working too)
 
 ## [0.5.2] - 23.09.2018
 

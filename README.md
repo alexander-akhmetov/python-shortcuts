@@ -1,7 +1,7 @@
 # WIP: python-shortcuts
 
 [![Build Status](https://travis-ci.org/alexander-akhmetov/python-shortcuts.svg?branch=master)](https://travis-ci.org/alexander-akhmetov/python-shortcuts)
-[![PyPI](https://img.shields.io/pypi/v/python-shortcuts.svg)](https://pypi.python.org/pypi/python-shortcuts)
+[![PyPI](https://img.shields.io/pypi/v/shortcuts.svg)](https://pypi.python.org/pypi/shortcuts)
 
 🍏 + 🐍 = ❤️
 
@@ -63,7 +63,7 @@ On Linux, you should be able to use `plistutil` instead.
 ### Installation
 
 ```bash
-pip install python-shortcuts
+pip install shortcuts
 ```
 
 ### Usage

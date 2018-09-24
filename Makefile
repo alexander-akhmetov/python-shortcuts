@@ -7,8 +7,20 @@ tests:
 
 release-pypi:
 	test -n "$(VERSION)"
+	@echo "\033[92mReleasing python-shortcuts with VERSION=$(VERSION)\033[0m"
+
+	@echo "\033[92mBuilding python-shortcuts\033[0m"
+	sed -i '' "s/name='shortcuts'/name='python-shortcuts'/" setup.py
 	python setup.py sdist
+
+	@echo "\033[92mBuilding shortcuts\033[0m"
+	sed -i '' "s/name='python-shortcuts'/name='shortcuts'/" setup.py
+	python setup.py sdist
+
+	@echo "\033[92mUploading...\033[0m"
 	twine upload dist/python-shortcuts-$(VERSION).tar.gz
+	twine upload dist/shortcuts-$(VERSION).tar.gz
+	@echo "\033[92mDone\033[0m"
 
 
 isort-fix:

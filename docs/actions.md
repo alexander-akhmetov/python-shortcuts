@@ -31,7 +31,7 @@ params:
 Base64 decode
 
 **keyword**: `base64_decode`
-**shortcuts identifier**: `is.workflow.actions.base64decode`
+**shortcuts identifier**: `is.workflow.actions.base64encode`
 
 ## Base64EncodeAction
 
