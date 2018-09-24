@@ -51,6 +51,13 @@ params:
 
 * text
 
+## ContinueInShortcutAppAction
+
+Continue in shortcut app
+
+**keyword**: `continue_in_shortcut_app`
+**shortcuts identifier**: `is.workflow.actions.handoff`
+
 ## ImageConvertAction
 
 Image convert
@@ -96,6 +103,17 @@ Date
 params:
 
 * default_answer
+
+## DelayAction
+
+Delay
+
+**keyword**: `delay`
+**shortcuts identifier**: `is.workflow.actions.delay`
+
+params:
+
+* time
 
 ## DictionaryAction
 
@@ -147,6 +165,36 @@ Format date
 params:
 
 * format
+
+## GetBatteryLevelAction
+
+Get battery level
+
+**keyword**: `get_battery_level`
+**shortcuts identifier**: `is.workflow.actions.getbatterylevel`
+
+## GetDeviceDetailsAction
+
+Get device details
+
+**keyword**: `get_device_details`
+**shortcuts identifier**: `is.workflow.actions.getdevicedetails`
+
+params:
+
+* detail
+
+## GetIPAddressAction
+
+Get current IP address
+
+**keyword**: `get_ip_address`
+**shortcuts identifier**: `is.workflow.actions.getipaddress`
+
+params:
+
+* address_type
+* source
 
 ## GetLastPhotoAction
 
@@ -205,6 +253,13 @@ params:
 * condition
 * group_id
 
+## NothingAction
+
+Nothing
+
+**keyword**: `nothing`
+**shortcuts identifier**: `is.workflow.actions.nothing`
+
 ## PreviewDocumentAction
 
 Preview document
@@ -224,6 +279,29 @@ params:
 * not_found_error
 * path
 * show_picker
+
+## RepeatEndAction
+
+Repeat
+
+**keyword**: `repeat_end`
+**shortcuts identifier**: `is.workflow.actions.repeat.count`
+
+params:
+
+* group_id
+
+## RepeatStartAction
+
+Repeat
+
+**keyword**: `repeat_start`
+**shortcuts identifier**: `is.workflow.actions.repeat.count`
+
+params:
+
+* count
+* group_id
 
 ## SaveFileAction
 
@@ -245,6 +323,90 @@ Select photos
 **keyword**: `select_photo`
 **shortcuts identifier**: `is.workflow.actions.selectphoto`
 
+## SetAirplaneModeAction
+
+Set airplane mode
+
+**keyword**: `set_airplane_mode`
+**shortcuts identifier**: `is.workflow.actions.airplanemode.set`
+
+params:
+
+* on
+
+## SetBluetoothAction
+
+Set bluetooth
+
+**keyword**: `set_bluetooth`
+**shortcuts identifier**: `is.workflow.actions.bluetooth.set`
+
+params:
+
+* on
+
+## SetBrightnessAction
+
+Set brightness
+
+**keyword**: `set_brightness`
+**shortcuts identifier**: `is.workflow.actions.setbrightness`
+
+params:
+
+* level
+
+## SetDoNotDisturbAction
+
+Set Do Not Disturb
+
+**keyword**: `set_do_not_disturb`
+**shortcuts identifier**: `is.workflow.actions.dnd.set`
+
+params:
+
+* enabled
+
+## SetItemNameAction
+
+Set item name
+
+**keyword**: `set_item_name`
+**shortcuts identifier**: `is.workflow.actions.setitemname`
+
+## SetLowPowerModeAction
+
+Set Low Power mode
+
+**keyword**: `set_low_power_mode`
+**shortcuts identifier**: `is.workflow.actions.lowpowermode.set`
+
+params:
+
+* on
+
+## SetMobileDataAction
+
+Set mobile data
+
+**keyword**: `set_mobile_data`
+**shortcuts identifier**: `is.workflow.actions.cellulardata.set`
+
+params:
+
+* on
+
+## SetTorchAction
+
+Set Torch
+
+**keyword**: `set_torch`
+**shortcuts identifier**: `is.workflow.actions.flashlight`
+
+params:
+
+* mode
+
 ## SetVariableAction
 
 Set variable: saves input to a variable with a name=`name`
@@ -255,6 +417,28 @@ Set variable: saves input to a variable with a name=`name`
 params:
 
 * name
+
+## SetVolumeAction
+
+Set volume
+
+**keyword**: `set_volume`
+**shortcuts identifier**: `is.workflow.actions.setvolume`
+
+params:
+
+* level
+
+## SetWiFiAction
+
+Set WiFi
+
+**keyword**: `set_wifi`
+**shortcuts identifier**: `is.workflow.actions.wifi.set`
+
+params:
+
+* on
 
 ## ShowResultAction
 
@@ -302,3 +486,17 @@ Vibrate
 
 **keyword**: `vibrate`
 **shortcuts identifier**: `is.workflow.actions.vibrate`
+
+## ViewContentGraphAction
+
+View content graph
+
+**keyword**: `view_content_graph`
+**shortcuts identifier**: `is.workflow.actions.viewresult`
+
+## WaitToReturnAction
+
+Wait to return
+
+**keyword**: `wait_to_return`
+**shortcuts identifier**: `is.workflow.actions.waittoreturn`
