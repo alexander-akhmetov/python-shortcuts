@@ -9,8 +9,8 @@ Show alert
 
 params:
 
-* show_cancel_button
-* text
+* show_cancel_button 
+* text 
 * title
 
 ## AskAction
@@ -22,8 +22,8 @@ Ask for input
 
 params:
 
-* default_answer
-* input_type
+* default_answer 
+* input_type 
 * question
 
 ## Base64DecodeAction
@@ -67,8 +67,8 @@ Image convert
 
 params:
 
-* compression_quality
-* format
+* compression_quality 
+* format 
 * preserve_metadata
 
 ## CountAction
@@ -182,7 +182,21 @@ Get device details
 
 params:
 
-* detail
+* detail   | _choices_:
+
+  * "Device Name"
+
+  * "Device Model"
+
+  * "System Version"
+
+  * "Screen Width"
+
+  * "Screen Height"
+
+  * "Current Volume"
+
+  * "Current Brightness"
 
 ## GetIPAddressAction
 
@@ -193,8 +207,16 @@ Get current IP address
 
 params:
 
-* address_type
-* source
+* address_type   | _choices_:
+
+  * "IPv4"
+
+  * "IPv6"
+* source   | _choices_:
+
+  * "Local"
+
+  * "Global"
 
 ## GetLastPhotoAction
 
@@ -212,10 +234,10 @@ Get URL
 
 params:
 
-* advanced
-* form
-* headers
-* json
+* advanced 
+* form 
+* headers 
+* json 
 * method
 
 ## GetDictionaryValueAction
@@ -249,8 +271,12 @@ If: you must specify group_id of this if condition
 
 params:
 
-* compare_with
-* condition
+* compare_with 
+* condition   | _choices_:
+
+  * "Equals"
+
+  * "Contains"
 * group_id
 
 ## NothingAction
@@ -276,8 +302,8 @@ Get file
 
 params:
 
-* not_found_error
-* path
+* not_found_error 
+* path 
 * show_picker
 
 ## RepeatEndAction
@@ -300,7 +326,7 @@ Repeat
 
 params:
 
-* count
+* count 
 * group_id
 
 ## SaveFileAction
@@ -312,8 +338,8 @@ Save file
 
 params:
 
-* overwrite
-* path
+* overwrite 
+* path 
 * show_picker
 
 ## SelectPhotoAction
@@ -405,7 +431,13 @@ Set Torch
 
 params:
 
-* mode
+* mode   | _choices_:
+
+  * "Off"
+
+  * "On"
+
+  * "Toggle"
 
 ## SetVariableAction
 

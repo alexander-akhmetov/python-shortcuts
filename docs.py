@@ -21,11 +21,23 @@ ACTION_TEMPLATE = '''
 '''  # todo: choices
 
 
+PARAM_TEMPLATE = '* {name} {opts}'
+
+
 def _build_docs():
     actions_docs = []
     actions = sorted(KEYWORD_TO_ACTION_MAP.items())
     for _, action in actions:
-        params = '\n'.join([f'* {f._attr}' for f in action().fields]).strip()
+        params = []
+        for field in action().fields:
+            choices = getattr(field, 'choices', None)
+            if choices:
+                opts = '  | _choices_:\n'
+                opts += '\n'.join([f'\n  * "{choice}"' for choice in choices])
+            else:
+                opts = ''
+            params.append(PARAM_TEMPLATE.format(name=field._attr, opts=opts))
+        params = '\n'.join(params).strip()
         if params:
             params = f'params:\n\n{params}'
         actions_docs.append(
