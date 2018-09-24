@@ -6,11 +6,33 @@ from shortcuts.actions.base import BaseAction
 from shortcuts.actions.calculation import CountAction
 from shortcuts.actions.conditions import ElseAction, EndIfAction, IfAction
 from shortcuts.actions.date import DateAction, FormatDateAction
+from shortcuts.actions.device import (
+    GetBatteryLevelAction,
+    GetDeviceDetailsAction,
+    GetIPAddressAction,
+    SetAirplaneModeAction,
+    SetBluetoothAction,
+    SetBrightnessAction,
+    SetDoNotDisturbAction,
+    SetLowPowerModeAction,
+    SetMobileDataAction,
+    SetTorchAction,
+    SetVolumeAction,
+    SetWiFiAction,
+)
 from shortcuts.actions.dictionary import DictionaryAction, GetDictionaryValueAction
 from shortcuts.actions.files import CreateFolderAction, PreviewDocumentAction, ReadFileAction, SaveFileAction
 from shortcuts.actions.input import AskAction
 from shortcuts.actions.out import ExitAction, ShowAlertAction, ShowResultAction, VibrateAction
 from shortcuts.actions.photo import CameraAction, GetLastPhotoAction, ImageConvertAction, SelectPhotoAction
+from shortcuts.actions.scripting import (
+    ContinueInShortcutAppAction,
+    DelayAction,
+    NothingAction,
+    SetItemNameAction,
+    ViewContentGraphAction,
+    WaitToReturnAction,
+)
 from shortcuts.actions.text import CommentAction, TextAction
 from shortcuts.actions.variables import GetVariableAction, SetVariableAction
 from shortcuts.actions.web import GetURLAction, URLAction

@@ -18,7 +18,7 @@ ACTION_TEMPLATE = '''
 **shortcuts identifier**: `{identifier}`
 
 {params}
-'''
+'''  # todo: choices
 
 
 def _build_docs():

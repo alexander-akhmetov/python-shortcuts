@@ -7,7 +7,7 @@ class TestBaseAction:
     def test_get_parameters(self):
         base_action = BaseAction()
         base_action.itype = '123'
-        dump = base_action.dumps()
+        dump = base_action.dump()
 
         exp_dump = {
             'WFWorkflowActionIdentifier': base_action.itype,

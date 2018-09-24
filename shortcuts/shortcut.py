@@ -60,7 +60,7 @@ class Shortcut:
         raise RuntimeError(f'Unknown file_format: {file_format}')
 
     def _get_actions(self) -> List[str]:
-        return [a.dumps() for a in self.actions]
+        return [a.dump() for a in self.actions]
 
     def _get_import_questions(self) -> List:
         # todo: change me

@@ -3,7 +3,7 @@ from shortcuts import Shortcut
 
 
 class TestDictionaryAction:
-    def test_get_value(self):
+    def test_dump(self):
         data = {
             'items': [
                 {'key': 'k1', 'value': 'v1'},
@@ -52,7 +52,7 @@ class TestDictionaryAction:
                 'WFSerializationType': 'WFTextTokenString',
             },
         }
-        assert action.dumps() == exp_dump
+        assert action.dump() == exp_dump
 
 
 class TestShortcutWithDictionary:

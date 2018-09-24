@@ -5,10 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.6.0] - 24.09.2018
+## [unreleased]
 
-- Renamed `type` to `itype` for action classes.
-- Package name changed to `shortcuts`: `pip install shortcuts` (old name will be working too)
+- New actions:
+  - GetBatteryLevelAction
+  - GetIPAddressAction
+  - GetDeviceDetailsAction
+  - SetAirplaneModeAction
+  - SetBluetoothAction
+  - SetBrightnessAction
+  - SetMobileDataAction
+  - SetDoNotDisturbAction
+  - SetTorchAction
+  - SetLowPowerModeAction
+  - SetVolumeAction
+  - SetWiFiAction
+  - NothingAction
+  - SetItemNameAction
+  - ViewContentGraphAction
+  - ContinueInShortcutAppAction
+  - DelayAction
+  - WaitToReturnAction
+- Renamed `type` to `itype` for action classes (class attribute *only*).
+- Package name changed to `shortcuts`: `pip install shortcuts` (old name will be working too as an alias)
 
 ## [0.5.2] - 23.09.2018
 

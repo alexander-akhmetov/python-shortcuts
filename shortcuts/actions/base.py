@@ -12,7 +12,7 @@ class BaseAction:
         self.data = data if data is not None else {}
         self.default_fields = deepcopy(self.default_fields)
 
-    def dumps(self) -> Dict:  # todo: rename
+    def dump(self) -> Dict:
         data = {
             'WFWorkflowActionIdentifier': self.itype,
             'WFWorkflowActionParameters': {},
@@ -73,6 +73,25 @@ class Field:
             value = value.capitalize()
 
         return value
+
+
+class ChoiceField(Field):
+    def __init__(self, name, choices, required=True, capitalize=False, help=''):
+        super().__init__(name=name, required=required, capitalize=capitalize, help=help)
+        self.choices = choices
+
+    def process_value(self, value):
+        # todo: test me
+        value = super().process_value(value)
+        if value not in self.choices:
+            raise ValueError(f'Value "{value}" not in the choices list: {self.choices}')
+        return value
+
+
+class FloatField(Field):
+    def process_value(self, value):
+        # todo: test me
+        return float(super().process_value(value))
 
 
 class BooleanField(Field):
