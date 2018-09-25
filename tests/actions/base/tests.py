@@ -1,6 +1,14 @@
 import pytest
 
-from shortcuts.actions.base import BaseAction, BooleanField, ChoiceField, FloatField, IntegerField
+from shortcuts.actions.base import (
+    BaseAction,
+    BooleanField,
+    ChoiceField,
+    FloatField,
+    IntegerField,
+    ArrayField,
+    VariablesField,
+)
 
 
 class TestBaseAction:
@@ -69,3 +77,40 @@ class TestIntegerField:
 
         with pytest.raises(ValueError):
             f.process_value('asd')
+
+
+class TestArrayField:
+    def test_field(self):
+        f = ArrayField('t')
+
+        assert f.process_value(['1', '2']) == ['1', '2']
+
+        with pytest.raises(ValueError):
+            f.process_value('value')
+
+
+class TestActionWithAskWhenRunField:
+    def test_action(self):
+        identifier = 'my.identifier'
+        field_name = 'WFSomeField'
+
+        class MyAction(BaseAction):
+            itype = identifier
+
+            my_field = VariablesField(field_name)
+
+        action = MyAction(data={'my_field': '{{ask_when_run}}'})
+
+        dump = action.dump()
+        exp_dump = {
+            'WFWorkflowActionIdentifier': identifier,
+            'WFWorkflowActionParameters': {
+                field_name: {
+                    'WFSerializationType': 'WFTextTokenAttachment',
+                    'Value': {
+                        'Type': 'Ask',
+                    },
+                },
+            },
+        }
+        assert dump == exp_dump

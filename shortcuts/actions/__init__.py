@@ -23,6 +23,8 @@ from shortcuts.actions.device import (
 from shortcuts.actions.dictionary import DictionaryAction, GetDictionaryValueAction
 from shortcuts.actions.files import CreateFolderAction, PreviewDocumentAction, ReadFileAction, SaveFileAction
 from shortcuts.actions.input import AskAction
+from shortcuts.actions.menu import MenuEndAction, MenuItemAction, MenuStartAction
+from shortcuts.actions.messages import SendMessageAction
 from shortcuts.actions.out import ExitAction, ShowAlertAction, ShowResultAction, VibrateAction
 from shortcuts.actions.photo import CameraAction, GetLastPhotoAction, ImageConvertAction, SelectPhotoAction
 from shortcuts.actions.scripting import (

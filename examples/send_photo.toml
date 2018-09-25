@@ -1,0 +1,40 @@
+# This shortcut presents a menu with two options:
+# "Select photo" and "Camera".
+# If the user selects the first - it asks to select a photo,
+# the second - starts the camera to take it.
+#
+# After the shortcut asks to whom the user want to send the photo
+# and sends it with Messages app.
+
+
+[[action]]
+type = "start_menu"
+menu_items = ["Select photo", "Camera"]
+
+[[action]]
+type = "menu_item"
+title = "Select photo"
+
+    [[action]]
+    type = "select_photo"
+
+[[action]]
+type = "menu_item"
+title = "Camera"
+
+    [[action]]
+    type = "take_photo"
+
+[[action]]
+type = "end_menu"
+
+
+[[action]]
+type = "set_variable"
+name = "photo"
+
+[[action]]
+type = "send_message"
+recepients = "{{ask_when_run}}"
+text = "Look!\n\n{{photo}}￼"
+

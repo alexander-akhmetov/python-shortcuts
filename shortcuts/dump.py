@@ -31,7 +31,6 @@ class PListDumper(BaseDumper):
             'WFWorkflowIcon': self.shortcut._get_icon(),
             'WFWorkflowInputContentItemClasses': self.shortcut._get_input_content_item_classes(),
         }
-
         return plistlib.dumps(data).decode('utf-8')
 
 

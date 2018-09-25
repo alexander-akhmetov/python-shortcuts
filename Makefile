@@ -1,4 +1,4 @@
-generate_docs:
+generate-docs:
 	python docs.py docs/actions.md
 
 tests:
@@ -7,6 +7,10 @@ tests:
 
 release-pypi:
 	test -n "$(VERSION)"
+	@echo "\033[92mVERSION=$(VERSION)\033[0m"
+	@echo "\033[92mStarting tests\033[0m"
+	tox
+
 	@echo "\033[92mReleasing python-shortcuts with VERSION=$(VERSION)\033[0m"
 
 	@echo "\033[92mBuilding python-shortcuts\033[0m"

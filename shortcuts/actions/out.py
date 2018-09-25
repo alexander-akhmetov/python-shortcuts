@@ -14,7 +14,7 @@ class ShowAlertAction(BaseAction):
     itype = 'is.workflow.actions.alert'
     keyword = 'alert'
 
-    show_cancel_button = BooleanField('WFAlertActionCancelButtonShown')
+    show_cancel_button = BooleanField('WFAlertActionCancelButtonShown', default=True)
     text = Field('WFAlertActionMessage')
     title = Field('WFAlertActionTitle')
 

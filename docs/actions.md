@@ -1,6 +1,16 @@
 
 # Supported Actions
-## ShowAlertAction
+
+This is a list of all actions supported by **python-shortcuts**.
+
+Legend:
+
+* *keyword*: This keyword you can use in `toml` files to describe action
+* *shortcuts identifier*: (*itype*) this identifier will be used to generate an action in a shortcut
+
+----
+
+### ShowAlertAction
 
 Show alert
 
@@ -9,11 +19,11 @@ Show alert
 
 params:
 
-* show_cancel_button 
-* text 
-* title
+* show_cancel_button (*required*)
+* text (*required*)
+* title (*required*)
 
-## AskAction
+### AskAction
 
 Ask for input
 
@@ -22,25 +32,25 @@ Ask for input
 
 params:
 
-* default_answer 
-* input_type 
-* question
+* default_answer (*variables support*)
+* input_type ()
+* question (*required*)
 
-## Base64DecodeAction
+### Base64DecodeAction
 
 Base64 decode
 
 **keyword**: `base64_decode`
 **shortcuts identifier**: `is.workflow.actions.base64encode`
 
-## Base64EncodeAction
+### Base64EncodeAction
 
 Base64 encode
 
 **keyword**: `base64_encode`
 **shortcuts identifier**: `is.workflow.actions.base64encode`
 
-## CommentAction
+### CommentAction
 
 Comment: just a comment
 
@@ -49,16 +59,16 @@ Comment: just a comment
 
 params:
 
-* text
+* text (*required*)
 
-## ContinueInShortcutAppAction
+### ContinueInShortcutAppAction
 
 Continue in shortcut app
 
 **keyword**: `continue_in_shortcut_app`
 **shortcuts identifier**: `is.workflow.actions.handoff`
 
-## ImageConvertAction
+### ImageConvertAction
 
 Image convert
 
@@ -67,11 +77,11 @@ Image convert
 
 params:
 
-* compression_quality 
-* format 
-* preserve_metadata
+* compression_quality (*required*)
+* format (*required*)
+* preserve_metadata (*required*)
 
-## CountAction
+### CountAction
 
 Count
 
@@ -80,9 +90,9 @@ Count
 
 params:
 
-* count
+* count (*required*)
 
-## CreateFolderAction
+### CreateFolderAction
 
 Create folder
 
@@ -91,9 +101,9 @@ Create folder
 
 params:
 
-* path
+* path (*required*, *variables support*)
 
-## DateAction
+### DateAction
 
 Date
 
@@ -102,9 +112,9 @@ Date
 
 params:
 
-* default_answer
+* default_answer (*variables support*)
 
-## DelayAction
+### DelayAction
 
 Delay
 
@@ -113,9 +123,9 @@ Delay
 
 params:
 
-* time
+* time (*required*)
 
-## DictionaryAction
+### DictionaryAction
 
 Dictionary
 
@@ -124,38 +134,49 @@ Dictionary
 
 params:
 
-* items
+* items (*required*)
 
-## ElseAction
+### ElseAction
 
-Else: else for a specified group_id
+Else
 
 **keyword**: `else`
 **shortcuts identifier**: `is.workflow.actions.conditional`
 
 params:
 
-* group_id
+* group_id ()
 
-## EndIfAction
+### MenuEndAction
 
-EndIf: end a condition with specified group_id
+End menu
+
+**keyword**: `end_menu`
+**shortcuts identifier**: `is.workflow.actions.choosefrommenu`
+
+params:
+
+* group_id ()
+
+### EndIfAction
+
+EndIf: end a condition
 
 **keyword**: `endif`
 **shortcuts identifier**: `is.workflow.actions.conditional`
 
 params:
 
-* group_id
+* group_id ()
 
-## ExitAction
+### ExitAction
 
 Exit
 
 **keyword**: `exit`
 **shortcuts identifier**: `is.workflow.actions.exit`
 
-## FormatDateAction
+### FormatDateAction
 
 Format date
 
@@ -164,16 +185,16 @@ Format date
 
 params:
 
-* format
+* format (*required*)
 
-## GetBatteryLevelAction
+### GetBatteryLevelAction
 
 Get battery level
 
 **keyword**: `get_battery_level`
 **shortcuts identifier**: `is.workflow.actions.getbatterylevel`
 
-## GetDeviceDetailsAction
+### GetDeviceDetailsAction
 
 Get device details
 
@@ -182,7 +203,7 @@ Get device details
 
 params:
 
-* detail   | _choices_:
+* detail (*required*)  | _choices_:
 
   * "Device Name"
 
@@ -198,7 +219,7 @@ params:
 
   * "Current Brightness"
 
-## GetIPAddressAction
+### GetIPAddressAction
 
 Get current IP address
 
@@ -207,25 +228,25 @@ Get current IP address
 
 params:
 
-* address_type   | _choices_:
+* address_type (*required*)  | _choices_:
 
   * "IPv4"
 
   * "IPv6"
-* source   | _choices_:
+* source (*required*)  | _choices_:
 
   * "Local"
 
   * "Global"
 
-## GetLastPhotoAction
+### GetLastPhotoAction
 
 Get latest photos
 
 **keyword**: `get_last_photo`
 **shortcuts identifier**: `is.workflow.actions.getlastphoto`
 
-## GetURLAction
+### GetURLAction
 
 Get URL
 
@@ -234,13 +255,13 @@ Get URL
 
 params:
 
-* advanced 
-* form 
-* headers 
-* json 
-* method
+* advanced ()
+* form ()
+* headers ()
+* json ()
+* method ()
 
-## GetDictionaryValueAction
+### GetDictionaryValueAction
 
 Get dictionary value
 
@@ -249,9 +270,9 @@ Get dictionary value
 
 params:
 
-* key
+* key (*required*)
 
-## GetVariableAction
+### GetVariableAction
 
 Get variable: returns variable with name=`name` in the output
 
@@ -260,40 +281,57 @@ Get variable: returns variable with name=`name` in the output
 
 params:
 
-* name
+* name (*required*)
 
-## IfAction
+### IfAction
 
-If: you must specify group_id of this if condition
+If
 
 **keyword**: `if`
 **shortcuts identifier**: `is.workflow.actions.conditional`
 
 params:
 
-* compare_with 
-* condition   | _choices_:
+* compare_with (*required*)
+* condition (*required*)  | _choices_:
 
   * "Equals"
 
   * "Contains"
-* group_id
+* group_id ()
 
-## NothingAction
+### MenuItemAction
+
+
+    Menu item
+
+    You must specify the title for the item.
+    After this action write all actions which you want to be executed when a user selects this option in the menu.
+    
+
+**keyword**: `menu_item`
+**shortcuts identifier**: `is.workflow.actions.choosefrommenu`
+
+params:
+
+* group_id ()
+* title (*required*)
+
+### NothingAction
 
 Nothing
 
 **keyword**: `nothing`
 **shortcuts identifier**: `is.workflow.actions.nothing`
 
-## PreviewDocumentAction
+### PreviewDocumentAction
 
 Preview document
 
 **keyword**: `preview`
 **shortcuts identifier**: `is.workflow.actions.previewdocument`
 
-## ReadFileAction
+### ReadFileAction
 
 Get file
 
@@ -302,11 +340,11 @@ Get file
 
 params:
 
-* not_found_error 
-* path 
-* show_picker
+* not_found_error (*required*)
+* path (*required*, *variables support*)
+* show_picker (*required*)
 
-## RepeatEndAction
+### RepeatEndAction
 
 Repeat
 
@@ -315,9 +353,9 @@ Repeat
 
 params:
 
-* group_id
+* group_id ()
 
-## RepeatStartAction
+### RepeatStartAction
 
 Repeat
 
@@ -326,10 +364,10 @@ Repeat
 
 params:
 
-* count 
-* group_id
+* count (*required*)
+* group_id ()
 
-## SaveFileAction
+### SaveFileAction
 
 Save file
 
@@ -338,18 +376,30 @@ Save file
 
 params:
 
-* overwrite 
-* path 
-* show_picker
+* overwrite (*required*)
+* path (*required*, *variables support*)
+* show_picker (*required*)
 
-## SelectPhotoAction
+### SelectPhotoAction
 
 Select photos
 
 **keyword**: `select_photo`
 **shortcuts identifier**: `is.workflow.actions.selectphoto`
 
-## SetAirplaneModeAction
+### SendMessageAction
+
+Send Message
+
+**keyword**: `send_message`
+**shortcuts identifier**: `is.workflow.actions.sendmessage`
+
+params:
+
+* recepients (*required*, *variables support*)
+* text (*required*, *variables support*)
+
+### SetAirplaneModeAction
 
 Set airplane mode
 
@@ -358,9 +408,9 @@ Set airplane mode
 
 params:
 
-* on
+* on (*required*)
 
-## SetBluetoothAction
+### SetBluetoothAction
 
 Set bluetooth
 
@@ -369,9 +419,9 @@ Set bluetooth
 
 params:
 
-* on
+* on (*required*)
 
-## SetBrightnessAction
+### SetBrightnessAction
 
 Set brightness
 
@@ -380,9 +430,9 @@ Set brightness
 
 params:
 
-* level
+* level (*required*)
 
-## SetDoNotDisturbAction
+### SetDoNotDisturbAction
 
 Set Do Not Disturb
 
@@ -391,16 +441,16 @@ Set Do Not Disturb
 
 params:
 
-* enabled
+* enabled (*required*)
 
-## SetItemNameAction
+### SetItemNameAction
 
 Set item name
 
 **keyword**: `set_item_name`
 **shortcuts identifier**: `is.workflow.actions.setitemname`
 
-## SetLowPowerModeAction
+### SetLowPowerModeAction
 
 Set Low Power mode
 
@@ -409,9 +459,9 @@ Set Low Power mode
 
 params:
 
-* on
+* on (*required*)
 
-## SetMobileDataAction
+### SetMobileDataAction
 
 Set mobile data
 
@@ -420,9 +470,9 @@ Set mobile data
 
 params:
 
-* on
+* on (*required*)
 
-## SetTorchAction
+### SetTorchAction
 
 Set Torch
 
@@ -431,7 +481,7 @@ Set Torch
 
 params:
 
-* mode   | _choices_:
+* mode (*required*)  | _choices_:
 
   * "Off"
 
@@ -439,7 +489,7 @@ params:
 
   * "Toggle"
 
-## SetVariableAction
+### SetVariableAction
 
 Set variable: saves input to a variable with a name=`name`
 
@@ -448,9 +498,9 @@ Set variable: saves input to a variable with a name=`name`
 
 params:
 
-* name
+* name (*required*)
 
-## SetVolumeAction
+### SetVolumeAction
 
 Set volume
 
@@ -459,9 +509,9 @@ Set volume
 
 params:
 
-* level
+* level (*required*)
 
-## SetWiFiAction
+### SetWiFiAction
 
 Set WiFi
 
@@ -470,9 +520,9 @@ Set WiFi
 
 params:
 
-* on
+* on (*required*)
 
-## ShowResultAction
+### ShowResultAction
 
 Show result: shows a result
 
@@ -481,16 +531,51 @@ Show result: shows a result
 
 params:
 
-* text
+* text (*required*, *variables support*)
 
-## CameraAction
+### MenuStartAction
+
+
+    Start menu
+
+    To build a menu, you have to write at least three actions:
+        * Start menu
+        * Menu item
+        * End menu
+
+    So the menu with two items will look like:
+
+        ```
+        Start menu
+
+        Menu item title=1
+            ... some actions...
+
+        Menu item title=2
+            ...other actions...
+
+        End menu
+        ```
+
+    As in other actions which have `group_id` field, you don't need to specify it, it will be generated automatically.
+    
+
+**keyword**: `start_menu`
+**shortcuts identifier**: `is.workflow.actions.choosefrommenu`
+
+params:
+
+* group_id ()
+* menu_items (*required*)
+
+### CameraAction
 
 Take photo
 
 **keyword**: `take_photo`
 **shortcuts identifier**: `is.workflow.actions.takephoto`
 
-## TextAction
+### TextAction
 
 Text: returns text as an output
 
@@ -499,9 +584,9 @@ Text: returns text as an output
 
 params:
 
-* text
+* text (*required*, *variables support*)
 
-## URLAction
+### URLAction
 
 URL: returns url as an output
 
@@ -510,23 +595,23 @@ URL: returns url as an output
 
 params:
 
-* url
+* url (*required*)
 
-## VibrateAction
+### VibrateAction
 
 Vibrate
 
 **keyword**: `vibrate`
 **shortcuts identifier**: `is.workflow.actions.vibrate`
 
-## ViewContentGraphAction
+### ViewContentGraphAction
 
 View content graph
 
 **keyword**: `view_content_graph`
 **shortcuts identifier**: `is.workflow.actions.viewresult`
 
-## WaitToReturnAction
+### WaitToReturnAction
 
 Wait to return
 

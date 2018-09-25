@@ -23,7 +23,8 @@ class TestActions:
             imported_module = importlib.import_module(f'shortcuts.actions.{module_name}')
             module_actions = self._get_actions_from_module(imported_module)
 
-            assert module_actions - lib_actions == set()
+            msg = 'Seems like you have actions which are not imported in `shortcuts.actions.__init__.py`'
+            assert module_actions - lib_actions == set(), msg
 
     def _get_actions_from_module(self, module):
         """Returns subclasses of the BaseAction from module"""

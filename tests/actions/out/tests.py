@@ -19,7 +19,6 @@ class TestShowResultAction:
                 },
                 'WFSerializationType': 'WFTextTokenString',
             },
-            'WFSerializationType': 'WFTextTokenString',
         }
         assert dump == exp_dump
 

@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [unreleased]
+
+- New actions:
+  - SendMessageAction
+  - MenuStartAction
+  - MenuItemAction
+  - MenuEndAction
+- New examples in the `/examples/` directory:
+  - `send_photo.toml`: how to use `menu`, send photo with `send message` action and how to use `{{ask_when_run}}`
+- Updated documentation about supported actions `/docs/actions.md`
+- Supported `{{ask_when_run}}` variable (as a single value for a field for now)
+
 ## [0.6.0] - 24.09.2018
 
 - New actions:

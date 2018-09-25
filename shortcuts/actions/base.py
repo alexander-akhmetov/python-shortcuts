@@ -34,15 +34,14 @@ class BaseAction:
             try:
                 data_value = self.data[field._attr]
             except KeyError:
-                if field.required:
+                if field.default is not None:
+                    data_value = field.default
+                elif field.required:
                     raise ValueError(f'{self}, Field is required: {field._attr}:{field.name}')
                 else:
                     continue
 
             params[field.name] = field.process_value(data_value)
-
-            if isinstance(field, VariablesField):
-                params['WFSerializationType'] = 'WFTextTokenString'
 
         return params
 
@@ -62,11 +61,12 @@ class BaseAction:
 class Field:
     _attr: Union[None, str] = None
 
-    def __init__(self, name, required=True, capitalize=False, help=''):
+    def __init__(self, name, default=None, required=True, capitalize=False, help=''):
         self.name = name
         self.required = required
         self.capitalize = capitalize
         self.help = help
+        self.default = default
 
     def process_value(self, value):
         if self.capitalize:
@@ -91,6 +91,14 @@ class ChoiceField(Field):
         if value not in self.choices:
             raise ValueError(f'Value "{value}" not in the choices list: {self.choices}')
         return value
+
+
+class ArrayField(Field):
+    def process_value(self, value):
+        if not isinstance(value, (list, tuple)):
+            raise ValueError(f'{self._attr}:{self.__class__}: Value must be a list')
+
+        return super().process_value(value)
 
 
 class FloatField(Field):
@@ -132,10 +140,23 @@ class VariablesField(Field):
     _regexp = re.compile(r'({{[A-Za-z0-9_-]+}})')
 
     def process_value(self, value: str) -> Dict:
+        token = self._check_token_match(value)
+        if token:
+            return token
+
         return {
             'Value': self._get_variables_dict(value),
             'WFSerializationType': 'WFTextTokenString',
         }
+
+    def _check_token_match(self, value):
+        # todo: move to a separate field
+        if value == '{{ask_when_run}}':
+            value = {
+                'WFSerializationType': 'WFTextTokenAttachment',
+                'Value': {'Type': 'Ask'},
+            }
+            return value
 
     def _get_variables_dict(self, value: str) -> Dict:
         attachments_by_range, string = self._get_variables_from_text(value)

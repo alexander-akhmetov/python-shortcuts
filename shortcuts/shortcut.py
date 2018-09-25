@@ -3,6 +3,7 @@ import plistlib
 import uuid
 from typing import Any, Dict, List, TextIO, Type
 
+from shortcuts.actions import MenuEndAction, MenuItemAction, MenuStartAction
 from shortcuts.actions.base import GroupIDField
 from shortcuts.dump import BaseDumper, PListDumper, TomlDumper
 from shortcuts.loader import BaseLoader, PListLoader, TomlLoader
@@ -37,6 +38,7 @@ class Shortcut:
         """Based on file_format returns loader class"""
         supported_formats = {
             'plist': PListLoader,
+            'shortcut': PListLoader,
             'toml': TomlLoader,
         }
         if file_format in supported_formats:
@@ -55,6 +57,7 @@ class Shortcut:
         """Based on file_format returns dumper class"""
         supported_formats = {
             'plist': PListDumper,
+            'shortcut': PListDumper,
             'toml': TomlDumper,
         }
         if file_format in supported_formats:
@@ -66,6 +69,7 @@ class Shortcut:
     def _get_actions(self) -> List[str]:
         """returns list of all actions"""
         self._set_group_ids()
+        self._set_menu_items()
         return [a.dump() for a in self.actions]
 
     def _set_group_ids(self):
@@ -80,24 +84,41 @@ class Shortcut:
         ids = []
         for action in self.actions:
             # if action has GroupIDField, we may need to generate it's value automatically
-            if isinstance(getattr(action, 'group_id', None), GroupIDField):
-                control_mode = action.default_fields['WFControlFlowMode']
-                if control_mode == 0:
-                    # 0 means beginning of the group
-                    group_id = action.data.get('group_id', str(uuid.uuid4()))
-                    action.data['group_id'] = group_id  # if wasn't defined
-                    ids.append(group_id)
-                elif control_mode == 1:
-                    # 1 - else, so we don't need to remove group_id from the stack
-                    # we need to just use the latest one
-                    action.data['group_id'] = ids[-1]
-                elif control_mode == 2:
-                    # end of the group, we must remove group_id
-                    if len(ids) < 0:
-                        # if actions are correct, all groups must be compelted
-                        # (group complete if it has start and end actions)
-                        raise RuntimeError('Incomplete cycle')
+            if not isinstance(getattr(action, 'group_id', None), GroupIDField):
+                continue
+
+            control_mode = action.default_fields['WFControlFlowMode']
+            if control_mode == 0:
+                # 0 means beginning of the group
+                group_id = action.data.get('group_id', str(uuid.uuid4()))
+                action.data['group_id'] = group_id  # if wasn't defined
+                ids.append(group_id)
+            elif control_mode == 1:
+                # 1 - else, so we don't need to remove group_id from the stack
+                # we need to just use the latest one
+                action.data['group_id'] = ids[-1]
+            elif control_mode == 2:
+                # end of the group, we must remove group_id
+                try:
                     action.data['group_id'] = ids.pop()
+                except IndexError:
+                    # if actions are correct, all groups must be compelted
+                    # (group complete if it has start and end actions)
+                    raise RuntimeError('Incomplete cycle')
+
+    def _set_menu_items(self):
+        menus = []
+        for action in self.actions:
+            if isinstance(action, MenuStartAction):
+                action.data['menu_items'] = []
+                menus.append(action)
+            elif isinstance(action, MenuItemAction):
+                menus[-1].data['menu_items'].append(action.data['title'])
+            elif isinstance(action, MenuEndAction):
+                try:
+                    menus.pop()
+                except IndexError:
+                    raise RuntimeError('Incomplete menu action')
 
     def _get_import_questions(self) -> List:
         # todo: change me
