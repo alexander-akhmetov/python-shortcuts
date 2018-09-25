@@ -1,7 +1,7 @@
 import logging
 import plistlib
 import uuid
-from typing import Any, Dict, List, TextIO, Type
+from typing import Any, BinaryIO, Dict, List, Type
 
 from shortcuts.actions import MenuEndAction, MenuItemAction, MenuStartAction
 from shortcuts.actions.base import GroupIDField
@@ -26,7 +26,7 @@ class Shortcut:
         self.actions = actions if actions else []
 
     @classmethod
-    def load(cls, file_object: TextIO, file_format: str = 'toml') -> 'Shortcut':
+    def load(cls, file_object: BinaryIO, file_format: str = 'toml') -> 'Shortcut':
         return cls._get_loader_class(file_format).load(file_object)
 
     @classmethod
@@ -47,7 +47,7 @@ class Shortcut:
 
         raise RuntimeError(f'Unknown file_format: {file_format}')
 
-    def dump(self, file_object: TextIO, file_format: str = 'plist') -> None:
+    def dump(self, file_object: BinaryIO, file_format: str = 'plist') -> None:
         self._get_dumper_class(file_format)(shortcut=self).dump(file_object)
 
     def dumps(self, file_format: str = 'plist') -> str:

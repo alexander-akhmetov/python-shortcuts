@@ -2,19 +2,28 @@ import argparse
 import os.path
 
 import shortcuts
+from shortcuts.utils import download_shortcut
 
 
 def convert_shortcut(input_filepath, out_filepath):
     input_format = _get_format(input_filepath)
     out_format = _get_format(out_filepath)
 
-    with open(input_filepath, 'rb') as f:
-        sc = shortcuts.Shortcut.load(f, file_format=input_format)
+    if input_format == 'url':
+        sc_data = download_shortcut(input_filepath)
+        sc = shortcuts.Shortcut.loads(sc_data, file_format='plist')
+    else:
+        with open(input_filepath, 'rb') as f:
+            sc = shortcuts.Shortcut.load(f, file_format=input_format)
+
     with open(out_filepath, 'wb') as f:
         sc.dump(f, file_format=out_format)
 
 
 def _get_format(filepath):
+    if filepath.startswith('https://www.icloud.com/shortcuts/'):
+        return 'url'
+
     _, ext = os.path.splitext(filepath)
     ext = ext.strip('.')
     if ext in ('shortcut', 'plist'):

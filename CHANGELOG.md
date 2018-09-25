@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New action: SpeakTextAction
 - Added `default=True` to field `SetLowPowerModeAction.on`.
 - Removed `plutil` requirement
+- Added ability to download shortcuts with `shortcuts` cli directly from iCloud
 
 ## [0.7.0] - 25.09.2018
 
