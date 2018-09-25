@@ -14,16 +14,19 @@ class BaseDumper:
         self.shortcut = shortcut
 
     def dump(self, file_obj: BinaryIO) -> None:
-        file_obj.write(self.dumps())
+        data = self.dumps()
+        if type(data) is str:
+            data = data.encode('utf-8')  # type: ignore
+        file_obj.write(data)  # type: ignore
 
     def dumps(self) -> str:
         raise NotImplementedError()
 
 
 class PListDumper(BaseDumper):
-    def dump(self, file_obj: BinaryIO) -> None:
+    def dump(self, file_obj: BinaryIO) -> None:  # type: ignore
         binary = plistlib.dumps(  # todo: change dumps to binary and remove this
-            plistlib.loads(self.dumps().encode('utf-8')),
+            plistlib.loads(self.dumps().encode('utf-8')),  # type: ignore
             fmt=plistlib.FMT_BINARY,
         )
         file_obj.write(binary)

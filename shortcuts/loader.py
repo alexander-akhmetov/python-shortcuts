@@ -1,7 +1,7 @@
 import collections
 import copy
 import plistlib
-from typing import TYPE_CHECKING, Any, Dict, List, TextIO, Tuple, Type, Union
+from typing import TYPE_CHECKING, Any, BinaryIO, Dict, List, Tuple, Type, Union
 
 import toml
 
@@ -15,11 +15,9 @@ if TYPE_CHECKING:
 
 class BaseLoader:
     @classmethod
-    def load(cls, file_obj: TextIO) -> 'Shortcut':
+    def load(cls, file_obj: BinaryIO) -> 'Shortcut':
         content = file_obj.read()
-        if isinstance(content, (bytes, bytearray)):
-            content = content.decode('utf-8')
-        return cls.loads(content)
+        return cls.loads(content)  # type: ignore
 
     @classmethod
     def loads(cls, string: str) -> 'Shortcut':
@@ -30,6 +28,9 @@ class TomlLoader(BaseLoader):
     @classmethod
     def loads(cls, string: str) -> 'Shortcut':
         from shortcuts import Shortcut  # noqa
+
+        if isinstance(string, (bytearray, bytes)):
+            string = string.decode('utf-8')
 
         shortcut_dict = toml.loads(string)
         shortcut = Shortcut(name=shortcut_dict.get('name', 'python-shortcuts'))
