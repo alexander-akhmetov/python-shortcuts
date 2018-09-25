@@ -55,11 +55,6 @@ sc.actions = [
 
 ## How to use
 
-### Requirements
-
-This library requires `plutil` tool, which should be installed on MacOS by default.
-On Linux, you should be able to use `plistutil` instead.
-
 ### Installation
 
 ```bash

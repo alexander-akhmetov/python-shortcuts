@@ -1,5 +1,5 @@
 import plistlib
-from typing import TYPE_CHECKING, Any, Dict, TextIO, Type
+from typing import TYPE_CHECKING, Any, BinaryIO, Dict, Type
 
 import toml
 
@@ -13,7 +13,7 @@ class BaseDumper:
     def __init__(self, shortcut: 'Shortcut') -> None:
         self.shortcut = shortcut
 
-    def dump(self, file_obj: TextIO) -> None:
+    def dump(self, file_obj: BinaryIO) -> None:
         file_obj.write(self.dumps())
 
     def dumps(self) -> str:
@@ -21,6 +21,13 @@ class BaseDumper:
 
 
 class PListDumper(BaseDumper):
+    def dump(self, file_obj: BinaryIO) -> None:
+        binary = plistlib.dumps(  # todo: change dumps to binary and remove this
+            plistlib.loads(self.dumps().encode('utf-8')),
+            fmt=plistlib.FMT_BINARY,
+        )
+        file_obj.write(binary)
+
     def dumps(self) -> str:
         data = {
             'WFWorkflowActions': self.shortcut._get_actions(),
