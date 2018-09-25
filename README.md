@@ -74,6 +74,7 @@ If you need to convert existing shortcut to a toml file, at first you need to ex
 Go into Shortcuts app, open the shortcut and share it. Choose "Share as file" and use this file with this library.
 
 Convert shortcut file to `toml`:
+
 ```bash
 shortcuts what_is_your_name.shortcut what_is_your_name.toml
 ```

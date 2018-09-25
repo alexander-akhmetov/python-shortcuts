@@ -23,7 +23,7 @@ Show alert
 
 params:
 
-* show_cancel_button (*required*)
+* show_cancel_button (*required*, default=True)
 * text (*required*)
 * title (*required*)
 
@@ -463,7 +463,7 @@ Set Low Power mode
 
 params:
 
-* on (*required*)
+* on (*required*, default=True)
 
 ### SetMobileDataAction
 
@@ -536,6 +536,40 @@ Show result: shows a result
 params:
 
 * text (*required*, *variables support*)
+
+### SpeakTextAction
+
+Speak text
+
+**keyword**: `speak_text`
+**shortcuts identifier**: `is.workflow.actions.speaktext`
+
+params:
+
+* language (*required*)  | _choices_:
+
+  * "Čeština (Česko)"
+
+  * "Dansk (Danmark)"
+
+  * "Deutsch (Deutschland)"
+
+  * "English (Australia)"
+
+  * "English (Ireland)"
+
+  * "English (South Africa)"
+
+  * "English (United Kingdom)"
+
+  * "English (United States)"
+
+  * "Español (España)"
+
+  * "Español (México)"
+* pitch (*required*, default=0.95)
+* rate (*required*, default=0.44)
+* wait_until_finished (*required*, default=True)
 
 ### MenuStartAction
 

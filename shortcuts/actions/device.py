@@ -92,7 +92,7 @@ class SetLowPowerModeAction(BaseAction):
     itype = 'is.workflow.actions.lowpowermode.set'
     keyword = 'set_low_power_mode'
 
-    on = BooleanField('OnValue')
+    on = BooleanField('OnValue', default=True)
 
 
 class SetVolumeAction(BaseAction):

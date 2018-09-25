@@ -25,7 +25,7 @@ from shortcuts.actions.files import CreateFolderAction, PreviewDocumentAction, R
 from shortcuts.actions.input import AskAction
 from shortcuts.actions.menu import MenuEndAction, MenuItemAction, MenuStartAction
 from shortcuts.actions.messages import SendMessageAction
-from shortcuts.actions.out import ExitAction, ShowAlertAction, ShowResultAction, VibrateAction
+from shortcuts.actions.out import ExitAction, ShowAlertAction, ShowResultAction, SpeakTextAction, VibrateAction
 from shortcuts.actions.photo import CameraAction, GetLastPhotoAction, ImageConvertAction, SelectPhotoAction
 from shortcuts.actions.scripting import (
     ContinueInShortcutAppAction,

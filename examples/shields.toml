@@ -1,0 +1,26 @@
+# Slightly modified nice shortcut from
+# https://www.reddit.com/r/shortcuts/comments/9it4uf/i_couldnt_help_but_do_this_the_inner_nerd_in_me/
+# :-)
+
+[[action]]
+type = "get_battery_level"
+
+[[action]]
+name = "battery"
+type = "set_variable"
+
+[[action]]
+text = "Shields are at {{battery}}￼% and falling, Shall I engage the Warp Drive?"
+type = "text"
+
+[[action]]
+language = "English (United States)"
+type = "speak_text"
+
+[[action]]
+text = "Shall I engage the Warp Drive?"
+title = "Shields status"
+type = "alert"
+
+[[action]]
+type = "set_low_power_mode"

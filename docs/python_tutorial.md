@@ -2,6 +2,8 @@
 
 You need to [install](/README.md#installation) **shortcuts** first.
 
+---
+
 How to use this package from your python code:
 
 ```python
