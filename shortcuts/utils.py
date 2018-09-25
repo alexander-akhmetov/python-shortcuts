@@ -17,7 +17,7 @@ def _get_shortcut_uuid(url):
     '''
     Public url: https://www.icloud.com/shortcuts/{uuid}/
     '''
-    if not url.startswith('https://www.icloud.com/shortcuts/'):
+    if not is_shortcut_url(url):
         raise ValueError('Not a shortcut URL!')
 
     parsed_url = urlparse(url)
@@ -29,6 +29,16 @@ def _get_shortcut_uuid(url):
         except ValueError:
             raise ValueError(f'Can not find shortcut id in "{url}"')
         return shortcut_id
+
+
+def is_shortcut_url(url):
+    parsed_url = urlparse(url)
+    if parsed_url.netloc not in ('www.icloud.com', 'icloud.com'):
+        return False
+    if not parsed_url.path.startswith('/shortcuts/'):
+        return False
+
+    return True
 
 
 def _get_shortcut_info(shortcut_id):
