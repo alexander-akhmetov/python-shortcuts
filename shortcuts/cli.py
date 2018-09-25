@@ -2,23 +2,16 @@ import argparse
 import os.path
 
 import shortcuts
-from shortcuts.utils import convert_plist_to_binary, convert_plist_to_xml
 
 
 def convert_shortcut(input_filepath, out_filepath):
     input_format = _get_format(input_filepath)
     out_format = _get_format(out_filepath)
 
-    if input_format == 'plist':
-        convert_plist_to_xml(input_filepath)
-
     with open(input_filepath, 'rb') as f:
         sc = shortcuts.Shortcut.load(f, file_format=input_format)
-    with open(out_filepath, 'w') as f:
+    with open(out_filepath, 'wb') as f:
         sc.dump(f, file_format=out_format)
-
-    if out_format == 'plist':
-        convert_plist_to_binary(out_filepath)
 
 
 def _get_format(filepath):
@@ -34,7 +27,7 @@ def _get_format(filepath):
 
 def main():
     parser = argparse.ArgumentParser(description='Shortcuts: Siri shortcuts creator')
-    parser.add_argument('file', nargs='?', help='Input file: *.(toml|shortcut)')
+    parser.add_argument('file', nargs='?', help='Input file: *.(toml|shortcut|itunes url)')
     parser.add_argument('output', nargs='?', help='Output file: *.(toml|shortcut)')
     parser.add_argument('--version', action='store_true', help='Version information')
 

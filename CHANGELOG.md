@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New example: [shields.toml](/examples/shields.toml)
 - New action: SpeakTextAction
 - Added `default=True` to field `SetLowPowerModeAction.on`.
+- Removed `plutil` requirement
 
 ## [0.7.0] - 25.09.2018
 
