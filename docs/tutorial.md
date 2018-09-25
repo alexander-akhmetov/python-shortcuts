@@ -6,6 +6,8 @@ A shortcut is a sequence of actions. Every action can receive some input and can
 
 Let's write a simple shortcut, which asks the name of our user and then prints it back in an alert.
 
+You need to [install](/README.md#installation) **shortcuts** first.
+
 At first, we need to ask our user:
 
 ```toml
@@ -58,3 +60,5 @@ name = "name"
 type = "show_result"
 text = "Hello, {{name}}!"
 ```
+
+Description of all supported actions you can find here: [/docs/actions.md](/docs/actions.md).

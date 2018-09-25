@@ -1,4 +1,6 @@
-# Interface
+# Python tutorial
+
+You need to [install](/README.md#installation) **shortcuts** first.
 
 How to use this package from your python code:
 
@@ -27,3 +29,5 @@ convert_plist_to_binary(file_path)
 ```
 
 Now you can upload `s.shortcut` to your phone and open it with Shortcuts app.
+
+Description of all supported actions you can find here: [/docs/actions.md](/docs/actions.md).
