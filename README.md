@@ -86,6 +86,17 @@ shortcuts examples/what_is_your_name.toml what_is_your_name.shortcut
 More examples of `toml` files you can find [here](examples/).
 And [read the tutorial](docs/tutorial.md)! :)
 
+### URL → [toml|shortcut]
+
+Also, you can download shortcut directly from iCloud.
+If somebody shared shortcut link with you, just run:
+
+```bash
+shortcuts https://www.icloud.com/shortcuts/... my_shortcut.toml  # or my_shortcut.shortcut
+```
+
+And it will download this shortcut and save it in `toml` or `shortcut` format.
+
 ## Development
 
 ### Tests
