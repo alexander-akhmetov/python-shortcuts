@@ -78,6 +78,8 @@ def _get_field_properties(field):
     properties = []
     if field.required:
         properties.append('*required*')
+    if field.default:
+        properties.append(f'default={field.default}')
     if type(field) is VariablesField:  # without inheritance for now
         properties.append('*variables support*')
     return properties

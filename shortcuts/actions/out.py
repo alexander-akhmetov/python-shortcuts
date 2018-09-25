@@ -1,4 +1,4 @@
-from shortcuts.actions.base import BaseAction, BooleanField, Field, VariablesField
+from shortcuts.actions.base import BaseAction, BooleanField, ChoiceField, Field, FloatField, VariablesField
 
 
 class ShowResultAction(BaseAction):
@@ -29,3 +29,28 @@ class VibrateAction(BaseAction):
     '''Vibrate'''
     itype = 'is.workflow.actions.vibrate'
     keyword = 'vibrate'
+
+
+SPEAK_LANGUAGE_CHOICES = (
+    'Čeština (Česko)',
+    'Dansk (Danmark)',
+    'Deutsch (Deutschland)',
+    'English (Australia)',
+    'English (Ireland)',
+    'English (South Africa)',
+    'English (United Kingdom)',
+    'English (United States)',
+    'Español (España)',
+    'Español (México)',
+)
+
+
+class SpeakTextAction(BaseAction):
+    '''Speak text'''
+    itype = 'is.workflow.actions.speaktext'
+    keyword = 'speak_text'
+
+    language = ChoiceField('WFSpeakTextLanguage', choices=SPEAK_LANGUAGE_CHOICES)
+    pitch = FloatField('WFSpeakTextPitch', default=0.95)
+    rate = FloatField('WFSpeakTextRate', default=0.44)
+    wait_until_finished = BooleanField('WFSpeakTextWait', default=True)
