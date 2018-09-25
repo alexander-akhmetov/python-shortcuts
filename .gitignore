@@ -4,3 +4,8 @@
 build
 dist
 MANIFEST
+*.plist
+*.shortcut
+*.toml
+!examples/*.toml
+!examples/*.shortcut
