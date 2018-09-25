@@ -261,16 +261,23 @@ class WFVariableStringField(WFDeserializer):
 
         positions = {}
 
+        supported_types = ('Ask', 'Variable')
+
         for variable_range, variable_data in value['attachmentsByRange'].items():
-            if variable_data['Type'] != 'Variable':
+            if variable_data['Type'] not in supported_types:
                 # it doesn't support magic variables yet
                 raise RuntimeError(
                     f'Unsupported variable type: {variable_data["Type"]} (possibly it is a magic variable)',
                 )
 
+            if variable_data['Type'] == 'Variable':
+                variable_name = variable_data['VariableName']
+            elif variable_data['Type'] == 'Ask':
+                variable_name = 'ask_when_run'
+
             # let's find positions of all variables in the string
             position = self._get_position(variable_range)
-            positions[position] = '{{%s}}' % variable_data['VariableName']
+            positions[position] = '{{%s}}' % variable_name
 
         # and then replace them with '{{variable_name}}'
         offset = 0

@@ -19,6 +19,10 @@ Legend:
 * *keyword*: This keyword you can use in `toml` files to describe action
 * *shortcuts identifier*: (*itype*) this identifier will be used to generate an action in a shortcut
 
+System variables:
+
+* `{{{{ask_when_run}}}}` - ask the user for an input when the shortcut is running.
+
 ----
 
 {actions}

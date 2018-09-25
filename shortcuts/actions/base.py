@@ -138,6 +138,9 @@ class WFVariableField(Field):
 
 class VariablesField(Field):
     _regexp = re.compile(r'({{[A-Za-z0-9_-]+}})')
+    _system_variables = {
+        'ask_when_run': 'Ask',
+    }
 
     def process_value(self, value: str) -> Dict:
         token = self._check_token_match(value)
@@ -150,13 +153,13 @@ class VariablesField(Field):
         }
 
     def _check_token_match(self, value):
-        # todo: move to a separate field
-        if value == '{{ask_when_run}}':
-            value = {
+        variable = value.strip('{}')
+        type = self._system_variables.get(variable)
+        if type:
+            return {
                 'WFSerializationType': 'WFTextTokenAttachment',
-                'Value': {'Type': 'Ask'},
+                'Value': {'Type': type},
             }
-            return value
 
     def _get_variables_dict(self, value: str) -> Dict:
         attachments_by_range, string = self._get_variables_from_text(value)
@@ -169,11 +172,15 @@ class VariablesField(Field):
         attachments_by_range = {}
         offset = 0
         for m in self._regexp.finditer(value):
-            attachments_by_range[f'{{{m.start() - offset}, {1}}}'] = {
-                'Type': 'Variable',
-                'VariableName': m.group().strip('{}'),
+            variable_name = m.group().strip('{}')
+            type = self._system_variables.get(variable_name, 'Variable')
+            variable_range = f'{{{m.start() - offset}, {1}}}'
+            attachments_by_range[variable_range] = {
+                'Type': type,
             }
-            offset += len(m.group()) - 1
+            if type == 'Variable':
+                attachments_by_range[variable_range]['VariableName'] = variable_name
+            offset += len(m.group())
 
         # replacing all variables with char 65523 (OBJECT REPLACEMENT CHARACTER)
         string = self._regexp.sub('￼', value)

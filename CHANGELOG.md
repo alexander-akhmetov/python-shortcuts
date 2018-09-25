@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New examples in the `/examples/` directory:
   - `send_photo.toml`: how to use `menu`, send photo with `send message` action and how to use `{{ask_when_run}}`
 - Updated documentation about supported actions `/docs/actions.md`
-- Supported `{{ask_when_run}}` variable (as a single value for a field for now)
+- Supported `{{ask_when_run}}` system variable (read more about this in `/docs/actions.md`)
 
 ## [0.6.0] - 24.09.2018
 

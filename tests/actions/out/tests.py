@@ -13,7 +13,7 @@ class TestShowResultAction:
                 'Value': {
                     'attachmentsByRange': {
                         '{0, 1}': {'Type': 'Variable', 'VariableName': 'v1'},
-                        '{3, 1}': {'Type': 'Variable', 'VariableName': 'v2'},
+                        '{2, 1}': {'Type': 'Variable', 'VariableName': 'v2'},
                     },
                     'string': '￼##￼',
                 },
