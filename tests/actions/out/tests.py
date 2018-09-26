@@ -1,4 +1,4 @@
-from shortcuts.actions import ShowResultAction, ShowAlertAction, SetClipboardAction
+from shortcuts.actions import ShowResultAction, ShowAlertAction, SetClipboardAction, NotificationAction
 
 from tests.conftest import ActionTomlLoadsMixin
 
@@ -38,14 +38,19 @@ class TestShowAlertAction:
 
         exp_dump = {
             'WFAlertActionCancelButtonShown': show_cancel_button,
-            'WFAlertActionMessage': text,
-            'WFAlertActionTitle': title,
+            'WFAlertActionMessage': {
+                'Value': {'attachmentsByRange': {}, 'string': text},
+                'WFSerializationType': 'WFTextTokenString',
+            },
+            'WFAlertActionTitle': {
+                'Value': {'attachmentsByRange': {}, 'string': title},
+                'WFSerializationType': 'WFTextTokenString',
+            },
         }
         assert dump == exp_dump
 
 
 class TestSetClipboardAction(ActionTomlLoadsMixin):
-
     def test_dumps(self):
         action = SetClipboardAction()
         exp_dump = {
@@ -85,4 +90,46 @@ class TestSetClipboardAction(ActionTomlLoadsMixin):
             toml,
             SetClipboardAction,
             {'local_only': False, 'expiration_date': 'tomorrow'},
+        )
+
+
+class TestNotificationAction(ActionTomlLoadsMixin):
+    def test_dumps(self):
+        text = 't'
+        title = 'tt'
+        play_sound = True
+        action = NotificationAction(data={
+            'text': text,
+            'title': title,
+            'play_sound': play_sound,
+        })
+        exp_dump = {
+            'WFWorkflowActionIdentifier': 'is.workflow.actions.notification',
+            'WFWorkflowActionParameters': {
+                'WFNotificationActionSound': play_sound,
+                'WFNotificationActionBody': {
+                    'Value': {'attachmentsByRange': {}, 'string': text},
+                    'WFSerializationType': 'WFTextTokenString',
+                },
+                'WFAlertActionTitle': {
+                    'Value': {'attachmentsByRange': {}, 'string': title},
+                    'WFSerializationType': 'WFTextTokenString',
+                },
+            },
+        }
+
+        assert action.dump() == exp_dump
+
+    def test_loads_toml(self):
+        toml = '''
+        [[action]]
+        type = "notification"
+        title = "title"
+        text = "text"
+        play_sound = true
+        '''
+        self._assert_toml_loads(
+            toml,
+            NotificationAction,
+            {'play_sound': True, 'text': 'text', 'title': 'title'},
         )

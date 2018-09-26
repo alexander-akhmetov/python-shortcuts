@@ -45,3 +45,23 @@ class GetURLAction(BaseAction):
 
         if data and data.get('headers'):
             self.default_fields['ShowHeaders'] = True
+
+
+class URLEncodeAction(BaseAction):
+    '''URL Encode'''
+    itype = 'is.workflow.actions.urlencode'
+    keyword = 'urlencode'
+
+    default_fields = {
+        'WFEncodeMode': 'Encode',
+    }
+
+
+class URLDecodeAction(BaseAction):
+    '''URL Dencode'''
+    itype = 'is.workflow.actions.urlencode'
+    keyword = 'urldecode'
+
+    default_fields = {
+        'WFEncodeMode': 'Decode',
+    }

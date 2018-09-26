@@ -28,6 +28,7 @@ from shortcuts.actions.messages import SendMessageAction
 from shortcuts.actions.numbers import NumberAction
 from shortcuts.actions.out import (
     ExitAction,
+    NotificationAction,
     SetClipboardAction,
     ShowAlertAction,
     ShowResultAction,
@@ -49,8 +50,8 @@ from shortcuts.actions.scripting import (
     WaitToReturnAction,
 )
 from shortcuts.actions.text import ChangeCaseAction, CommentAction, SplitTextAction, TextAction
-from shortcuts.actions.variables import GetVariableAction, SetVariableAction
-from shortcuts.actions.web import GetURLAction, URLAction
+from shortcuts.actions.variables import AppendVariableAction, GetVariableAction, SetVariableAction
+from shortcuts.actions.web import GetURLAction, URLAction, URLDecodeAction, URLEncodeAction
 
 
 # flake8: noqa

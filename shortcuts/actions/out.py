@@ -15,8 +15,18 @@ class ShowAlertAction(BaseAction):
     keyword = 'alert'
 
     show_cancel_button = BooleanField('WFAlertActionCancelButtonShown', default=True)
-    text = Field('WFAlertActionMessage')
-    title = Field('WFAlertActionTitle')
+    text = VariablesField('WFAlertActionMessage')
+    title = VariablesField('WFAlertActionTitle')
+
+
+class NotificationAction(BaseAction):
+    '''Show notification'''
+    itype = 'is.workflow.actions.notification'
+    keyword = 'notification'
+
+    play_sound = BooleanField('WFNotificationActionSound', default=True)
+    text = VariablesField('WFNotificationActionBody')
+    title = VariablesField('WFAlertActionTitle')
 
 
 class ExitAction(BaseAction):

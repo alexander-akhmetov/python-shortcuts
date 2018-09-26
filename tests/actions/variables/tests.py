@@ -1,5 +1,7 @@
 from shortcuts import Shortcut, FMT_SHORTCUT
-from shortcuts.actions import SetVariableAction, GetVariableAction
+from shortcuts.actions import SetVariableAction, GetVariableAction, AppendVariableAction
+
+from tests.conftest import ActionTomlLoadsMixin
 
 
 class TestSetVariable:
@@ -56,3 +58,25 @@ class TestGetVariableAction:
             'name': 'var',
         }
         assert action.data == exp_data
+
+
+class TestAppendVariableAction(ActionTomlLoadsMixin):
+    def test_dumps(self):
+        name = 'var'
+        action = AppendVariableAction(data={'name': name})
+        exp_dump = {
+            'WFWorkflowActionIdentifier': 'is.workflow.actions.appendvariable',
+            'WFWorkflowActionParameters': {
+                'WFVariableName': name,
+            }
+        }
+        assert action.dump() == exp_dump
+
+    def test_loads_toml(self):
+        name = 'var1'
+        toml = f'''
+        [[action]]
+        type = "append_variable"
+        name = "{name}"
+        '''
+        self._assert_toml_loads(toml, AppendVariableAction, {'name': name})

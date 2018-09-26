@@ -15,3 +15,11 @@ class GetVariableAction(BaseAction):
     keyword = 'get_variable'
 
     name = WFVariableField('WFVariable')
+
+
+class AppendVariableAction(BaseAction):
+    '''Append input to varaible'''
+    itype = 'is.workflow.actions.appendvariable'
+    keyword = 'append_variable'
+
+    name = Field('WFVariableName')
