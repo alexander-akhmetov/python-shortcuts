@@ -1,12 +1,14 @@
 import re
 from copy import deepcopy
-from typing import Any, Dict, List, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 
 class BaseAction:
     itype: Union[str, None] = None  # identificator from shortcut source (being used by iOS app): WFWorkflowActionIdentifier
     keyword: Union[str, None] = None  # this keyword is being used in the toml file
     default_fields: Dict = {}  # noqa dictionary with default parameters fields
+    _additional_identifier_field: Union[str, None] = None
+    _default_class: Optional[bool] = None
 
     def __init__(self, data: Union[Dict, None] = None) -> None:
         self.data = data if data is not None else {}

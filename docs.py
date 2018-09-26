@@ -1,6 +1,6 @@
 import argparse
 
-from shortcuts.actions import KEYWORD_TO_ACTION_MAP
+from shortcuts.actions import actions_registry
 from shortcuts.actions.base import VariablesField
 
 
@@ -31,8 +31,7 @@ System variables:
 
 def _build_docs():
     actions_docs = []
-    actions = sorted(KEYWORD_TO_ACTION_MAP.items())
-    actions_docs = [_build_action_doc(a) for _, a in actions]
+    actions_docs = [_build_action_doc(a) for a in actions_registry.actions]
     return DOC_TEMPLATE.format(actions='\n\n'.join(actions_docs))
 
 

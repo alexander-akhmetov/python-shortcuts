@@ -111,7 +111,7 @@ class TestNotificationAction(ActionTomlLoadsMixin):
                     'Value': {'attachmentsByRange': {}, 'string': text},
                     'WFSerializationType': 'WFTextTokenString',
                 },
-                'WFAlertActionTitle': {
+                'WFNotificationActionTitle': {
                     'Value': {'attachmentsByRange': {}, 'string': title},
                     'WFSerializationType': 'WFTextTokenString',
                 },

@@ -12,7 +12,9 @@ class IfAction(BaseAction):
     itype = 'is.workflow.actions.conditional'
     keyword = 'if'
 
-    condition = ChoiceField('WFCondition', choices=IF_CHOICES, capitalize=True)
+    _additional_identifier_field = 'WFControlFlowMode'
+
+    condition = ChoiceField('WFCondition', choices=IF_CHOICES, capitalize=True, default=IF_CHOICES[0])
     compare_with = Field('WFConditionalActionString')
     group_id = GroupIDField('GroupingIdentifier')
 
@@ -26,6 +28,8 @@ class ElseAction(BaseAction):
     itype = 'is.workflow.actions.conditional'
     keyword = 'else'
 
+    _additional_identifier_field = 'WFControlFlowMode'
+
     group_id = GroupIDField('GroupingIdentifier')
 
     default_fields = {
@@ -37,6 +41,8 @@ class EndIfAction(BaseAction):
     '''EndIf: end a condition'''
     itype = 'is.workflow.actions.conditional'
     keyword = 'endif'
+
+    _additional_identifier_field = 'WFControlFlowMode'
 
     group_id = GroupIDField('GroupingIdentifier')
 

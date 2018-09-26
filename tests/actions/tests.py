@@ -2,7 +2,6 @@ import os
 import importlib
 
 from shortcuts import actions
-from tests.conftest import ActionTomlLoadsMixin
 
 
 class TestActions:
@@ -34,41 +33,3 @@ class TestActions:
             if isinstance(cls, type) and issubclass(cls, actions.BaseAction) and cls.keyword:
                 module_actions.append(cls)
         return set(module_actions)
-
-
-class TestURLEncodeAction(ActionTomlLoadsMixin):
-    def test_dumps(self):
-        action = actions.URLEncodeAction()
-        exp_dump = {
-            'WFWorkflowActionIdentifier': 'is.workflow.actions.urlencode',
-            'WFWorkflowActionParameters': {
-                'WFEncodeMode': 'Encode',
-            }
-        }
-        assert action.dump() == exp_dump
-
-    def test_loads_toml(self):
-        toml = f'''
-        [[action]]
-        type = "urlencode"
-        '''
-        self._assert_toml_loads(toml, actions.URLEncodeAction, {})
-
-
-class TestURLDecodeAction(ActionTomlLoadsMixin):
-    def test_dumps(self):
-        action = actions.URLDecodeAction()
-        exp_dump = {
-            'WFWorkflowActionIdentifier': 'is.workflow.actions.urlencode',
-            'WFWorkflowActionParameters': {
-                'WFEncodeMode': 'Decode',
-            }
-        }
-        assert action.dump() == exp_dump
-
-    def test_loads_toml(self):
-        toml = f'''
-        [[action]]
-        type = "urldecode"
-        '''
-        self._assert_toml_loads(toml, actions.URLDecodeAction, {})

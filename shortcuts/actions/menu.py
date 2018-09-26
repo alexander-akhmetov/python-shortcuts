@@ -29,6 +29,8 @@ class MenuStartAction(BaseAction):
     itype = 'is.workflow.actions.choosefrommenu'
     keyword = 'start_menu'
 
+    _additional_identifier_field = 'WFControlFlowMode'
+
     group_id = GroupIDField('GroupingIdentifier')
 
     menu_items = ArrayField('WFMenuItems')
@@ -48,6 +50,8 @@ class MenuItemAction(BaseAction):
     itype = 'is.workflow.actions.choosefrommenu'
     keyword = 'menu_item'
 
+    _additional_identifier_field = 'WFControlFlowMode'
+
     group_id = GroupIDField('GroupingIdentifier')
     title = Field('WFMenuItemTitle')
 
@@ -60,6 +64,8 @@ class MenuEndAction(BaseAction):
     '''End menu'''
     itype = 'is.workflow.actions.choosefrommenu'
     keyword = 'end_menu'
+
+    _additional_identifier_field = 'WFControlFlowMode'
 
     group_id = GroupIDField('GroupingIdentifier')
 
