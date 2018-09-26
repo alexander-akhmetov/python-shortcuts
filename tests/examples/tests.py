@@ -1,24 +1,24 @@
 import mock
 
-from shortcuts import Shortcut
+from shortcuts import Shortcut, FMT_TOML, FMT_SHORTCUT
 
 
 class BaseShortcutTest:
     def test_loads(self):
         with open(self.filepath, 'rb') as f:
-            sc = Shortcut.load(f, file_format='toml')
+            sc = Shortcut.load(f, file_format=FMT_TOML)
 
         assert [a.itype for a in sc.actions] == self.exp_itypes
 
     def test_dumps_to_plist(self):
         with open(self.filepath, 'rb') as f:
-            sc = Shortcut.load(f, file_format='toml')
+            sc = Shortcut.load(f, file_format=FMT_TOML)
 
         mocked_uuid = mock.Mock()
         mocked_uuid.uuid4.return_value = 'some-id'
 
         with mock.patch('shortcuts.shortcut.uuid', mocked_uuid):
-            plist = sc.dumps(file_format='plist')
+            plist = sc.dumps(file_format=FMT_SHORTCUT)
 
         assert plist == self.exp_plist
 

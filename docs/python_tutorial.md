@@ -8,7 +8,7 @@ How to use this package from your python code:
 
 ```python
 
-from shortcuts import Shortcut, actions
+from shortcuts import Shortcut, actions, FMT_SHORTCUT
 
 sc = Shortcut()
 
@@ -22,7 +22,7 @@ sc.actions = [
 file_path = 's.shortcut'
 
 with open(file_path, 'wb') as f:
-    sc.dump(f, file_format='plist')
+    sc.dump(f, file_format=FMT_SHORTCUT)
 ```
 
 Now you can upload `s.shortcut` to your phone and open it with Shortcuts app.

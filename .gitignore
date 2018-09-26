@@ -9,3 +9,4 @@ MANIFEST
 *.toml
 !examples/*.toml
 !examples/*.shortcut
+.coverage

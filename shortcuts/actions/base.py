@@ -82,8 +82,8 @@ class GroupIDField(Field):
 
 
 class ChoiceField(Field):
-    def __init__(self, name, choices, required=True, capitalize=False, help=''):
-        super().__init__(name=name, required=required, capitalize=capitalize, help=help)
+    def __init__(self, name, choices, default=None, required=True, capitalize=False, help=''):
+        super().__init__(name=name, required=required, default=default, capitalize=capitalize, help=help)
         self.choices = choices
 
     def process_value(self, value):

@@ -9,6 +9,7 @@ mock = "*"
 mypy = "*"
 "flake8" = "*"
 isort = "*"
+pytest-cov = "*"
 
 [packages]
 toml = "*"

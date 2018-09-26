@@ -11,11 +11,11 @@ def convert_shortcut(input_filepath, out_filepath):
 
     if input_format == 'url':
         sc_data = download_shortcut(input_filepath)
-        if out_format == 'plist':
+        if out_format == shortcuts.FMT_SHORTCUT:
             with open(out_filepath, 'wb') as f:
                 f.write(sc_data)
             return
-        sc = shortcuts.Shortcut.loads(sc_data, file_format='plist')
+        sc = shortcuts.Shortcut.loads(sc_data, file_format=shortcuts.FMT_SHORTCUT)
     else:
         with open(input_filepath, 'rb') as f:
             sc = shortcuts.Shortcut.load(f, file_format=input_format)
@@ -31,10 +31,10 @@ def _get_format(filepath):
 
     _, ext = os.path.splitext(filepath)
     ext = ext.strip('.')
-    if ext in ('shortcut', 'plist'):
-        return 'plist'
+    if ext in (shortcuts.FMT_SHORTCUT, 'plist'):
+        return shortcuts.FMT_SHORTCUT
     elif ext == 'toml':
-        return 'toml'
+        return shortcuts.FMT_TOML
 
     raise RuntimeError(f'Unsupported file format: {filepath}: "{ext}"')
 
