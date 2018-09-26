@@ -24,8 +24,19 @@ Show alert
 params:
 
 * show_cancel_button (*required*, default=True)
-* text (*required*)
-* title (*required*)
+* text (*required*, *variables support*)
+* title (*required*, *variables support*)
+
+### AppendVariableAction
+
+Append input to varaible
+
+**keyword**: `append_variable`
+**shortcuts identifier**: `is.workflow.actions.appendvariable`
+
+params:
+
+* name (*required*)
 
 ### AskAction
 
@@ -304,7 +315,7 @@ Get dictionary value
 
 params:
 
-* key (*required*)
+* key (*required*, *variables support*)
 
 ### GetVariableAction
 
@@ -316,6 +327,25 @@ Get variable: returns variable with name=`name` in the output
 params:
 
 * name (*required*)
+
+### HashAction
+
+Hash action
+
+**keyword**: `hash`
+**shortcuts identifier**: `is.workflow.actions.hash`
+
+params:
+
+* hash_type (*required*, default=MD5)  | _choices_:
+
+  * "MD5"
+
+  * "SHA1"
+
+  * "SHA256"
+
+  * "SHA512"
 
 ### IfAction
 
@@ -357,6 +387,19 @@ Nothing
 
 **keyword**: `nothing`
 **shortcuts identifier**: `is.workflow.actions.nothing`
+
+### NotificationAction
+
+Show notification
+
+**keyword**: `notification`
+**shortcuts identifier**: `is.workflow.actions.notification`
+
+params:
+
+* play_sound (*required*, default=True)
+* text (*required*, *variables support*)
+* title (*required*, *variables support*)
 
 ### NumberAction
 
@@ -499,6 +542,18 @@ params:
 
 * level (*required*)
 
+### SetClipboardAction
+
+
+
+**keyword**: `set_clipboard`
+**shortcuts identifier**: `is.workflow.actions.setclipboard`
+
+params:
+
+* expiration_date ()
+* local_only ()
+
 ### SetDoNotDisturbAction
 
 Set Do Not Disturb
@@ -555,6 +610,18 @@ params:
   * "On"
 
   * "Toggle"
+
+### SetDictionaryValueAction
+
+Set dictionary value
+
+**keyword**: `set_value_for_key`
+**shortcuts identifier**: `is.workflow.actions.setvalueforkey`
+
+params:
+
+* key (*required*, *variables support*)
+* value (*required*, *variables support*)
 
 ### SetVariableAction
 
@@ -717,6 +784,20 @@ URL: returns url as an output
 params:
 
 * url (*required*)
+
+### URLDecodeAction
+
+URL Dencode
+
+**keyword**: `urldecode`
+**shortcuts identifier**: `is.workflow.actions.urlencode`
+
+### URLEncodeAction
+
+URL Encode
+
+**keyword**: `urlencode`
+**shortcuts identifier**: `is.workflow.actions.urlencode`
 
 ### VibrateAction
 

@@ -94,7 +94,7 @@ class TestShortcutWithDictionary:
         assert dump == exp_dump
 
 
-class TestGetDictionaryValueAction(ActionTomlLoadsMixin):
+class TestSetDictionaryValueAction(ActionTomlLoadsMixin):
     def test_dumps(self):
         key = 'key1'
         value = 'value1'

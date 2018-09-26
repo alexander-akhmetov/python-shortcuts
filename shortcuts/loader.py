@@ -122,6 +122,10 @@ class PListLoader(BaseLoader):
             action_class = cls._get_menu_action_class(action_dict)
         elif identifier == 'is.workflow.actions.repeat.each':
             action_class = cls._get_repeat_each_action_class(action_dict)
+        elif identifier == 'is.workflow.actions.repeat.each':
+            action_class = cls._get_repeat_each_action_class(action_dict)
+        elif identifier == 'is.workflow.actions.urlencode':
+            action_class = cls._get_urlencode_action_class(action_dict)
 
         return action_class
 
@@ -149,6 +153,7 @@ class PListLoader(BaseLoader):
     @classmethod
     def _get_repeat_action_class(cls, action_dict: Dict) -> Type['BaseAction']:
         """Returns Repeat-Start or Repeat-End action class based on WFControlFlowMode parameter of action_dict"""
+        # todo: refactor to common solution
         from shortcuts.actions import RepeatEndAction, RepeatStartAction
         return cls._get_action_class_by_wf_control_flow(
             from_classes=(RepeatEndAction, RepeatStartAction),
@@ -158,6 +163,7 @@ class PListLoader(BaseLoader):
     @classmethod
     def _get_menu_action_class(cls, action_dict: Dict) -> Type['BaseAction']:
         """Returns Menu action class based on WFControlFlowMode parameter of action_dict"""
+        # todo: refactor to common solution
         from shortcuts.actions import MenuStartAction, MenuItemAction, MenuEndAction
         return cls._get_action_class_by_wf_control_flow(
             from_classes=(MenuStartAction, MenuItemAction, MenuEndAction),
@@ -169,6 +175,7 @@ class PListLoader(BaseLoader):
                                              from_classes: Tuple[Type['BaseAction'], ...],
                                              action_dict: Dict) -> Type['BaseAction']:
         """Returns class from `from_classes` based on WFControlFlowMode parameter of action_dict"""
+        # todo: refactor to common solution
         flow_to_action = {a.default_fields['WFControlFlowMode']: a for a in from_classes}  # type: ignore
         wf_control_flow_mode = action_dict['WFWorkflowActionParameters']['WFControlFlowMode']
         return flow_to_action[wf_control_flow_mode]
@@ -176,6 +183,7 @@ class PListLoader(BaseLoader):
     @classmethod
     def _get_base64_action_class(cls, action_dict: Dict) -> Type['BaseAction']:
         """Returns Base64EncodeAction or Base64DecodeAction based on WFEncodeMode parameter of action_dict"""
+        # todo: refactor to common solution
         from shortcuts.actions import Base64EncodeAction, Base64DecodeAction
         action_params = action_dict['WFWorkflowActionParameters']
 
@@ -185,6 +193,22 @@ class PListLoader(BaseLoader):
             return Base64EncodeAction
         elif encode_mode == 'Decode':
             return Base64DecodeAction
+
+        raise exceptions.UnknownWFEncodeModeError(f'Unknown WFEncodeMode: "{encode_mode}"')
+
+    @classmethod
+    def _get_urlencode_action_class(cls, action_dict: Dict) -> Type['BaseAction']:
+        """Returns URLEncode or URLDecode based on WFEncodeMode parameter of action_dict"""
+        # todo: refactor to common solution
+        from shortcuts.actions import URLEncodeAction, URLDecodeAction
+        action_params = action_dict['WFWorkflowActionParameters']
+
+        # by default it's encode, even if it doesn't have WFEncodeMode parameter
+        encode_mode = action_params.get('WFEncodeMode', 'Encode')
+        if encode_mode == 'Encode':
+            return URLEncodeAction
+        elif encode_mode == 'Decode':
+            return URLDecodeAction
 
         raise exceptions.UnknownWFEncodeModeError(f'Unknown WFEncodeMode: "{encode_mode}"')
 
