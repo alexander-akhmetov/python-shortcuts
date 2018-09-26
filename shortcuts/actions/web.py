@@ -52,6 +52,9 @@ class URLEncodeAction(BaseAction):
     itype = 'is.workflow.actions.urlencode'
     keyword = 'urlencode'
 
+    _additional_identifier_field = 'WFEncodeMode'
+    _default_class = True
+
     default_fields = {
         'WFEncodeMode': 'Encode',
     }
@@ -61,6 +64,8 @@ class URLDecodeAction(BaseAction):
     '''URL Dencode'''
     itype = 'is.workflow.actions.urlencode'
     keyword = 'urldecode'
+
+    _additional_identifier_field = 'WFEncodeMode'
 
     default_fields = {
         'WFEncodeMode': 'Decode',

@@ -26,7 +26,7 @@ class NotificationAction(BaseAction):
 
     play_sound = BooleanField('WFNotificationActionSound', default=True)
     text = VariablesField('WFNotificationActionBody')
-    title = VariablesField('WFAlertActionTitle')
+    title = VariablesField('WFNotificationActionTitle')
 
 
 class ExitAction(BaseAction):

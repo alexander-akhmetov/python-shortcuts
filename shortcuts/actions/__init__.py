@@ -1,6 +1,3 @@
-import types
-from typing import Dict, Type
-
 from shortcuts.actions.b64 import Base64DecodeAction, Base64EncodeAction
 from shortcuts.actions.base import BaseAction
 from shortcuts.actions.calculation import CountAction
@@ -36,6 +33,7 @@ from shortcuts.actions.out import (
     VibrateAction,
 )
 from shortcuts.actions.photo import CameraAction, GetLastPhotoAction, ImageConvertAction, SelectPhotoAction
+from shortcuts.actions.registry import ActionsRegistry
 from shortcuts.actions.scripting import (
     ContinueInShortcutAppAction,
     DelayAction,
@@ -57,18 +55,14 @@ from shortcuts.actions.web import GetURLAction, URLAction, URLDecodeAction, URLE
 # flake8: noqa
 
 
-KEYWORD_TO_ACTION_MAP: Dict[str, Type[BaseAction]] = {}
-ITYPE_TO_ACTION_MAP: Dict[str, Type[BaseAction]] = {}
+actions_registry = ActionsRegistry()
 
 
-def _create_maps():
-    # from all imported actions above it
-    # creates two maps: KEYWORD_TO_ACTION_MAP and ITYPE_TO_ACTION_MAP
-    # which the library uses to find action classes by keyword or type
+def _register_actions():
+    # register all imported actions in the actions registry
     for name, val in globals().items():
-        if isinstance(val, type) and issubclass(val, base.BaseAction) and val.keyword:
-            KEYWORD_TO_ACTION_MAP[val.keyword] = val
-            ITYPE_TO_ACTION_MAP[val.itype] = val
+        if isinstance(val, type) and issubclass(val, BaseAction) and val.keyword:
+            actions_registry.register_action(val)
 
 
-_create_maps()
+_register_actions()

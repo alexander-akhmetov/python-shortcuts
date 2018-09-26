@@ -57,6 +57,8 @@ class RepeatStartAction(BaseAction):
     itype = 'is.workflow.actions.repeat.count'
     keyword = 'repeat_start'
 
+    _additional_identifier_field = 'WFControlFlowMode'
+
     group_id = GroupIDField('GroupingIdentifier')
     count = IntegerField('WFRepeatCount')
 
@@ -70,6 +72,8 @@ class RepeatEndAction(BaseAction):
     itype = 'is.workflow.actions.repeat.count'
     keyword = 'repeat_end'
 
+    _additional_identifier_field = 'WFControlFlowMode'
+
     group_id = GroupIDField('GroupingIdentifier')
 
     default_fields = {
@@ -82,6 +86,8 @@ class RepeatEachStartAction(BaseAction):
     itype = 'is.workflow.actions.repeat.each'
     keyword = 'repeat_with_each_start'
 
+    _additional_identifier_field = 'WFControlFlowMode'
+
     group_id = GroupIDField('GroupingIdentifier')
 
     default_fields = {
@@ -93,6 +99,8 @@ class RepeatEachEndAction(BaseAction):
     '''Repeat with each end'''
     itype = 'is.workflow.actions.repeat.each'
     keyword = 'repeat_with_each_end'
+
+    _additional_identifier_field = 'WFControlFlowMode'
 
     group_id = GroupIDField('GroupingIdentifier')
 

@@ -1,12 +1,12 @@
 import collections
 import copy
 import plistlib
-from typing import TYPE_CHECKING, Any, BinaryIO, Dict, List, Tuple, Type, Union
+from typing import TYPE_CHECKING, Any, BinaryIO, Dict, List, Type, Union
 
 import toml
 
 from shortcuts import exceptions
-from shortcuts.actions import ITYPE_TO_ACTION_MAP, KEYWORD_TO_ACTION_MAP
+from shortcuts.actions import actions_registry
 
 
 if TYPE_CHECKING:
@@ -39,12 +39,13 @@ class TomlLoader(BaseLoader):
         if not isinstance(shortcut_dict.get('action'), list):
             raise ValueError('toml file must contain "action" array with actions')
 
-        for action in shortcut_dict['action']:
-            action_params = copy.deepcopy(action)
+        for params in shortcut_dict['action']:
+            action_params = copy.deepcopy(params)
             del action_params['type']
-            shortcut.actions.append(
-                KEYWORD_TO_ACTION_MAP[action['type']](data=action_params)
-            )
+
+            action_class = actions_registry.get_by_keyword(params['type'])
+            action = action_class(data=action_params)
+            shortcut.actions.append(action)
 
         return shortcut
 
@@ -71,23 +72,11 @@ class PListLoader(BaseLoader):
 
     @classmethod
     def _action_from_dict(cls, action_dict: Dict) -> 'BaseAction':
-        action_class = cls._get_action_class(action_dict)
-
-        if not action_class:
-            msg = f'''
-            Unknown shortcut action: {type}
-
-            Please, check documentation to add new shortcut action, or create an issue:
-            Docs: https://github.com/alexander-akhmetov/python-shortcuts/tree/master/docs/new_action.md
-
-            https://github.com/alexander-akhmetov/python-shortcuts/
-
-            Action dictionary:
-
-            {action_dict}
-            '''
-            raise exceptions.UnknownActionError(msg)
-
+        identifier = action_dict['WFWorkflowActionIdentifier']
+        action_class = actions_registry.get_by_itype(
+            itype=identifier,
+            action_params=action_dict,
+        )
         shortcut_name_to_field_name = {
             f.name: f._attr for f in action_class().fields
         }
@@ -98,119 +87,6 @@ class PListLoader(BaseLoader):
         }
 
         return action_class(data=params)
-
-    @classmethod
-    def _get_action_class(cls, action_dict: Dict) -> Union[Type['BaseAction'], None]:
-        identifier = action_dict['WFWorkflowActionIdentifier']
-        action_class = ITYPE_TO_ACTION_MAP.get(identifier)
-
-        # in some cases we have action classes with the same itype (identifier)
-        # but they have different parameters
-        #
-        # For example, Base64EncodeAction and Base64DecodeAction
-        # classes have the same itype: "is.workflow.actions.base64encode"
-        # we need to check parameters to determine which action class we need to use
-        #
-        # todo: action-based common solution
-        if identifier == 'is.workflow.actions.conditional':
-            action_class = cls._get_if_else_action_class(action_dict)
-        elif identifier == 'is.workflow.actions.base64encode':
-            action_class = cls._get_base64_action_class(action_dict)
-        elif identifier == 'is.workflow.actions.repeat.count':
-            action_class = cls._get_repeat_action_class(action_dict)
-        elif identifier == 'is.workflow.actions.choosefrommenu':
-            action_class = cls._get_menu_action_class(action_dict)
-        elif identifier == 'is.workflow.actions.repeat.each':
-            action_class = cls._get_repeat_each_action_class(action_dict)
-        elif identifier == 'is.workflow.actions.repeat.each':
-            action_class = cls._get_repeat_each_action_class(action_dict)
-        elif identifier == 'is.workflow.actions.urlencode':
-            action_class = cls._get_urlencode_action_class(action_dict)
-
-        return action_class
-
-    @classmethod
-    def _get_if_else_action_class(cls, action_dict: Dict) -> Type['BaseAction']:
-        """Returns If-Else-EndIf action class based on WFControlFlowMode parameter of action_dict"""
-        from shortcuts.actions import IfAction, ElseAction, EndIfAction
-        return cls._get_action_class_by_wf_control_flow(
-            from_classes=(IfAction, ElseAction, EndIfAction),
-            action_dict=action_dict,
-        )
-
-    @classmethod
-    def _get_repeat_each_action_class(cls, action_dict: Dict) -> Type['BaseAction']:
-        """
-        Returns Repeat-Each-Start or Repeat-Each-End action class
-        based on WFControlFlowMode parameter of action_dict
-        """
-        from shortcuts.actions import RepeatEachStartAction, RepeatEachEndAction
-        return cls._get_action_class_by_wf_control_flow(
-            from_classes=(RepeatEachStartAction, RepeatEachEndAction),
-            action_dict=action_dict,
-        )
-
-    @classmethod
-    def _get_repeat_action_class(cls, action_dict: Dict) -> Type['BaseAction']:
-        """Returns Repeat-Start or Repeat-End action class based on WFControlFlowMode parameter of action_dict"""
-        # todo: refactor to common solution
-        from shortcuts.actions import RepeatEndAction, RepeatStartAction
-        return cls._get_action_class_by_wf_control_flow(
-            from_classes=(RepeatEndAction, RepeatStartAction),
-            action_dict=action_dict,
-        )
-
-    @classmethod
-    def _get_menu_action_class(cls, action_dict: Dict) -> Type['BaseAction']:
-        """Returns Menu action class based on WFControlFlowMode parameter of action_dict"""
-        # todo: refactor to common solution
-        from shortcuts.actions import MenuStartAction, MenuItemAction, MenuEndAction
-        return cls._get_action_class_by_wf_control_flow(
-            from_classes=(MenuStartAction, MenuItemAction, MenuEndAction),
-            action_dict=action_dict,
-        )
-
-    @classmethod
-    def _get_action_class_by_wf_control_flow(cls,
-                                             from_classes: Tuple[Type['BaseAction'], ...],
-                                             action_dict: Dict) -> Type['BaseAction']:
-        """Returns class from `from_classes` based on WFControlFlowMode parameter of action_dict"""
-        # todo: refactor to common solution
-        flow_to_action = {a.default_fields['WFControlFlowMode']: a for a in from_classes}  # type: ignore
-        wf_control_flow_mode = action_dict['WFWorkflowActionParameters']['WFControlFlowMode']
-        return flow_to_action[wf_control_flow_mode]
-
-    @classmethod
-    def _get_base64_action_class(cls, action_dict: Dict) -> Type['BaseAction']:
-        """Returns Base64EncodeAction or Base64DecodeAction based on WFEncodeMode parameter of action_dict"""
-        # todo: refactor to common solution
-        from shortcuts.actions import Base64EncodeAction, Base64DecodeAction
-        action_params = action_dict['WFWorkflowActionParameters']
-
-        # by default it's encode, even if it doesn't have WFEncodeMode parameter
-        encode_mode = action_params.get('WFEncodeMode', 'Encode')
-        if encode_mode == 'Encode':
-            return Base64EncodeAction
-        elif encode_mode == 'Decode':
-            return Base64DecodeAction
-
-        raise exceptions.UnknownWFEncodeModeError(f'Unknown WFEncodeMode: "{encode_mode}"')
-
-    @classmethod
-    def _get_urlencode_action_class(cls, action_dict: Dict) -> Type['BaseAction']:
-        """Returns URLEncode or URLDecode based on WFEncodeMode parameter of action_dict"""
-        # todo: refactor to common solution
-        from shortcuts.actions import URLEncodeAction, URLDecodeAction
-        action_params = action_dict['WFWorkflowActionParameters']
-
-        # by default it's encode, even if it doesn't have WFEncodeMode parameter
-        encode_mode = action_params.get('WFEncodeMode', 'Encode')
-        if encode_mode == 'Encode':
-            return URLEncodeAction
-        elif encode_mode == 'Decode':
-            return URLDecodeAction
-
-        raise exceptions.UnknownWFEncodeModeError(f'Unknown WFEncodeMode: "{encode_mode}"')
 
 
 class WFDeserializer:
