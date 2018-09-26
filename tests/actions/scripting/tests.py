@@ -1,3 +1,4 @@
+import pytest
 import mock
 
 from shortcuts.actions import (
@@ -9,7 +10,9 @@ from shortcuts.actions import (
     WaitToReturnAction,
     RepeatEachStartAction,
     RepeatEachEndAction,
+    HashAction,
 )
+from shortcuts.actions.scripting import HASH_CHOICES
 from shortcuts import Shortcut, FMT_SHORTCUT
 
 from tests.conftest import ActionTomlLoadsMixin
@@ -146,3 +149,38 @@ class TestRepeatWithEachActions:
 
         exp_dump = '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<plist version="1.0">\n<dict>\n\t<key>WFWorkflowActions</key>\n\t<array>\n\t\t<dict>\n\t\t\t<key>WFWorkflowActionIdentifier</key>\n\t\t\t<string>is.workflow.actions.repeat.each</string>\n\t\t\t<key>WFWorkflowActionParameters</key>\n\t\t\t<dict>\n\t\t\t\t<key>GroupingIdentifier</key>\n\t\t\t\t<string>some-uuid</string>\n\t\t\t\t<key>WFControlFlowMode</key>\n\t\t\t\t<integer>0</integer>\n\t\t\t</dict>\n\t\t</dict>\n\t\t<dict>\n\t\t\t<key>WFWorkflowActionIdentifier</key>\n\t\t\t<string>is.workflow.actions.repeat.each</string>\n\t\t\t<key>WFWorkflowActionParameters</key>\n\t\t\t<dict>\n\t\t\t\t<key>GroupingIdentifier</key>\n\t\t\t\t<string>some-uuid</string>\n\t\t\t\t<key>WFControlFlowMode</key>\n\t\t\t\t<integer>2</integer>\n\t\t\t</dict>\n\t\t</dict>\n\t</array>\n\t<key>WFWorkflowClientRelease</key>\n\t<string>2.0</string>\n\t<key>WFWorkflowClientVersion</key>\n\t<string>700</string>\n\t<key>WFWorkflowIcon</key>\n\t<dict>\n\t\t<key>WFWorkflowIconGlyphNumber</key>\n\t\t<integer>59511</integer>\n\t\t<key>WFWorkflowIconImageData</key>\n\t\t<data>\n\t\t</data>\n\t\t<key>WFWorkflowIconStartColor</key>\n\t\t<integer>431817727</integer>\n\t</dict>\n\t<key>WFWorkflowImportQuestions</key>\n\t<array/>\n\t<key>WFWorkflowInputContentItemClasses</key>\n\t<array>\n\t\t<string>WFAppStoreAppContentItem</string>\n\t\t<string>WFArticleContentItem</string>\n\t\t<string>WFContactContentItem</string>\n\t\t<string>WFDateContentItem</string>\n\t\t<string>WFEmailAddressContentItem</string>\n\t\t<string>WFGenericFileContentItem</string>\n\t\t<string>WFImageContentItem</string>\n\t\t<string>WFiTunesProductContentItem</string>\n\t\t<string>WFLocationContentItem</string>\n\t\t<string>WFDCMapsLinkContentItem</string>\n\t\t<string>WFAVAssetContentItem</string>\n\t\t<string>WFPDFContentItem</string>\n\t\t<string>WFPhoneNumberContentItem</string>\n\t\t<string>WFRichTextContentItem</string>\n\t\t<string>WFSafariWebPageContentItem</string>\n\t\t<string>WFStringContentItem</string>\n\t\t<string>WFURLContentItem</string>\n\t</array>\n\t<key>WFWorkflowTypes</key>\n\t<array>\n\t\t<string>NCWidget</string>\n\t\t<string>WatchKit</string>\n\t</array>\n</dict>\n</plist>\n'
         assert dump == exp_dump
+
+
+class TestHashAction(ActionTomlLoadsMixin):
+    @pytest.mark.parametrize('hash_type', [
+        *HASH_CHOICES,
+    ])
+    def test_dumps_with_choices(self, hash_type):
+        action = HashAction(data={'hash_type': hash_type})
+        exp_dump = {
+            'WFWorkflowActionIdentifier': 'is.workflow.actions.hash',
+            'WFWorkflowActionParameters': {
+                'WFHashType': hash_type,
+            }
+        }
+        assert action.dump() == exp_dump
+
+    @pytest.mark.parametrize('hash_type', [
+        *HASH_CHOICES,
+    ])
+    def test_loads_toml(self, hash_type):
+        toml = f'''
+        [[action]]
+        type = "hash"
+        hash_type = "{hash_type}"
+        '''
+        self._assert_toml_loads(toml, HashAction, {'hash_type': hash_type})
+
+    def test_choices(self):
+        exp_choices = (
+            'MD5',
+            'SHA1',
+            'SHA256',
+            'SHA512',
+        )
+        assert HASH_CHOICES == exp_choices

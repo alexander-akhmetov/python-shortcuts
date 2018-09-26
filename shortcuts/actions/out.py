@@ -54,3 +54,11 @@ class SpeakTextAction(BaseAction):
     pitch = FloatField('WFSpeakTextPitch', default=0.95)
     rate = FloatField('WFSpeakTextRate', default=0.44)
     wait_until_finished = BooleanField('WFSpeakTextWait', default=True)
+
+
+class SetClipboardAction(BaseAction):
+    itype = 'is.workflow.actions.setclipboard'
+    keyword = 'set_clipboard'
+
+    local_only = BooleanField('WFLocalOnly', required=False)
+    expiration_date = Field('WFExpirationDate', required=False)

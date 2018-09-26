@@ -1,4 +1,4 @@
-from shortcuts.actions.base import BaseAction, DictionaryField, Field
+from shortcuts.actions.base import BaseAction, DictionaryField, VariablesField
 
 
 class GetDictionaryValueAction(BaseAction):
@@ -6,7 +6,16 @@ class GetDictionaryValueAction(BaseAction):
     itype = 'is.workflow.actions.getvalueforkey'
     keyword = 'get_value_for_key'
 
-    key = Field('WFDictionaryKey')
+    key = VariablesField('WFDictionaryKey')
+
+
+class SetDictionaryValueAction(BaseAction):
+    '''Set dictionary value'''
+    itype = 'is.workflow.actions.setvalueforkey'
+    keyword = 'set_value_for_key'
+
+    key = VariablesField('WFDictionaryKey')
+    value = VariablesField('WFDictionaryValue')
 
 
 class DictionaryAction(BaseAction):

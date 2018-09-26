@@ -20,17 +20,25 @@ from shortcuts.actions.device import (
     SetVolumeAction,
     SetWiFiAction,
 )
-from shortcuts.actions.dictionary import DictionaryAction, GetDictionaryValueAction
+from shortcuts.actions.dictionary import DictionaryAction, GetDictionaryValueAction, SetDictionaryValueAction
 from shortcuts.actions.files import CreateFolderAction, PreviewDocumentAction, ReadFileAction, SaveFileAction
 from shortcuts.actions.input import AskAction, GetClipboardAction
 from shortcuts.actions.menu import MenuEndAction, MenuItemAction, MenuStartAction
 from shortcuts.actions.messages import SendMessageAction
 from shortcuts.actions.numbers import NumberAction
-from shortcuts.actions.out import ExitAction, ShowAlertAction, ShowResultAction, SpeakTextAction, VibrateAction
+from shortcuts.actions.out import (
+    ExitAction,
+    SetClipboardAction,
+    ShowAlertAction,
+    ShowResultAction,
+    SpeakTextAction,
+    VibrateAction,
+)
 from shortcuts.actions.photo import CameraAction, GetLastPhotoAction, ImageConvertAction, SelectPhotoAction
 from shortcuts.actions.scripting import (
     ContinueInShortcutAppAction,
     DelayAction,
+    HashAction,
     NothingAction,
     RepeatEachEndAction,
     RepeatEachStartAction,

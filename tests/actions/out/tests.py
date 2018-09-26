@@ -1,4 +1,6 @@
-from shortcuts.actions import ShowResultAction, ShowAlertAction
+from shortcuts.actions import ShowResultAction, ShowAlertAction, SetClipboardAction
+
+from tests.conftest import ActionTomlLoadsMixin
 
 
 class TestShowResultAction:
@@ -40,3 +42,47 @@ class TestShowAlertAction:
             'WFAlertActionTitle': title,
         }
         assert dump == exp_dump
+
+
+class TestSetClipboardAction(ActionTomlLoadsMixin):
+
+    def test_dumps(self):
+        action = SetClipboardAction()
+        exp_dump = {
+            'WFWorkflowActionIdentifier': 'is.workflow.actions.setclipboard',
+            'WFWorkflowActionParameters': {}
+        }
+        assert action.dump() == exp_dump
+
+    def test_dumps_with_parameters(self):
+        expiration_date = 'Tomorrow at 2am'
+        local_only = True
+        action = SetClipboardAction(data={'local_only': local_only, 'expiration_date': expiration_date})
+        exp_dump = {
+            'WFWorkflowActionIdentifier': 'is.workflow.actions.setclipboard',
+            'WFWorkflowActionParameters': {
+                'WFLocalOnly': local_only,
+                'WFExpirationDate': expiration_date,
+            }
+        }
+        assert action.dump() == exp_dump
+
+    def test_loads_toml(self):
+        toml = '''
+        [[action]]
+        type = "set_clipboard"
+        '''
+        self._assert_toml_loads(toml, SetClipboardAction, {})
+
+    def test_loads_toml_with_parameters(self):
+        toml = '''
+        [[action]]
+        type = "set_clipboard"
+        expiration_date = "tomorrow"
+        local_only = false
+        '''
+        self._assert_toml_loads(
+            toml,
+            SetClipboardAction,
+            {'local_only': False, 'expiration_date': 'tomorrow'},
+        )
