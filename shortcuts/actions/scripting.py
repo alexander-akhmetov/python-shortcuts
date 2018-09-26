@@ -1,4 +1,4 @@
-from shortcuts.actions.base import BaseAction, FloatField, GroupIDField, IntegerField
+from shortcuts.actions.base import BaseAction, ChoiceField, FloatField, GroupIDField, IntegerField
 
 
 class NothingAction(BaseAction):
@@ -99,3 +99,19 @@ class RepeatEachEndAction(BaseAction):
     default_fields = {
         'WFControlFlowMode': 2,
     }
+
+
+HASH_CHOICES = (
+    'MD5',
+    'SHA1',
+    'SHA256',
+    'SHA512',
+)
+
+
+class HashAction(BaseAction):
+    '''Hash action'''
+    itype = 'is.workflow.actions.hash'
+    keyword = 'hash'
+
+    hash_type = ChoiceField('WFHashType', choices=HASH_CHOICES, default=HASH_CHOICES[0])

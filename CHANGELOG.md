@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - SplitTextAction
   - GetClipboardAction
   - NumberAction
+  - HashAction
+  - SetClipboardAction
+  - SetDictionaryValueAction
 
 ## [0.8.1] - 26.09.2018
 
