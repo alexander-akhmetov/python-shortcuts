@@ -3,6 +3,7 @@ import plistlib
 import uuid
 from typing import Any, BinaryIO, Dict, List, Type
 
+from shortcuts import exceptions
 from shortcuts.actions import MenuEndAction, MenuItemAction, MenuStartAction
 from shortcuts.actions.base import GroupIDField
 from shortcuts.dump import BaseDumper, PListDumper, TomlDumper
@@ -10,6 +11,10 @@ from shortcuts.loader import BaseLoader, PListLoader, TomlLoader
 
 
 logger = logging.getLogger(__name__)
+
+
+FMT_TOML = 'toml'
+FMT_SHORTCUT = 'shortcut'
 
 
 class Shortcut:
@@ -26,42 +31,67 @@ class Shortcut:
         self.actions = actions if actions else []
 
     @classmethod
-    def load(cls, file_object: BinaryIO, file_format: str = 'toml') -> 'Shortcut':
+    def load(cls, file_object: BinaryIO, file_format: str = FMT_TOML) -> 'Shortcut':
+        '''
+        Returns a Shortcut instance from given file_object
+
+        Params:
+            file_object (BinaryIO)
+            file_format: format of the string, FMT_TOML by default
+        '''
         return cls._get_loader_class(file_format).load(file_object)
 
     @classmethod
-    def loads(cls, string: str, file_format: str = 'toml') -> 'Shortcut':
+    def loads(cls, string: str, file_format: str = FMT_TOML) -> 'Shortcut':
+        '''
+        Returns a Shortcut instance from given string
+
+        Params:
+            string: representation of a shortcut in string
+            file_format: format of the string, FMT_TOML by default
+        '''
         return cls._get_loader_class(file_format).loads(string)
 
     @classmethod
     def _get_loader_class(self, file_format: str) -> Type[BaseLoader]:
         """Based on file_format returns loader class"""
         supported_formats = {
-            'plist': PListLoader,
-            'shortcut': PListLoader,
-            'toml': TomlLoader,
+            FMT_SHORTCUT: PListLoader,
+            FMT_TOML: TomlLoader,
         }
         if file_format in supported_formats:
-            logger.debug(f'Loading shortcut from file format: {supported_formats}')
+            logger.debug(f'Loading shortcut from file format: {file_format}')
             return supported_formats[file_format]
 
         raise RuntimeError(f'Unknown file_format: {file_format}')
 
-    def dump(self, file_object: BinaryIO, file_format: str = 'plist') -> None:
+    def dump(self, file_object: BinaryIO, file_format: str = FMT_TOML) -> None:
+        '''
+        Dumps the shortcut instance to file_object
+
+        Params:
+            file_object (BinaryIO)
+            file_format: format of the string, FMT_TOML by default
+        '''
         self._get_dumper_class(file_format)(shortcut=self).dump(file_object)
 
-    def dumps(self, file_format: str = 'plist') -> str:
+    def dumps(self, file_format: str = FMT_TOML) -> str:
+        '''
+        Dumps the shortcut instance and returns a string representation
+
+        Params:
+            file_format: format of the string, FMT_TOML by default
+        '''
         return self._get_dumper_class(file_format)(shortcut=self).dumps()
 
     def _get_dumper_class(self, file_format: str) -> Type[BaseDumper]:
         """Based on file_format returns dumper class"""
         supported_formats = {
-            'plist': PListDumper,
-            'shortcut': PListDumper,
-            'toml': TomlDumper,
+            FMT_SHORTCUT: PListDumper,
+            FMT_TOML: TomlDumper,
         }
         if file_format in supported_formats:
-            logger.debug(f'Dumping shortcut to file format: {supported_formats}')
+            logger.debug(f'Dumping shortcut to file format: {file_format}')
             return supported_formats[file_format]
 
         raise RuntimeError(f'Unknown file_format: {file_format}')
@@ -104,7 +134,7 @@ class Shortcut:
                 except IndexError:
                     # if actions are correct, all groups must be compelted
                     # (group complete if it has start and end actions)
-                    raise RuntimeError('Incomplete cycle')
+                    raise exceptions.IncompleteCycleError('Incomplete cycle')
 
     def _set_menu_items(self):
         menus = []
@@ -118,7 +148,7 @@ class Shortcut:
                 try:
                     menus.pop()
                 except IndexError:
-                    raise RuntimeError('Incomplete menu action')
+                    raise exceptions.IncompleteCycleError('Incomplete menu cycle')
 
     def _get_import_questions(self) -> List:
         # todo: change me

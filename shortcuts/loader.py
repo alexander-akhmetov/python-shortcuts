@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING, Any, BinaryIO, Dict, List, Tuple, Type, Union
 
 import toml
 
+from shortcuts import exceptions
 from shortcuts.actions import ITYPE_TO_ACTION_MAP, KEYWORD_TO_ACTION_MAP
 
 
@@ -85,7 +86,7 @@ class PListLoader(BaseLoader):
 
             {action_dict}
             '''
-            raise RuntimeError(msg)
+            raise exceptions.UnknownActionError(msg)
 
         shortcut_name_to_field_name = {
             f.name: f._attr for f in action_class().fields
@@ -119,6 +120,8 @@ class PListLoader(BaseLoader):
             action_class = cls._get_repeat_action_class(action_dict)
         elif identifier == 'is.workflow.actions.choosefrommenu':
             action_class = cls._get_menu_action_class(action_dict)
+        elif identifier == 'is.workflow.actions.repeat.each':
+            action_class = cls._get_repeat_each_action_class(action_dict)
 
         return action_class
 
@@ -128,6 +131,18 @@ class PListLoader(BaseLoader):
         from shortcuts.actions import IfAction, ElseAction, EndIfAction
         return cls._get_action_class_by_wf_control_flow(
             from_classes=(IfAction, ElseAction, EndIfAction),
+            action_dict=action_dict,
+        )
+
+    @classmethod
+    def _get_repeat_each_action_class(cls, action_dict: Dict) -> Type['BaseAction']:
+        """
+        Returns Repeat-Each-Start or Repeat-Each-End action class
+        based on WFControlFlowMode parameter of action_dict
+        """
+        from shortcuts.actions import RepeatEachStartAction, RepeatEachEndAction
+        return cls._get_action_class_by_wf_control_flow(
+            from_classes=(RepeatEachStartAction, RepeatEachEndAction),
             action_dict=action_dict,
         )
 
@@ -171,7 +186,7 @@ class PListLoader(BaseLoader):
         elif encode_mode == 'Decode':
             return Base64DecodeAction
 
-        raise RuntimeError(f'Unknown WFEncodeMode: "{encode_mode}"')
+        raise exceptions.UnknownWFEncodeModeError(f'Unknown WFEncodeMode: "{encode_mode}"')
 
 
 class WFDeserializer:
@@ -199,7 +214,9 @@ class WFDeserializer:
         if deserializer:
             return deserializer(self._data).deserialized_data
 
-        raise RuntimeError(f'Unknown serialization type: {self._data.get("WFSerializationType")}')
+        raise exceptions.UnknownSerializationType(
+            f'Unknown serialization type: {self._data.get("WFSerializationType")}',
+        )
 
 
 class WFTokenAttachmentParameterStateField(WFDeserializer):
@@ -213,6 +230,7 @@ class WFTextTokenAttachmentField(WFDeserializer):
         if self._data['Value'].get('Type') == 'Ask':
             return '{{ask_when_run}}'
 
+        # if self._data['Value']['Type'] == 'Variable':
         return self._data['Value']['VariableName']
 
 
@@ -267,8 +285,8 @@ class WFVariableStringField(WFDeserializer):
         for variable_range, variable_data in value['attachmentsByRange'].items():
             if variable_data['Type'] not in supported_types:
                 # it doesn't support magic variables yet
-                raise RuntimeError(
-                    f'Unsupported variable type: {variable_data["Type"]} (possibly it is a magic variable)',
+                raise exceptions.UnknownVariableError(
+                    f'Unknown variable type: {variable_data["Type"]} (possibly it is a magic variable)',
                 )
 
             if variable_data['Type'] == 'Variable':

@@ -22,22 +22,25 @@ from shortcuts.actions.device import (
 )
 from shortcuts.actions.dictionary import DictionaryAction, GetDictionaryValueAction
 from shortcuts.actions.files import CreateFolderAction, PreviewDocumentAction, ReadFileAction, SaveFileAction
-from shortcuts.actions.input import AskAction
+from shortcuts.actions.input import AskAction, GetClipboardAction
 from shortcuts.actions.menu import MenuEndAction, MenuItemAction, MenuStartAction
 from shortcuts.actions.messages import SendMessageAction
+from shortcuts.actions.numbers import NumberAction
 from shortcuts.actions.out import ExitAction, ShowAlertAction, ShowResultAction, SpeakTextAction, VibrateAction
 from shortcuts.actions.photo import CameraAction, GetLastPhotoAction, ImageConvertAction, SelectPhotoAction
 from shortcuts.actions.scripting import (
     ContinueInShortcutAppAction,
     DelayAction,
     NothingAction,
+    RepeatEachEndAction,
+    RepeatEachStartAction,
     RepeatEndAction,
     RepeatStartAction,
     SetItemNameAction,
     ViewContentGraphAction,
     WaitToReturnAction,
 )
-from shortcuts.actions.text import CommentAction, TextAction
+from shortcuts.actions.text import ChangeCaseAction, CommentAction, SplitTextAction, TextAction
 from shortcuts.actions.variables import GetVariableAction, SetVariableAction
 from shortcuts.actions.web import GetURLAction, URLAction
 

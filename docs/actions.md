@@ -54,6 +54,29 @@ Base64 encode
 **keyword**: `base64_encode`
 **shortcuts identifier**: `is.workflow.actions.base64encode`
 
+### ChangeCaseAction
+
+Change case
+
+**keyword**: `change_case`
+**shortcuts identifier**: `is.workflow.actions.text.changecase`
+
+params:
+
+* case_type (*required*)  | _choices_:
+
+  * "UPPERCASE"
+
+  * "lowercase"
+
+  * "Capitalize Every Word"
+
+  * "Capitalize with Title Case"
+
+  * "Capitalize with sentence case."
+
+  * "cApItAlIzE wItH aLtErNaTiNg CaSe."
+
 ### CommentAction
 
 Comment: just a comment
@@ -198,6 +221,13 @@ Get battery level
 **keyword**: `get_battery_level`
 **shortcuts identifier**: `is.workflow.actions.getbatterylevel`
 
+### GetClipboardAction
+
+
+
+**keyword**: `get_clipboard`
+**shortcuts identifier**: `is.workflow.actions.getclipboard`
+
 ### GetDeviceDetailsAction
 
 Get device details
@@ -328,6 +358,17 @@ Nothing
 **keyword**: `nothing`
 **shortcuts identifier**: `is.workflow.actions.nothing`
 
+### NumberAction
+
+
+
+**keyword**: `number`
+**shortcuts identifier**: `is.workflow.actions.number`
+
+params:
+
+* number (*required*)
+
 ### PreviewDocumentAction
 
 Preview document
@@ -369,6 +410,28 @@ Repeat
 params:
 
 * count (*required*)
+* group_id ()
+
+### RepeatEachEndAction
+
+Repeat with each end
+
+**keyword**: `repeat_with_each_end`
+**shortcuts identifier**: `is.workflow.actions.repeat.each`
+
+params:
+
+* group_id ()
+
+### RepeatEachStartAction
+
+Repeat with each start
+
+**keyword**: `repeat_with_each_start`
+**shortcuts identifier**: `is.workflow.actions.repeat.each`
+
+params:
+
 * group_id ()
 
 ### SaveFileAction
@@ -570,6 +633,26 @@ params:
 * pitch (*required*, default=0.95)
 * rate (*required*, default=0.44)
 * wait_until_finished (*required*, default=True)
+
+### SplitTextAction
+
+Split text
+
+**keyword**: `split_text`
+**shortcuts identifier**: `is.workflow.actions.text.split`
+
+params:
+
+* custom_separator ()
+* separator_type (*required*, default=New Lines)  | _choices_:
+
+  * "New Lines"
+
+  * "Spaces"
+
+  * "Every Character"
+
+  * "Custom"
 
 ### MenuStartAction
 

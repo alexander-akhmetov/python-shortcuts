@@ -9,3 +9,8 @@ class AskAction(BaseAction):
     question = Field('WFAskActionPrompt')
     input_type = Field('WFInputType', required=False)
     default_answer = VariablesField('WFAskActionDefaultAnswer', required=False)
+
+
+class GetClipboardAction(BaseAction):
+    itype = 'is.workflow.actions.getclipboard'
+    keyword = 'get_clipboard'

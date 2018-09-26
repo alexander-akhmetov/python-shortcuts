@@ -1,4 +1,4 @@
-from shortcuts.actions.base import BaseAction, Field, VariablesField
+from shortcuts.actions.base import BaseAction, ChoiceField, Field, VariablesField
 
 
 class CommentAction(BaseAction):
@@ -15,3 +15,46 @@ class TextAction(BaseAction):
     keyword = 'text'
 
     text = VariablesField('WFTextActionText', help='Output of this action')
+
+
+CASE_CHOICES = (
+    'UPPERCASE',
+    'lowercase',
+    'Capitalize Every Word',
+    'Capitalize with Title Case',
+    'Capitalize with sentence case.',
+    'cApItAlIzE wItH aLtErNaTiNg CaSe.',
+)
+
+
+class ChangeCaseAction(BaseAction):
+    '''Change case'''
+    itype = 'is.workflow.actions.text.changecase'
+    keyword = 'change_case'
+
+    case_type = ChoiceField('WFCaseType', choices=CASE_CHOICES)
+
+
+SPLIT_SEPARATOR_CHOICES = (
+    'New Lines',
+    'Spaces',
+    'Every Character',
+    'Custom',
+)
+
+
+class SplitTextAction(BaseAction):
+    '''Split text'''
+    itype = 'is.workflow.actions.text.split'
+    keyword = 'split_text'
+
+    separator_type = ChoiceField(
+        'WFTextSeparator',
+        choices=SPLIT_SEPARATOR_CHOICES,
+        default=SPLIT_SEPARATOR_CHOICES[0],
+    )
+    custom_separator = Field(
+        'WFTextCustomSeparator',
+        help='Works only with "Custom" `separator_type`',
+        required=False,
+    )

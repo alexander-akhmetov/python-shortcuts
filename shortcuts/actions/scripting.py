@@ -75,3 +75,27 @@ class RepeatEndAction(BaseAction):
     default_fields = {
         'WFControlFlowMode': 2,
     }
+
+
+class RepeatEachStartAction(BaseAction):
+    '''Repeat with each start'''
+    itype = 'is.workflow.actions.repeat.each'
+    keyword = 'repeat_with_each_start'
+
+    group_id = GroupIDField('GroupingIdentifier')
+
+    default_fields = {
+        'WFControlFlowMode': 0,
+    }
+
+
+class RepeatEachEndAction(BaseAction):
+    '''Repeat with each end'''
+    itype = 'is.workflow.actions.repeat.each'
+    keyword = 'repeat_with_each_end'
+
+    group_id = GroupIDField('GroupingIdentifier')
+
+    default_fields = {
+        'WFControlFlowMode': 2,
+    }
