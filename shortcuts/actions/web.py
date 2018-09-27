@@ -70,3 +70,13 @@ class URLDecodeAction(BaseAction):
     default_fields = {
         'WFEncodeMode': 'Decode',
     }
+
+
+class ExpandURLAction(BaseAction):
+    '''
+    Expand URL: This action expands and cleans up URLs
+    that have been shortened by a URL shortening
+    service like TinyURL or bit.ly
+    '''
+    itype = 'is.workflow.actions.url.expand'
+    keyword = 'expand_url'

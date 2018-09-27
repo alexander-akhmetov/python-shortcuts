@@ -1,0 +1,53 @@
+SHORTCUT_EMPTY_PLIST_TEMPLATE = '''
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>WFWorkflowActions</key>
+    <array>
+        {actions}
+    </array>
+    <key>WFWorkflowClientRelease</key>
+    <string>2.0</string>
+    <key>WFWorkflowClientVersion</key>
+    <string>700</string>
+    <key>WFWorkflowIcon</key>
+    <dict>
+        <key>WFWorkflowIconGlyphNumber</key>
+        <integer>59511</integer>
+        <key>WFWorkflowIconImageData</key>
+        <data>
+        </data>
+        <key>WFWorkflowIconStartColor</key>
+        <integer>1440408063</integer>
+    </dict>
+    <key>WFWorkflowImportQuestions</key>
+    <array/>
+    <key>WFWorkflowInputContentItemClasses</key>
+    <array>
+        <string>WFAppStoreAppContentItem</string>
+        <string>WFArticleContentItem</string>
+        <string>WFContactContentItem</string>
+        <string>WFDateContentItem</string>
+        <string>WFEmailAddressContentItem</string>
+        <string>WFGenericFileContentItem</string>
+        <string>WFImageContentItem</string>
+        <string>WFiTunesProductContentItem</string>
+        <string>WFLocationContentItem</string>
+        <string>WFDCMapsLinkContentItem</string>
+        <string>WFAVAssetContentItem</string>
+        <string>WFPDFContentItem</string>
+        <string>WFPhoneNumberContentItem</string>
+        <string>WFRichTextContentItem</string>
+        <string>WFSafariWebPageContentItem</string>
+        <string>WFStringContentItem</string>
+        <string>WFURLContentItem</string>
+    </array>
+    <key>WFWorkflowTypes</key>
+    <array>
+        <string>NCWidget</string>
+        <string>WatchKit</string>
+    </array>
+</dict>
+</plist>
+'''

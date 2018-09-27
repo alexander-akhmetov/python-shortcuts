@@ -15,13 +15,20 @@ def get_version(package):
 version = get_version('shortcuts')
 
 
+with open('README.md', 'r') as f:
+    readme = f.read()
+
+
 setup(
     name='shortcuts',
     version=version,
     description='Python library to create and parse Siri Shortcuts',
+    long_description=readme,
+    long_description_content_type='text/markdown',
     author='Alexander Akhmetov',
     author_email='me@aleks.sh',
     url='https://github.com/alexander-akhmetov/python-shortcuts',
+    python_requires="~=3.6",
     packages=[
         'shortcuts',
         'shortcuts.actions',

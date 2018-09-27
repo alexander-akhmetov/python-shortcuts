@@ -1,6 +1,7 @@
 generate-docs:
 	python docs.py docs/actions.md
 
+
 tests:
 	tox
 

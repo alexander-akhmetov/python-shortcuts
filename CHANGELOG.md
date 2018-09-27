@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Added [fields documentation](/docs/fields.md)
 - New actions:
   - RepeatEachStartAction
   - RepeatEachEndAction
@@ -20,6 +21,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - URLEncodeAction
   - URLDecodeAction
   - AppendVariableAction
+  - ShowDefinitionAction
+  - ScanQRBarCode
+  - GetTextFromInputAction
+  - GetNameOfEmoji
+  - DetectLanguageAction
+  - ExpandURLAction
 
 ## [0.8.1] - 26.09.2018
 

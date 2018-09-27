@@ -25,7 +25,6 @@ def convert_shortcut(input_filepath, out_filepath):
 
 
 def _get_format(filepath):
-
     if is_shortcut_url(filepath):
         return 'url'
 

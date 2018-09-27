@@ -76,17 +76,17 @@ params:
 
 * case_type (*required*)  | _choices_:
 
-  * "UPPERCASE"
+  * `UPPERCASE`
 
-  * "lowercase"
+  * `lowercase`
 
-  * "Capitalize Every Word"
+  * `Capitalize Every Word`
 
-  * "Capitalize with Title Case"
+  * `Capitalize with Title Case`
 
-  * "Capitalize with sentence case."
+  * `Capitalize with sentence case.`
 
-  * "cApItAlIzE wItH aLtErNaTiNg CaSe."
+  * `cApItAlIzE wItH aLtErNaTiNg CaSe.`
 
 ### CommentAction
 
@@ -163,6 +163,13 @@ params:
 
 * time (*required*)
 
+### DetectLanguageAction
+
+Detect Language with Microsoft
+
+**keyword**: `detect_language`
+**shortcuts identifier**: `is.workflow.actions.detectlanguage`
+
 ### DictionaryAction
 
 Dictionary
@@ -172,7 +179,7 @@ Dictionary
 
 params:
 
-* items (*required*)
+* items (*required*, *variables support*)
 
 ### ElseAction
 
@@ -214,6 +221,17 @@ Exit
 **keyword**: `exit`
 **shortcuts identifier**: `is.workflow.actions.exit`
 
+### ExpandURLAction
+
+
+Expand URL: This action expands and cleans up URLs
+that have been shortened by a URL shortening
+service like TinyURL or bit.ly
+
+
+**keyword**: `expand_url`
+**shortcuts identifier**: `is.workflow.actions.url.expand`
+
 ### FormatDateAction
 
 Format date
@@ -250,19 +268,19 @@ params:
 
 * detail (*required*)  | _choices_:
 
-  * "Device Name"
+  * `Device Name`
 
-  * "Device Model"
+  * `Device Model`
 
-  * "System Version"
+  * `System Version`
 
-  * "Screen Width"
+  * `Screen Width`
 
-  * "Screen Height"
+  * `Screen Height`
 
-  * "Current Volume"
+  * `Current Volume`
 
-  * "Current Brightness"
+  * `Current Brightness`
 
 ### GetIPAddressAction
 
@@ -275,14 +293,14 @@ params:
 
 * address_type (*required*)  | _choices_:
 
-  * "IPv4"
+  * `IPv4`
 
-  * "IPv6"
+  * `IPv6`
 * source (*required*)  | _choices_:
 
-  * "Local"
+  * `Local`
 
-  * "Global"
+  * `Global`
 
 ### GetLastPhotoAction
 
@@ -290,6 +308,26 @@ Get latest photos
 
 **keyword**: `get_last_photo`
 **shortcuts identifier**: `is.workflow.actions.getlastphoto`
+
+### GetNameOfEmojiAction
+
+Get name of emoji
+
+**keyword**: `get_name_of_emoji`
+**shortcuts identifier**: `is.workflow.actions.getnameofemoji`
+
+### GetTextFromInputAction
+
+
+Get text from input
+
+Returns text from the previous action's input.
+For example, this action can get the name of a photo
+or song, or the text of a web page.
+
+
+**keyword**: `get_text_from_input`
+**shortcuts identifier**: `is.workflow.actions.detect.text`
 
 ### GetURLAction
 
@@ -301,9 +339,9 @@ Get URL
 params:
 
 * advanced ()
-* form ()
-* headers ()
-* json ()
+* form (*variables support*)
+* headers (*variables support*)
+* json (*variables support*)
 * method ()
 
 ### GetDictionaryValueAction
@@ -339,13 +377,13 @@ params:
 
 * hash_type (*required*, default=MD5)  | _choices_:
 
-  * "MD5"
+  * `MD5`
 
-  * "SHA1"
+  * `SHA1`
 
-  * "SHA256"
+  * `SHA256`
 
-  * "SHA512"
+  * `SHA512`
 
 ### IfAction
 
@@ -357,21 +395,21 @@ If
 params:
 
 * compare_with (*required*)
-* condition (*required*)  | _choices_:
+* condition (*required*, default=Equals)  | _choices_:
 
-  * "Equals"
+  * `Equals`
 
-  * "Contains"
+  * `Contains`
 * group_id ()
 
 ### MenuItemAction
 
 
-    Menu item
+Menu item
 
-    You must specify the title for the item.
-    After this action write all actions which you want to be executed when a user selects this option in the menu.
-    
+You must specify the title for the item.
+After this action write all actions which you want to be executed when a user selects this option in the menu.
+
 
 **keyword**: `menu_item`
 **shortcuts identifier**: `is.workflow.actions.choosefrommenu`
@@ -490,6 +528,13 @@ params:
 * path (*required*, *variables support*)
 * show_picker (*required*)
 
+### ScanQRBarCodeAction
+
+Scan QR/Barcode
+
+**keyword**: `scan_barcode`
+**shortcuts identifier**: `is.workflow.actions.scanbarcode`
+
 ### SelectPhotoAction
 
 Select photos
@@ -605,11 +650,11 @@ params:
 
 * mode (*required*)  | _choices_:
 
-  * "Off"
+  * `Off`
 
-  * "On"
+  * `On`
 
-  * "Toggle"
+  * `Toggle`
 
 ### SetDictionaryValueAction
 
@@ -656,6 +701,13 @@ params:
 
 * on (*required*)
 
+### ShowDefinitionAction
+
+Show definition
+
+**keyword**: `show_definition`
+**shortcuts identifier**: `is.workflow.actions.showdefinition`
+
 ### ShowResultAction
 
 Show result: shows a result
@@ -678,25 +730,25 @@ params:
 
 * language (*required*)  | _choices_:
 
-  * "Čeština (Česko)"
+  * `Čeština (Česko)`
 
-  * "Dansk (Danmark)"
+  * `Dansk (Danmark)`
 
-  * "Deutsch (Deutschland)"
+  * `Deutsch (Deutschland)`
 
-  * "English (Australia)"
+  * `English (Australia)`
 
-  * "English (Ireland)"
+  * `English (Ireland)`
 
-  * "English (South Africa)"
+  * `English (South Africa)`
 
-  * "English (United Kingdom)"
+  * `English (United Kingdom)`
 
-  * "English (United States)"
+  * `English (United States)`
 
-  * "Español (España)"
+  * `Español (España)`
 
-  * "Español (México)"
+  * `Español (México)`
 * pitch (*required*, default=0.95)
 * rate (*required*, default=0.44)
 * wait_until_finished (*required*, default=True)
@@ -713,40 +765,40 @@ params:
 * custom_separator ()
 * separator_type (*required*, default=New Lines)  | _choices_:
 
-  * "New Lines"
+  * `New Lines`
 
-  * "Spaces"
+  * `Spaces`
 
-  * "Every Character"
+  * `Every Character`
 
-  * "Custom"
+  * `Custom`
 
 ### MenuStartAction
 
 
-    Start menu
+Start menu
 
-    To build a menu, you have to write at least three actions:
-        * Start menu
-        * Menu item
-        * End menu
+To build a menu, you have to write at least three actions:
+* Start menu
+* Menu item
+* End menu
 
-    So the menu with two items will look like:
+So the menu with two items will look like:
 
-        ```
-        Start menu
+```
+Start menu
 
-        Menu item title=1
-            ... some actions...
+Menu item title=1
+... some actions...
 
-        Menu item title=2
-            ...other actions...
+Menu item title=2
+...other actions...
 
-        End menu
-        ```
+End menu
+```
 
-    As in other actions which have `group_id` field, you don't need to specify it, it will be generated automatically.
-    
+As in other actions which have `group_id` field, you don't need to specify it, it will be generated automatically.
+
 
 **keyword**: `start_menu`
 **shortcuts identifier**: `is.workflow.actions.choosefrommenu`
