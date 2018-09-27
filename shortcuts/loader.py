@@ -127,11 +127,18 @@ class WFTokenAttachmentParameterStateField(WFDeserializer):
 class WFTextTokenAttachmentField(WFDeserializer):
     @property
     def deserialized_data(self) -> str:
-        if self._data['Value'].get('Type') == 'Ask':
+        value = self._data.get('Value', {})
+        field_type = value.get('Type')
+
+        if field_type == 'Ask':
             return '{{ask_when_run}}'
 
-        # if self._data['Value']['Type'] == 'Variable':
-        return self._data['Value']['VariableName']
+        if field_type == 'Variable':
+            return value.get('VariableName')  # todo: #2
+
+        raise exceptions.UnknownWFTextTokenAttachment(
+            f'Unknown token attachment type: {field_type}',
+        )
 
 
 class WFDictionaryField(WFDeserializer):
