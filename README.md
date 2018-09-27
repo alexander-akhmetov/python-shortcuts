@@ -2,6 +2,9 @@
 
 [![Build Status](https://travis-ci.org/alexander-akhmetov/python-shortcuts.svg?branch=master)](https://travis-ci.org/alexander-akhmetov/python-shortcuts)
 [![PyPI](https://img.shields.io/pypi/v/shortcuts.svg)](https://pypi.python.org/pypi/shortcuts)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/shortcuts.svg)
+
+https://img.shields.io/pypi/pyversions/shortcuts.svg
 
 🍏 + 🐍 = ❤️
 
@@ -106,6 +109,10 @@ Run tests:
 ```bash
 tox
 ```
+
+### How to add a new action
+
+See [documentation](/docs/new_action.md).
 
 ### TODO
 

@@ -1,3 +1,5 @@
+import logging
+
 from shortcuts.actions.b64 import Base64DecodeAction, Base64EncodeAction
 from shortcuts.actions.base import BaseAction
 from shortcuts.actions.calculation import CountAction
@@ -47,12 +49,25 @@ from shortcuts.actions.scripting import (
     ViewContentGraphAction,
     WaitToReturnAction,
 )
-from shortcuts.actions.text import ChangeCaseAction, CommentAction, SplitTextAction, TextAction
+from shortcuts.actions.text import (
+    ChangeCaseAction,
+    CommentAction,
+    DetectLanguageAction,
+    GetNameOfEmojiAction,
+    GetTextFromInputAction,
+    ScanQRBarCodeAction,
+    ShowDefinitionAction,
+    SplitTextAction,
+    TextAction,
+)
 from shortcuts.actions.variables import AppendVariableAction, GetVariableAction, SetVariableAction
-from shortcuts.actions.web import GetURLAction, URLAction, URLDecodeAction, URLEncodeAction
+from shortcuts.actions.web import ExpandURLAction, GetURLAction, URLAction, URLDecodeAction, URLEncodeAction
 
 
 # flake8: noqa
+
+
+logger = logging.getLogger(__name__)
 
 
 actions_registry = ActionsRegistry()
@@ -60,9 +75,10 @@ actions_registry = ActionsRegistry()
 
 def _register_actions():
     # register all imported actions in the actions registry
-    for name, val in globals().items():
+    for _, val in globals().items():
         if isinstance(val, type) and issubclass(val, BaseAction) and val.keyword:
             actions_registry.register_action(val)
+    logging.debug(f'Registered actions: {len(actions_registry.actions)}')
 
 
 _register_actions()

@@ -156,12 +156,14 @@ class VariablesField(Field):
 
     def _check_token_match(self, value):
         variable = value.strip('{}')
-        type = self._system_variables.get(variable)
-        if type:
+        var_type = self._system_variables.get(variable)
+        if var_type:
             return {
                 'WFSerializationType': 'WFTextTokenAttachment',
-                'Value': {'Type': type},
+                'Value': {'Type': var_type},
             }
+
+        return None
 
     def _get_variables_dict(self, value: str) -> Dict:
         attachments_by_range, string = self._get_variables_from_text(value)
@@ -175,12 +177,12 @@ class VariablesField(Field):
         offset = 0
         for m in self._regexp.finditer(value):
             variable_name = m.group().strip('{}')
-            type = self._system_variables.get(variable_name, 'Variable')
+            var_type = self._system_variables.get(variable_name, 'Variable')
             variable_range = f'{{{m.start() - offset}, {1}}}'
             attachments_by_range[variable_range] = {
-                'Type': type,
+                'Type': var_type,
             }
-            if type == 'Variable':
+            if var_type == 'Variable':
                 attachments_by_range[variable_range]['VariableName'] = variable_name
             offset += len(m.group())
 

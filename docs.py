@@ -1,12 +1,11 @@
+'''
+Generates documentation for all available actions in the shortcuts.actions module
+'''
+
 import argparse
 
 from shortcuts.actions import actions_registry
 from shortcuts.actions.base import VariablesField
-
-
-"""
-Generates documentation for all available actions in the shortcuts.actions module
-"""
 
 
 DOC_TEMPLATE = '''
@@ -50,9 +49,15 @@ ACTION_TEMPLATE = '''
 def _build_action_doc(action):
     params = '\n'.join([_build_params_doc(f) for f in action().fields]).strip()
     params = f'params:\n\n{params}' if params else ''
+
+    doc = ''
+    if action.__doc__:
+        # remove spaces from the beginning of _each_ line
+        doc = '\n'.join([l.strip() for l in action.__doc__.splitlines()])
+
     return ACTION_TEMPLATE.format(
         name=action.__name__,
-        doc=action.__doc__ or '',
+        doc=doc,
         keyword=action.keyword,
         identifier=action.itype,
         params=params,
@@ -68,9 +73,13 @@ def _build_params_doc(field):
 
     choices = getattr(field, 'choices', None)
     if choices:
-        opts += '  | _choices_:\n'
-        opts += '\n'.join([f'\n  * "{choice}"' for choice in choices])
-    return PARAM_TEMPLATE.format(name=field._attr, opts=opts)
+        opts += f' {field.help} | _choices_:\n'
+        opts += '\n'.join([f'\n  * `{choice}`' for choice in choices])
+    return PARAM_TEMPLATE.format(
+        name=field._attr,
+        opts=opts,
+        help=field.help,
+    ).strip()
 
 
 def _get_field_properties(field):
@@ -79,7 +88,7 @@ def _get_field_properties(field):
         properties.append('*required*')
     if field.default:
         properties.append(f'default={field.default}')
-    if type(field) is VariablesField:  # without inheritance for now
+    if isinstance(field, VariablesField):
         properties.append('*variables support*')
     return properties
 

@@ -72,3 +72,5 @@ class GetTextAction(BaseAction):
 ```
 
 And then you can pass text data with `{{variable}}` inside.
+
+Other available [fields](/docs/fields.md)

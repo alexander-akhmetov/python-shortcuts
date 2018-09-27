@@ -1,7 +1,7 @@
 from shortcuts import Shortcut, FMT_SHORTCUT
-from shortcuts.actions import URLAction, GetURLAction, URLDecodeAction, URLEncodeAction
+from shortcuts.actions import URLAction, GetURLAction, URLDecodeAction, URLEncodeAction, ExpandURLAction
 
-from tests.conftest import ActionTomlLoadsMixin
+from tests.conftest import ActionTomlLoadsMixin, SimpleBaseDumpsLoadsTest
 
 
 class TestURLAction:
@@ -113,3 +113,18 @@ class TestURLEncodeAndDecodeActions:
 
         assert isinstance(sc.actions[0], URLDecodeAction) is True
         assert isinstance(sc.actions[1], URLEncodeAction) is True
+
+
+class TestExpandURLAction(SimpleBaseDumpsLoadsTest):
+    action_class = ExpandURLAction
+    itype = 'is.workflow.actions.url.expand'
+    toml = '[[action]]\ntype = "expand_url"'
+    action_xml = '''
+      <dict>
+        <key>WFWorkflowActionIdentifier</key>
+        <string>is.workflow.actions.url.expand</string>
+        <key>WFWorkflowActionParameters</key>
+        <dict>
+        </dict>
+      </dict>
+    '''
