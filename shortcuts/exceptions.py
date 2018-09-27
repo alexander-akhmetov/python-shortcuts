@@ -22,6 +22,10 @@ class UnknownActionError(ShortcutsException):
         super().__init__(message)
 
 
+class UnknownWFTextTokenAttachment(ShortcutsException):
+    '''Unknown WFTextTokenAttachment type'''
+
+
 class UnknownWFEncodeModeError(ShortcutsException):
     '''Unknown value of the WFEncodeMode field'''
 
