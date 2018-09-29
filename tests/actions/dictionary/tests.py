@@ -1,7 +1,7 @@
-from shortcuts.actions import DictionaryAction, SetDictionaryValueAction
+from shortcuts.actions import DictionaryAction, SetDictionaryValueAction, GetDictionaryFromInputAction
 from shortcuts import Shortcut, FMT_SHORTCUT
 
-from tests.conftest import ActionTomlLoadsMixin
+from tests.conftest import ActionTomlLoadsMixin, SimpleBaseDumpsLoadsTest
 
 
 class TestDictionaryAction:
@@ -124,3 +124,17 @@ class TestSetDictionaryValueAction(ActionTomlLoadsMixin):
         value = "{value}"
         '''
         self._assert_toml_loads(toml, SetDictionaryValueAction, {'key': key, 'value': value})
+
+
+class TestGetDictionaryFromInputAction(SimpleBaseDumpsLoadsTest):
+    action_class = GetDictionaryFromInputAction
+    itype = 'is.workflow.actions.detect.dictionary'
+    toml = '[[action]]\ntype = "get_dictionary"'
+    action_xml = '''
+      <dict>
+        <key>WFWorkflowActionIdentifier</key>
+        <string>is.workflow.actions.detect.dictionary</string>
+        <key>WFWorkflowActionParameters</key>
+        <dict></dict>
+      </dict>
+    '''

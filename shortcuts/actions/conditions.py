@@ -1,4 +1,4 @@
-from shortcuts.actions.base import BaseAction, ChoiceField, Field, GroupIDField
+from shortcuts.actions.base import BaseAction, ChoiceField, GroupIDField, VariablesField
 
 
 IF_CHOICES = (
@@ -15,7 +15,7 @@ class IfAction(BaseAction):
     _additional_identifier_field = 'WFControlFlowMode'
 
     condition = ChoiceField('WFCondition', choices=IF_CHOICES, capitalize=True, default=IF_CHOICES[0])
-    compare_with = Field('WFConditionalActionString')
+    compare_with = VariablesField('WFConditionalActionString')
     group_id = GroupIDField('GroupingIdentifier')
 
     default_fields = {

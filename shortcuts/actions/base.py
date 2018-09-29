@@ -138,11 +138,17 @@ class WFVariableField(Field):
         }
 
 
+SYSTEM_VARIABLES = {
+    'ask_when_run': 'Ask',
+    'shortcut_input': 'ExtensionInput',
+    'clipboard': 'Clipboard',
+    'current_date': 'CurrentDate',
+}
+SYSTEM_VARIABLES_TYPE_TO_VAR = {v: k for k, v in SYSTEM_VARIABLES.items()}
+
+
 class VariablesField(Field):
     _regexp = re.compile(r'({{[A-Za-z0-9_-]+}})')
-    _system_variables = {
-        'ask_when_run': 'Ask',
-    }
 
     def process_value(self, value: str) -> Dict:
         token = self._check_token_match(value)
@@ -156,7 +162,7 @@ class VariablesField(Field):
 
     def _check_token_match(self, value):
         variable = value.strip('{}')
-        var_type = self._system_variables.get(variable)
+        var_type = SYSTEM_VARIABLES.get(variable)
         if var_type:
             return {
                 'WFSerializationType': 'WFTextTokenAttachment',
@@ -177,7 +183,7 @@ class VariablesField(Field):
         offset = 0
         for m in self._regexp.finditer(value):
             variable_name = m.group().strip('{}')
-            var_type = self._system_variables.get(variable_name, 'Variable')
+            var_type = SYSTEM_VARIABLES.get(variable_name, 'Variable')
             variable_range = f'{{{m.start() - offset}, {1}}}'
             attachments_by_range[variable_range] = {
                 'Type': var_type,

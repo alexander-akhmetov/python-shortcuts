@@ -114,3 +114,47 @@ class TestActionWithAskWhenRunField:
             },
         }
         assert dump == exp_dump
+
+
+class TestVariablesField:
+    @pytest.mark.parametrize('variable, exp_data', [
+        (
+            '{{var}}',
+            {'attachmentsByRange': {'{0, 1}': {'Type': 'Variable', 'VariableName': 'var'}}, 'string': '￼'},
+        ),
+        (
+            '{{var1}} + {{var2}}',
+            {
+                'attachmentsByRange': {
+                    '{0, 1}': {'Type': 'Variable', 'VariableName': 'var1'},
+                    '{3, 1}': {'Type': 'Variable', 'VariableName': 'var2'},
+                },
+                'string': '￼ + ￼',
+            },
+        ),
+    ])
+    def test_field_with_variables(self, variable, exp_data):
+        f = VariablesField('')
+
+        exp_data = {
+            'Value': exp_data,
+            'WFSerializationType': 'WFTextTokenString',
+        }
+
+        assert f.process_value(variable) == exp_data
+
+    @pytest.mark.parametrize('variable, exp_data', [
+        (
+            '{{clipboard}}',
+            {'Type': 'Clipboard'},
+        ),
+    ])
+    def test_field_with_variables_with_token_only(self, variable, exp_data):
+        f = VariablesField('')
+
+        exp_data = {
+            'Value': exp_data,
+            'WFSerializationType': 'WFTextTokenAttachment',
+        }
+
+        assert f.process_value(variable) == exp_data

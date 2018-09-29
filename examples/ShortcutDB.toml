@@ -1,0 +1,184 @@
+[[action]]
+type = "comment"
+text = "https://shortcutdb.aleks.sh\nDatabase for your Apple Shortcuts"
+
+[[action]]
+type = "get_dictionary"
+
+[[action]]
+name = "request"
+type = "set_variable"
+
+[[action]]
+key = "operation"
+type = "get_value_for_key"
+
+[[action]]
+name = "operation"
+type = "set_variable"
+
+[[action]]
+text = "shortcuts_db"
+type = "text"
+
+[[action]]
+name = "db_dir"
+type = "set_variable"
+
+[[action]]
+text = "database"
+type = "text"
+
+[[action]]
+name = "db_name"
+type = "set_variable"
+
+[[action]]
+path = "{{db_dir}}￼"
+type = "create_folder"
+
+[[action]]
+name = "operation"
+type = "get_variable"
+
+[[action]]
+compare_with = "get"
+condition = "Equals"
+group_id = "8F484202-64AF-426C-90A4-F73E6788913E"
+type = "if"
+
+[[action]]
+not_found_error = true
+path = "{{db_dir}}￼/{{db_name}}￼.txt"
+show_picker = false
+type = "read_file"
+
+[[action]]
+separator_type = "New Lines"
+type = "split_text"
+
+[[action]]
+group_id = "9CAA8D7F-DC5C-4028-B58C-134E97FE56CA"
+type = "repeat_with_each_start"
+
+[[action]]
+type = "get_dictionary"
+
+[[action]]
+name = "row"
+type = "set_variable"
+
+[[action]]
+key = "key"
+type = "get_value_for_key"
+
+[[action]]
+name = "row_key"
+type = "set_variable"
+
+[[action]]
+name = "request"
+type = "get_variable"
+
+[[action]]
+key = "key"
+type = "get_value_for_key"
+
+[[action]]
+compare_with = "{{row_key}}￼"
+condition = "Equals"
+group_id = "83BDEADB-9605-4B86-A0F0-307D20367F02"
+type = "if"
+
+[[action]]
+name = "row"
+type = "get_variable"
+
+[[action]]
+key = "value"
+type = "get_value_for_key"
+
+[[action]]
+name = "result"
+type = "set_variable"
+
+[[action]]
+group_id = "83BDEADB-9605-4B86-A0F0-307D20367F02"
+type = "endif"
+
+[[action]]
+group_id = "9CAA8D7F-DC5C-4028-B58C-134E97FE56CA"
+type = "repeat_with_each_end"
+
+[[action]]
+group_id = "8F484202-64AF-426C-90A4-F73E6788913E"
+type = "endif"
+
+[[action]]
+compare_with = "set"
+condition = "Equals"
+group_id = "B5B99AC5-2588-4698-B9D3-193A092F0085"
+type = "if"
+
+[[action]]
+name = "request"
+type = "get_variable"
+
+[[action]]
+key = "key"
+type = "get_value_for_key"
+
+[[action]]
+name = "keyw"
+type = "set_variable"
+
+[[action]]
+name = "request"
+type = "get_variable"
+
+[[action]]
+key = "value"
+type = "get_value_for_key"
+
+[[action]]
+name = "valuew"
+type = "set_variable"
+
+[[action]]
+type = "dictionary"
+[[action.items]]
+key = "key"
+value = "{{keyw}}￼"
+
+[[action.items]]
+key = "value"
+value = "{{valuew}}￼"
+
+
+[[action]]
+path = "{{db_dir}}￼/{{db_name}}￼.txt"
+type = "append_file"
+
+[[action]]
+type = "dictionary"
+[[action.items]]
+key = "result"
+value = "ok"
+
+
+[[action]]
+name = "result"
+type = "set_variable"
+
+[[action]]
+group_id = "B5B99AC5-2588-4698-B9D3-193A092F0085"
+type = "endif"
+
+[[action]]
+name = "key"
+type = "set_variable"
+
+[[action]]
+name = "result"
+type = "get_variable"
+

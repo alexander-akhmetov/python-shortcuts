@@ -1,4 +1,4 @@
-from shortcuts.actions.base import BaseAction, ChoiceField, FloatField, GroupIDField, IntegerField
+from shortcuts.actions.base import BaseAction, BooleanField, ChoiceField, Field, FloatField, GroupIDField, IntegerField
 
 
 class NothingAction(BaseAction):
@@ -123,3 +123,18 @@ class HashAction(BaseAction):
     keyword = 'hash'
 
     hash_type = ChoiceField('WFHashType', choices=HASH_CHOICES, default=HASH_CHOICES[0])
+
+
+class GetMyShortcutsAction(BaseAction):
+    '''Get my shortcuts'''
+    itype = 'is.workflow.actions.getmyworkflows'
+    keyword = 'get_my_shortcuts'
+
+
+class RunShortcutAction(BaseAction):
+    '''Run shortcut'''
+    itype = 'is.workflow.actions.runworkflow'
+    keyword = 'run_shortcut'
+
+    show = BooleanField('WFShowWorkflow', default=False)
+    shortcut_name = Field('WFWorkflowName')

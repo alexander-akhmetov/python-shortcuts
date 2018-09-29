@@ -1,5 +1,5 @@
 from shortcuts import Shortcut, FMT_SHORTCUT
-from shortcuts.actions import URLAction, GetURLAction, URLDecodeAction, URLEncodeAction, ExpandURLAction
+from shortcuts.actions import URLAction, GetURLAction, URLDecodeAction, URLEncodeAction, ExpandURLAction, OpenURLAction
 
 from tests.conftest import ActionTomlLoadsMixin, SimpleBaseDumpsLoadsTest
 
@@ -123,6 +123,21 @@ class TestExpandURLAction(SimpleBaseDumpsLoadsTest):
       <dict>
         <key>WFWorkflowActionIdentifier</key>
         <string>is.workflow.actions.url.expand</string>
+        <key>WFWorkflowActionParameters</key>
+        <dict>
+        </dict>
+      </dict>
+    '''
+
+
+class TestOpenURLAction(SimpleBaseDumpsLoadsTest):
+    action_class = OpenURLAction
+    itype = 'is.workflow.actions.openurl'
+    toml = '[[action]]\ntype = "open_url"'
+    action_xml = '''
+      <dict>
+        <key>WFWorkflowActionIdentifier</key>
+        <string>is.workflow.actions.openurl</string>
         <key>WFWorkflowActionParameters</key>
         <dict>
         </dict>

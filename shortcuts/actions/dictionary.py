@@ -24,3 +24,9 @@ class DictionaryAction(BaseAction):
     keyword = 'dictionary'
 
     items = DictionaryField('WFItems')
+
+
+class GetDictionaryFromInputAction(BaseAction):
+    '''Get dictionary from input'''
+    itype = 'is.workflow.actions.detect.dictionary'
+    keyword = 'get_dictionary'

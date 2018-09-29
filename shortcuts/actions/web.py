@@ -80,3 +80,9 @@ class ExpandURLAction(BaseAction):
     '''
     itype = 'is.workflow.actions.url.expand'
     keyword = 'expand_url'
+
+
+class OpenURLAction(BaseAction):
+    '''Open URL from previous action'''
+    itype = 'is.workflow.actions.openurl'
+    keyword = 'open_url'

@@ -72,7 +72,7 @@ class ActionsRegistry:
         '''Returns action class by itype and plist parameters'''
         class_info = self._itype_to_action_map.get(itype)
         if not class_info:
-            raise exceptions.UnknownActionError(itype)
+            raise exceptions.UnknownActionError(itype, action_dict=action_params)
 
         value_type = class_info.get('type')
 
@@ -84,7 +84,7 @@ class ActionsRegistry:
             if field_value in class_info['value']:
                 return class_info['value'][field_value]
 
-        raise exceptions.UnknownActionError(itype)
+        raise exceptions.UnknownActionError(itype, action_dict=action_params)
 
     def get_by_keyword(self, keyword: str) -> Type[BaseAction]:
         '''Returns action class by keyword'''

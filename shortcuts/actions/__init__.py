@@ -4,7 +4,7 @@ from shortcuts.actions.b64 import Base64DecodeAction, Base64EncodeAction
 from shortcuts.actions.base import BaseAction
 from shortcuts.actions.calculation import CountAction
 from shortcuts.actions.conditions import ElseAction, EndIfAction, IfAction
-from shortcuts.actions.date import DateAction, FormatDateAction
+from shortcuts.actions.date import DateAction, DetectDateAction, FormatDateAction, GetTimeBetweenDates
 from shortcuts.actions.device import (
     GetBatteryLevelAction,
     GetDeviceDetailsAction,
@@ -19,8 +19,19 @@ from shortcuts.actions.device import (
     SetVolumeAction,
     SetWiFiAction,
 )
-from shortcuts.actions.dictionary import DictionaryAction, GetDictionaryValueAction, SetDictionaryValueAction
-from shortcuts.actions.files import CreateFolderAction, PreviewDocumentAction, ReadFileAction, SaveFileAction
+from shortcuts.actions.dictionary import (
+    DictionaryAction,
+    GetDictionaryFromInputAction,
+    GetDictionaryValueAction,
+    SetDictionaryValueAction,
+)
+from shortcuts.actions.files import (
+    AppendFileAction,
+    CreateFolderAction,
+    PreviewDocumentAction,
+    ReadFileAction,
+    SaveFileAction,
+)
 from shortcuts.actions.input import AskAction, GetClipboardAction
 from shortcuts.actions.menu import MenuEndAction, MenuItemAction, MenuStartAction
 from shortcuts.actions.messages import SendMessageAction
@@ -39,12 +50,14 @@ from shortcuts.actions.registry import ActionsRegistry
 from shortcuts.actions.scripting import (
     ContinueInShortcutAppAction,
     DelayAction,
+    GetMyShortcutsAction,
     HashAction,
     NothingAction,
     RepeatEachEndAction,
     RepeatEachStartAction,
     RepeatEndAction,
     RepeatStartAction,
+    RunShortcutAction,
     SetItemNameAction,
     ViewContentGraphAction,
     WaitToReturnAction,
@@ -61,7 +74,14 @@ from shortcuts.actions.text import (
     TextAction,
 )
 from shortcuts.actions.variables import AppendVariableAction, GetVariableAction, SetVariableAction
-from shortcuts.actions.web import ExpandURLAction, GetURLAction, URLAction, URLDecodeAction, URLEncodeAction
+from shortcuts.actions.web import (
+    ExpandURLAction,
+    GetURLAction,
+    OpenURLAction,
+    URLAction,
+    URLDecodeAction,
+    URLEncodeAction,
+)
 
 
 # flake8: noqa

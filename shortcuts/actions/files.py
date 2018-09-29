@@ -21,6 +21,14 @@ class SaveFileAction(BaseAction):
     show_picker = BooleanField('WFAskWhereToSave')
 
 
+class AppendFileAction(BaseAction):
+    '''Append file'''
+    itype = 'is.workflow.actions.file.append'
+    keyword = 'append_file'
+
+    path = VariablesField('WFFilePath')
+
+
 class CreateFolderAction(BaseAction):
     '''Create folder'''
     itype = 'is.workflow.actions.file.createfolder'

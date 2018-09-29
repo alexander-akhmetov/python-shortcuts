@@ -27,6 +27,17 @@ params:
 * text (*required*, *variables support*)
 * title (*required*, *variables support*)
 
+### AppendFileAction
+
+Append file
+
+**keyword**: `append_file`
+**shortcuts identifier**: `is.workflow.actions.file.append`
+
+params:
+
+* path (*required*, *variables support*)
+
 ### AppendVariableAction
 
 Append input to varaible
@@ -163,6 +174,13 @@ params:
 
 * time (*required*)
 
+### DetectDateAction
+
+Detect date
+
+**keyword**: `detect_date`
+**shortcuts identifier**: `is.workflow.actions.detect.date`
+
 ### DetectLanguageAction
 
 Detect Language with Microsoft
@@ -282,6 +300,13 @@ params:
 
   * `Current Brightness`
 
+### GetDictionaryFromInputAction
+
+Get dictionary from input
+
+**keyword**: `get_dictionary`
+**shortcuts identifier**: `is.workflow.actions.detect.dictionary`
+
 ### GetIPAddressAction
 
 Get current IP address
@@ -309,6 +334,13 @@ Get latest photos
 **keyword**: `get_last_photo`
 **shortcuts identifier**: `is.workflow.actions.getlastphoto`
 
+### GetMyShortcutsAction
+
+Get my shortcuts
+
+**keyword**: `get_my_shortcuts`
+**shortcuts identifier**: `is.workflow.actions.getmyworkflows`
+
 ### GetNameOfEmojiAction
 
 Get name of emoji
@@ -328,6 +360,34 @@ or song, or the text of a web page.
 
 **keyword**: `get_text_from_input`
 **shortcuts identifier**: `is.workflow.actions.detect.text`
+
+### GetTimeBetweenDates
+
+Get time difference between dates
+
+**keyword**: `get_time_between_dates`
+**shortcuts identifier**: `is.workflow.actions.gettimebetweendates`
+
+params:
+
+* custom_date ()
+* units (*required*, default=Total Time)  | _choices_:
+
+  * `Total Time`
+
+  * `Seconds`
+
+  * `Minutes`
+
+  * `Hours`
+
+  * `Days`
+
+  * `Weeks`
+
+  * `Years`
+
+  * `Other`
 
 ### GetURLAction
 
@@ -394,7 +454,7 @@ If
 
 params:
 
-* compare_with (*required*)
+* compare_with (*required*, *variables support*)
 * condition (*required*, default=Equals)  | _choices_:
 
   * `Equals`
@@ -449,6 +509,13 @@ params:
 params:
 
 * number (*required*)
+
+### OpenURLAction
+
+Open URL from previous action
+
+**keyword**: `open_url`
+**shortcuts identifier**: `is.workflow.actions.openurl`
 
 ### PreviewDocumentAction
 
@@ -514,6 +581,18 @@ Repeat with each start
 params:
 
 * group_id ()
+
+### RunShortcutAction
+
+Run shortcut
+
+**keyword**: `run_shortcut`
+**shortcuts identifier**: `is.workflow.actions.runworkflow`
+
+params:
+
+* shortcut_name (*required*)
+* show (*required*)
 
 ### SaveFileAction
 

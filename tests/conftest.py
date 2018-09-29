@@ -18,19 +18,28 @@ class ActionTomlLoadsMixin:
 class SimpleBaseDumpsLoadsTest(ActionTomlLoadsMixin):
     action_class = None
     itype = None
+
+    dump_data = None
+    dump_params = None
+
     toml = None
+    exp_toml_params = None
+
     action_xml = None
+    exp_xml_params = None
 
     def test_dumps(self):
-        action = self.action_class()
+        action = self.action_class(data=self.dump_data)
+        dump_params = self.dump_params if self.dump_params else {}
         exp_dump = {
             'WFWorkflowActionIdentifier': self.itype,
-            'WFWorkflowActionParameters': {}
+            'WFWorkflowActionParameters': dump_params,
         }
         assert action.dump() == exp_dump
 
     def test_loads_toml(self):
-        self._assert_toml_loads(self.toml, self.action_class, {})
+        exp_params = self.exp_toml_params if self.exp_toml_params else {}
+        self._assert_toml_loads(self.toml, self.action_class, exp_params)
 
     def test_loads_plist(self):
         plist = SHORTCUT_EMPTY_PLIST_TEMPLATE.format(actions=self.action_xml.strip())
@@ -39,3 +48,6 @@ class SimpleBaseDumpsLoadsTest(ActionTomlLoadsMixin):
 
         assert len(sc.actions) == 1
         assert isinstance(sc.actions[0], self.action_class) is True
+
+        exp_params = self.exp_xml_params if self.exp_xml_params else {}
+        assert sc.actions[0].data == exp_params

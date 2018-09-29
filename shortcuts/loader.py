@@ -7,6 +7,7 @@ import toml
 
 from shortcuts import exceptions
 from shortcuts.actions import actions_registry
+from shortcuts.actions.base import SYSTEM_VARIABLES_TYPE_TO_VAR
 
 
 if TYPE_CHECKING:
@@ -130,8 +131,8 @@ class WFTextTokenAttachmentField(WFDeserializer):
         value = self._data.get('Value', {})
         field_type = value.get('Type')
 
-        if field_type == 'Ask':
-            return '{{ask_when_run}}'
+        if field_type in SYSTEM_VARIABLES_TYPE_TO_VAR:
+            return '{{%s}}' % SYSTEM_VARIABLES_TYPE_TO_VAR[field_type]
 
         if field_type == 'Variable':
             return value.get('VariableName')  # todo: #2
@@ -187,7 +188,7 @@ class WFVariableStringField(WFDeserializer):
 
         positions = {}
 
-        supported_types = ('Ask', 'Variable')
+        supported_types = list(SYSTEM_VARIABLES_TYPE_TO_VAR.keys()) + ['Variable']
 
         for variable_range, variable_data in value['attachmentsByRange'].items():
             if variable_data['Type'] not in supported_types:
@@ -196,10 +197,11 @@ class WFVariableStringField(WFDeserializer):
                     f'Unknown variable type: {variable_data["Type"]} (possibly it is a magic variable)',
                 )
 
-            if variable_data['Type'] == 'Variable':
+            variable_type = variable_data['Type']
+            if variable_type == 'Variable':
                 variable_name = variable_data['VariableName']
-            elif variable_data['Type'] == 'Ask':
-                variable_name = 'ask_when_run'
+            elif variable_type in SYSTEM_VARIABLES_TYPE_TO_VAR:
+                variable_name = SYSTEM_VARIABLES_TYPE_TO_VAR[variable_type]
 
             # let's find positions of all variables in the string
             position = self._get_position(variable_range)

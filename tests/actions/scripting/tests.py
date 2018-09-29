@@ -11,11 +11,13 @@ from shortcuts.actions import (
     RepeatEachStartAction,
     RepeatEachEndAction,
     HashAction,
+    GetMyShortcutsAction,
+    RunShortcutAction,
 )
 from shortcuts.actions.scripting import HASH_CHOICES
 from shortcuts import Shortcut, FMT_SHORTCUT
 
-from tests.conftest import ActionTomlLoadsMixin
+from tests.conftest import ActionTomlLoadsMixin, SimpleBaseDumpsLoadsTest
 
 
 class TestNothingAction(ActionTomlLoadsMixin):
@@ -184,3 +186,50 @@ class TestHashAction(ActionTomlLoadsMixin):
             'SHA512',
         )
         assert HASH_CHOICES == exp_choices
+
+
+class TestGetMyShortcutsAction(SimpleBaseDumpsLoadsTest):
+    action_class = GetMyShortcutsAction
+    itype = 'is.workflow.actions.getmyworkflows'
+    toml = '[[action]]\ntype = "get_my_shortcuts"'
+    action_xml = '''
+      <dict>
+        <key>WFWorkflowActionIdentifier</key>
+        <string>is.workflow.actions.getmyworkflows</string>
+        <key>WFWorkflowActionParameters</key>
+        <dict></dict>
+      </dict>
+    '''
+
+
+class TestRunShortcut(SimpleBaseDumpsLoadsTest):
+    action_class = RunShortcutAction
+    itype = 'is.workflow.actions.runworkflow'
+
+    dump_data = {'shortcut_name': 'test', 'show': False}
+    dump_params = {
+        'WFShowWorkflow': False,
+        'WFWorkflowName': 'test',
+    }
+
+    toml = '''
+    [[action]]
+    type = "run_shortcut"
+    shortcut_name = "test_shortcut"
+    '''
+    exp_toml_params = {'shortcut_name': 'test_shortcut'}
+
+    action_xml = '''
+      <dict>
+        <key>WFWorkflowActionIdentifier</key>
+        <string>is.workflow.actions.runworkflow</string>
+        <key>WFWorkflowActionParameters</key>
+        <dict>
+        <key>WFWorkflowName</key>
+        <string>mywf</string>
+        <key>WFShowWorkflow</key>
+        <true/>
+        </dict>
+      </dict>
+    '''
+    exp_xml_params = {'shortcut_name': 'mywf', 'show': True}
