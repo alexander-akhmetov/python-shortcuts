@@ -1,6 +1,6 @@
 # Fields
 
-These fields are available for creating [a new action](/docs/new_action/md).
+These fields are available for creating [a new action](/docs/new_action.md).
 
 ## Field
 
