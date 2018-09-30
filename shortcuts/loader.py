@@ -16,6 +16,7 @@ if TYPE_CHECKING:
 
 
 class BaseLoader:
+    '''Base class for all classes which load shortcuts from files or strings'''
     @classmethod
     def load(cls, file_obj: BinaryIO) -> 'Shortcut':
         content = file_obj.read()
@@ -73,6 +74,7 @@ class PListLoader(BaseLoader):
 
     @classmethod
     def _action_from_dict(cls, action_dict: Dict) -> 'BaseAction':
+        '''Returns action instance from the dictionary with all necessary parameters'''
         identifier = action_dict['WFWorkflowActionIdentifier']
         action_class = actions_registry.get_by_itype(
             itype=identifier,
@@ -104,6 +106,8 @@ class WFDeserializer:
             # todo: check if there are other types
             return self._data
 
+        # based on 'WFSerializationType' from the self._data
+        # we need to choose a proper class to deserialize it
         serialization_to_field_map: Dict[str, Type[WFDeserializer]] = {
             'WFTextTokenString': WFVariableStringField,
             'WFDictionaryFieldValue': WFDictionaryField,
@@ -181,13 +185,20 @@ class WFVariableStringField(WFDeserializer):
     """
     @property
     def deserialized_data(self) -> str:
+        '''
+        Raises:
+            shortcuts.exceptions.UnknownVariableError: if variable's type is not supported
+        '''
         # if this field is a string with variables,
-        # we need to convert it to our representation
+        # we need to convert it into our representation
         value = self._data['Value']
         value_string = value['string']
 
         positions = {}
 
+        # sometimes variables are system (read more near SYSTEM_VARIABLES_TYPE_TO_VAR definition)
+        # and we need to detect this by checking variable's type
+        # if it is not supported - raise an exception
         supported_types = list(SYSTEM_VARIABLES_TYPE_TO_VAR.keys()) + ['Variable']
 
         for variable_range, variable_data in value['attachmentsByRange'].items():

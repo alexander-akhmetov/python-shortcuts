@@ -5,13 +5,29 @@ import shortcuts
 from shortcuts.utils import download_shortcut, is_shortcut_url
 
 
-def convert_shortcut(input_filepath, out_filepath):
+def convert_shortcut(input_filepath: str, out_filepath: str) -> None:
+    '''
+    Args:
+        input_filepath: input file with a shortcut
+        out_filepath: where save the shortcut
+
+    Detects input and output file formats and converts input file into output.
+    There is 4 possible (and supported) situations:
+        1. URL -> .toml (downloads, converts and saves)
+        2. URL -> .shortcut (downloads and saves directly)
+        3. toml -> shortcut (converts and saves)
+        4. shortcut -> toml (converts and saves)
+
+    Supported URLs are www.icloud.com/shortcuts/... and icloud.com/shortcuts
+    '''
     input_format = _get_format(input_filepath)
     out_format = _get_format(out_filepath)
 
     if input_format == 'url':
         sc_data = download_shortcut(input_filepath)
         if out_format == shortcuts.FMT_SHORTCUT:
+            # if output format is .shortcut just save
+            # downloaded data without any conversion
             with open(out_filepath, 'wb') as f:
                 f.write(sc_data)
             return
@@ -24,7 +40,14 @@ def convert_shortcut(input_filepath, out_filepath):
         sc.dump(f, file_format=out_format)
 
 
-def _get_format(filepath):
+def _get_format(filepath: str) -> str:
+    '''
+    Args:
+        filepath: path for a file which format needs to be determined
+
+    Returns:
+        file format (shortcut, toml or url)
+    '''
     if is_shortcut_url(filepath):
         return 'url'
 

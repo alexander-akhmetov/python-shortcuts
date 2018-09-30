@@ -8,7 +8,8 @@ from urllib.request import urlopen
 from shortcuts import exceptions
 
 
-def download_shortcut(url: str) -> str:
+def download_shortcut(url: str):
+    '''Downloads shortcut file if possible and returns a string with plist'''
     shortcut_id = _get_shortcut_uuid(url)
     shortcut_info = _get_shortcut_info(shortcut_id)
     download_url = shortcut_info['fields']['shortcut']['value']['downloadURL']
@@ -18,7 +19,11 @@ def download_shortcut(url: str) -> str:
 
 def _get_shortcut_uuid(url: str) -> str:
     '''
-    Public url: https://www.icloud.com/shortcuts/{uuid}/
+    Returns uuid from shortcut's public URL.
+    Public url example: https://www.icloud.com/shortcuts/{uuid}/
+
+    Raises:
+        shortcuts.exceptions.InvalidShortcutURLError if the "url" parameter is not valid
     '''
     if not is_shortcut_url(url):
         raise exceptions.InvalidShortcutURLError('Not a shortcut URL!')
@@ -35,6 +40,7 @@ def _get_shortcut_uuid(url: str) -> str:
 
 
 def is_shortcut_url(url: str) -> bool:
+    '''Determines is it a shortcut URL or not'''
     parsed_url = urlparse(url)
     if parsed_url.netloc not in ('www.icloud.com', 'icloud.com'):
         return False
@@ -45,12 +51,24 @@ def is_shortcut_url(url: str) -> bool:
 
 
 def _get_shortcut_info(shortcut_id: str) -> Dict:
+    '''
+    Downloads shortcut information from a public (and not official) API
+
+    Returns:
+        dictioanry with shortcut information
+    '''
     url = f'https://www.icloud.com/shortcuts/api/records/{shortcut_id}/'
     response = _make_request(url)
     return json.loads(response.read())
 
 
 def _make_request(url: str):
+    '''
+    Makes HTTP request
+
+    Raises:
+        RuntimeError if response.status != 200
+    '''
     response = urlopen(url)
 
     if response.status != 200:  # type: ignore

@@ -27,6 +27,13 @@ class BaseAction:
         return data
 
     def _get_parameters(self) -> Dict:
+        '''
+        Returns dictionary with action parameters for a plist.
+        It iterates over all fields, and processes the action's params to get values for all fields.
+
+        As an output we have dictionary, and values of the dictionary
+        are prepared data by corresponding field's "process_value" method.
+        '''
         params = {}
 
         if self.default_fields:
@@ -49,6 +56,7 @@ class BaseAction:
 
     @property
     def fields(self) -> List[Any]:
+        '''Returns list of all fields of the action (with memoization).'''
         if not hasattr(self, '_fields'):
             self._fields: List['Field'] = []
             for attr in dir(self):
@@ -71,6 +79,7 @@ class Field:
         self.default = default
 
     def process_value(self, value):
+        '''Prepares the value to be represented in the Shortcuts app'''
         if self.capitalize:
             value = value.capitalize()
 
@@ -138,6 +147,10 @@ class WFVariableField(Field):
         }
 
 
+# system variables are special variables supported by Shortcuts app.
+# Like "Ask when run", "Clipboard", "Current date" and others
+# Keys in the dictionary are variable names in the python-shortcuts
+# and values are names in the app
 SYSTEM_VARIABLES = {
     'ask_when_run': 'Ask',
     'shortcut_input': 'ExtensionInput',

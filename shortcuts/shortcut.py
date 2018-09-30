@@ -54,7 +54,7 @@ class Shortcut:
 
     @classmethod
     def _get_loader_class(self, file_format: str) -> Type[BaseLoader]:
-        """Based on file_format returns loader class"""
+        """Based on file_format returns loader class for the format"""
         supported_formats = {
             FMT_SHORTCUT: PListLoader,
             FMT_TOML: TomlLoader,
@@ -137,6 +137,18 @@ class Shortcut:
                     raise exceptions.IncompleteCycleError('Incomplete cycle')
 
     def _set_menu_items(self):
+        '''
+        Menu consists of many items:
+            start menu
+            menu item 1
+            menu item2
+            end menu
+        And start menu must know all items (titles).
+        So this function iterates over all actions, finds menu items and saves information
+        about them to a corresponding "start menu" action.
+
+        # todo: move to menu item logic
+        '''
         menus = []
         for action in self.actions:
             if isinstance(action, MenuStartAction):

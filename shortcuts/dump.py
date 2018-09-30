@@ -10,12 +10,15 @@ if TYPE_CHECKING:
 
 
 class BaseDumper:
+    '''
+    Base class to dump shortcuts
+    '''
     def __init__(self, shortcut: 'Shortcut') -> None:
         self.shortcut = shortcut
 
     def dump(self, file_obj: BinaryIO) -> None:
         data = self.dumps()
-        if type(data) is str:
+        if isinstance(data, str):
             data = data.encode('utf-8')  # type: ignore
         file_obj.write(data)  # type: ignore
 
@@ -24,6 +27,10 @@ class BaseDumper:
 
 
 class PListDumper(BaseDumper):
+    '''
+    PListDumper is a class which dumps shortcuts to
+    binary plist files supported by Apple Shortcuts app
+    '''
     def dump(self, file_obj: BinaryIO) -> None:  # type: ignore
         binary = plistlib.dumps(  # todo: change dumps to binary and remove this
             plistlib.loads(self.dumps().encode('utf-8')),  # type: ignore
@@ -45,6 +52,7 @@ class PListDumper(BaseDumper):
 
 
 class TomlDumper(BaseDumper):
+    '''TomlDumper is a class which dumps shortcuts to toml files'''
     def dumps(self) -> str:
         data = {
             'action': [self._process_action(a) for a in self.shortcut.actions],
