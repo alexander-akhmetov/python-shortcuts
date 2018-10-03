@@ -18,6 +18,8 @@ The library is in a very early development state (PR welcome!), so it does not s
 * [Changelog](CHANGELOG.md)
 * [Documentation](docs/)
 
+Supported Python version: **>=3.6**.
+
 ## Why
 
 I wanted to convert my shortcut to a file in human-readable format. :)
