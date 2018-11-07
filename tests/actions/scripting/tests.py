@@ -13,6 +13,7 @@ from shortcuts.actions import (
     HashAction,
     GetMyShortcutsAction,
     RunShortcutAction,
+    ChooseFromListAction
 )
 from shortcuts.actions.scripting import HASH_CHOICES
 from shortcuts import Shortcut, FMT_SHORTCUT
@@ -200,6 +201,35 @@ class TestGetMyShortcutsAction(SimpleBaseDumpsLoadsTest):
         <dict></dict>
       </dict>
     '''
+
+
+class TestChooseFromListAction(SimpleBaseDumpsLoadsTest):
+    action_class = ChooseFromListAction
+    itype = 'is.workflow.actions.choosefromlist'
+    dump_data = {'select_multiple': False, 'select_all_initially': False}
+    dump_params = {'WFChooseFromListActionSelectMultiple': False, 'WFChooseFromListActionSelectAll': False}
+    toml = '''
+        [[action]] 
+         type = "choose_from_list"
+         prompt = "test"
+           '''
+    exp_toml_params = {'prompt': 'test'}
+    action_xml = '''
+    <dict>
+    <key>WFWorkflowActionIdentifier</key>
+            <string>is.workflow.actions.choosefromlist</string>
+            <key>WFWorkflowActionParameters</key>
+            <dict>
+                <key>WFChooseFromListActionPrompt</key>
+                <string>test</string>
+                <key>WFChooseFromListActionSelectAll</key>
+                <true/>
+                <key>WFChooseFromListActionSelectMultiple</key>
+                <true/>
+            </dict>
+    </dict>
+    '''
+    exp_xml_params = {'select_all_initially': True, 'select_multiple': True, 'prompt': 'test'}
 
 
 class TestRunShortcut(SimpleBaseDumpsLoadsTest):

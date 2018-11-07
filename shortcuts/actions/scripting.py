@@ -1,6 +1,5 @@
 from shortcuts.actions.base import BaseAction, BooleanField, ChoiceField, Field, FloatField, GroupIDField, IntegerField
 
-
 class NothingAction(BaseAction):
     '''Nothing'''
     itype = 'is.workflow.actions.nothing'
@@ -36,6 +35,15 @@ class ContinueInShortcutAppAction(BaseAction):
     '''Continue in shortcut app'''
     itype = 'is.workflow.actions.handoff'
     keyword = 'continue_in_shortcut_app'
+
+
+class ChooseFromListAction(BaseAction):
+    '''Choose from list'''
+    itype = 'is.workflow.actions.choosefromlist'
+    keyword = 'choose_from_list'
+    prompt = Field('WFChooseFromListActionPrompt', required=False)
+    select_multiple = BooleanField('WFChooseFromListActionSelectMultiple', required=False)
+    select_all_initially = BooleanField('WFChooseFromListActionSelectAll', required=False)
 
 
 class DelayAction(BaseAction):
