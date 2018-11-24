@@ -510,6 +510,17 @@ params:
 
 * number (*required*)
 
+### OpenAppAction
+
+Opens the specified app.
+
+**keyword**: `open_app`
+**shortcuts identifier**: `is.workflow.actions.openapp`
+
+params:
+
+* app (*required*)
+
 ### OpenURLAction
 
 Open URL from previous action

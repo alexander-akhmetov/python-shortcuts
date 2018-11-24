@@ -146,3 +146,11 @@ class RunShortcutAction(BaseAction):
 
     show = BooleanField('WFShowWorkflow', default=False)
     shortcut_name = Field('WFWorkflowName')
+
+
+class OpenAppAction(BaseAction):
+    '''Opens the specified app.'''
+    itype = 'is.workflow.actions.openapp'
+    keyword = 'open_app'
+
+    app = Field('WFAppIdentifier')
