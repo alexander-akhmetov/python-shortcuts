@@ -236,11 +236,19 @@ class TestChooseFromListAction(SimpleBaseDumpsLoadsTest):
 class TestOpenAppAction(SimpleBaseDumpsLoadsTest):
     action_class = OpenAppAction
     itype = 'is.workflow.actions.openapp'
+
+    dump_data = {'app': 'com.apple.camera'}
+    dump_params = {
+        'WFAppIdentifier': 'com.apple.camera'
+    }
+    
     toml = '''
         [[action]] 
          type = "open_app"
          app = "com.apple.camera"
     '''
+    exp_toml_params = {'app': 'com.apple.camera'}
+
     action_xml = '''
       <dict>
         <key>WFWorkflowActionIdentifier</key>
@@ -252,6 +260,7 @@ class TestOpenAppAction(SimpleBaseDumpsLoadsTest):
         </dict>
       </dict>
     '''
+    exp_xml_params = {'app': 'com.apple.camera'}
 
 
 class TestRunShortcut(SimpleBaseDumpsLoadsTest):
