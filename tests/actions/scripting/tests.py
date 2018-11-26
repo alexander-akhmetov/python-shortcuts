@@ -13,7 +13,8 @@ from shortcuts.actions import (
     HashAction,
     GetMyShortcutsAction,
     RunShortcutAction,
-    ChooseFromListAction
+    ChooseFromListAction,
+    OpenAppAction
 )
 from shortcuts.actions.scripting import HASH_CHOICES
 from shortcuts import Shortcut, FMT_SHORTCUT
@@ -230,6 +231,36 @@ class TestChooseFromListAction(SimpleBaseDumpsLoadsTest):
     </dict>
     '''
     exp_xml_params = {'select_all_initially': True, 'select_multiple': True, 'prompt': 'test'}
+
+
+class TestOpenAppAction(SimpleBaseDumpsLoadsTest):
+    action_class = OpenAppAction
+    itype = 'is.workflow.actions.openapp'
+
+    dump_data = {'app': 'com.apple.camera'}
+    dump_params = {
+        'WFAppIdentifier': 'com.apple.camera'
+    }
+    
+    toml = '''
+        [[action]] 
+         type = "open_app"
+         app = "com.apple.camera"
+    '''
+    exp_toml_params = {'app': 'com.apple.camera'}
+
+    action_xml = '''
+      <dict>
+        <key>WFWorkflowActionIdentifier</key>
+        <string>is.workflow.actions.openapp</string>
+        <key>WFWorkflowActionParameters</key>
+        <dict>
+            <key>WFAppIdentifier</key>
+            <string>com.apple.camera</string>
+        </dict>
+      </dict>
+    '''
+    exp_xml_params = {'app': 'com.apple.camera'}
 
 
 class TestRunShortcut(SimpleBaseDumpsLoadsTest):
