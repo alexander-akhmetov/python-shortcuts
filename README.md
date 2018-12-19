@@ -123,3 +123,8 @@ See [documentation](/docs/new_action.md).
 * ☐ Document all actions
 * ☐ Support magic variables
 * ☐ Support all current actions from Shortcuts app
+
+
+### Similar projects
+
+* [Shortcuts JS](https://github.com/joshfarrant/shortcuts-js)
