@@ -61,6 +61,8 @@ from shortcuts.actions.scripting import (
     SetItemNameAction,
     ViewContentGraphAction,
     WaitToReturnAction,
+    ChooseFromListAction,
+    OpenAppAction,
 )
 from shortcuts.actions.text import (
     ChangeCaseAction,
