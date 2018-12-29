@@ -44,5 +44,7 @@ class GetTimeBetweenDates(BaseAction):
     itype = 'is.workflow.actions.gettimebetweendates'
     keyword = 'get_time_between_dates'
 
-    units = ChoiceField('WFTimeUntilUnit', choices=DATE_DIFF_UNITS_CHOICES, default=DATE_DIFF_UNITS_CHOICES[0])
+    units = ChoiceField(
+        'WFTimeUntilUnit', choices=DATE_DIFF_UNITS_CHOICES, default=DATE_DIFF_UNITS_CHOICES[0]
+    )
     custom_date = Field('WFTimeUntilCustomDate', required=False)

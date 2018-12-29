@@ -11,16 +11,18 @@ from shortcuts.actions.base import SYSTEM_VARIABLES_TYPE_TO_VAR
 
 
 if TYPE_CHECKING:
-    from shortcuts import Shortcut  # noqa
-    from shortcuts.actions.base import BaseAction  # noqa
+    from shortcuts import Shortcut    # noqa
+    from shortcuts.actions.base import BaseAction    # noqa
 
 
 class BaseLoader:
     '''Base class for all classes which load shortcuts from files or strings'''
+
     @classmethod
     def load(cls, file_obj: BinaryIO) -> 'Shortcut':
         content = file_obj.read()
-        return cls.loads(content)  # type: ignore
+
+        return cls.loads(content)    # type: ignore
 
     @classmethod
     def loads(cls, string: str) -> 'Shortcut':
@@ -30,7 +32,7 @@ class BaseLoader:
 class TomlLoader(BaseLoader):
     @classmethod
     def loads(cls, string: str) -> 'Shortcut':
-        from shortcuts import Shortcut  # noqa
+        from shortcuts import Shortcut    # noqa
 
         if isinstance(string, (bytearray, bytes)):
             string = string.decode('utf-8')
@@ -55,7 +57,7 @@ class TomlLoader(BaseLoader):
 class PListLoader(BaseLoader):
     @classmethod
     def loads(cls, string: Union[str, bytes]) -> 'Shortcut':
-        from shortcuts import Shortcut  # noqa
+        from shortcuts import Shortcut    # noqa
 
         if isinstance(string, str):
             string = string.encode('utf-8')
@@ -80,12 +82,12 @@ class PListLoader(BaseLoader):
             itype=identifier,
             action_params=action_dict,
         )
-        shortcut_name_to_field_name = {
-            f.name: f._attr for f in action_class().fields
-        }
+        shortcut_name_to_field_name = {f.name: f._attr for f in action_class().fields}
         params = {
             shortcut_name_to_field_name[p]: WFDeserializer(v).deserialized_data
+
             for p, v in action_dict['WFWorkflowActionParameters'].items()
+
             if p in shortcut_name_to_field_name
         }
 
@@ -97,6 +99,7 @@ class WFDeserializer:
     Deserializer for WF fields (from shortcuts plist)
     which converts their data to a format acceptable by Actions
     """
+
     def __init__(self, data) -> None:
         self._data = data
 
@@ -104,6 +107,7 @@ class WFDeserializer:
     def deserialized_data(self) -> Union[str, List, Dict]:
         if not isinstance(self._data, dict):
             # todo: check if there are other types
+
             return self._data
 
         # based on 'WFSerializationType' from the self._data
@@ -115,7 +119,8 @@ class WFDeserializer:
             'WFTokenAttachmentParameterState': WFTokenAttachmentParameterStateField,
         }
 
-        deserializer = serialization_to_field_map[self._data.get('WFSerializationType')]  # type: ignore
+        deserializer = serialization_to_field_map[self._data.get('WFSerializationType')]    # type: ignore
+
         if deserializer:
             return deserializer(self._data).deserialized_data
 
@@ -139,7 +144,7 @@ class WFTextTokenAttachmentField(WFDeserializer):
             return '{{%s}}' % SYSTEM_VARIABLES_TYPE_TO_VAR[field_type]
 
         if field_type == 'Variable':
-            return value.get('VariableName')  # todo: #2
+            return value.get('VariableName')    # todo: #2
 
         raise exceptions.UnknownWFTextTokenAttachment(
             f'Unknown token attachment type: {field_type}',
@@ -150,10 +155,12 @@ class WFDictionaryField(WFDeserializer):
     @property
     def deserialized_data(self) -> List[Dict[str, Any]]:
         result = []
+
         for item in self._data['Value']['WFDictionaryFieldValueItems']:
             key = WFDeserializer(item['WFKey']).deserialized_data
             value = WFDeserializer(item['WFValue']).deserialized_data
             result.append({'key': key, 'value': value})
+
         return result
 
 
@@ -183,6 +190,7 @@ class WFVariableStringField(WFDeserializer):
     to a shortcuts-string:
         "Hello, {{var}}!"
     """
+
     @property
     def deserialized_data(self) -> str:
         '''
@@ -209,6 +217,7 @@ class WFVariableStringField(WFDeserializer):
                 )
 
             variable_type = variable_data['Type']
+
             if variable_type == 'Variable':
                 variable_name = variable_data['VariableName']
             elif variable_type in SYSTEM_VARIABLES_TYPE_TO_VAR:
@@ -220,6 +229,7 @@ class WFVariableStringField(WFDeserializer):
 
         # and then replace them with '{{variable_name}}'
         offset = 0
+
         for pos, variable in collections.OrderedDict(sorted(positions.items())).items():
             value_string = value_string[:pos + offset] + variable + value_string[pos + offset:]
             offset += len(variable)
@@ -228,4 +238,5 @@ class WFVariableStringField(WFDeserializer):
 
     def _get_position(self, range_str: str) -> int:
         ranges = list(map(lambda x: int(x.strip()), range_str.strip('{} ').split(',')))
+
         return ranges[0]

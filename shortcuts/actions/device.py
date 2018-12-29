@@ -73,7 +73,7 @@ class SetDoNotDisturbAction(BaseAction):
     keyword = 'set_do_not_disturb'
 
     default_fields = {
-        'AssertionType': 'Turned Off',  # todo: support more "until"
+        'AssertionType': 'Turned Off',    # todo: support more "until"
     }
 
     enabled = BooleanField('Enabled')

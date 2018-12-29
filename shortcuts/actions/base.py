@@ -4,9 +4,11 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 
 class BaseAction:
-    itype: Union[str, None] = None  # identificator from shortcut source (being used by iOS app): WFWorkflowActionIdentifier
-    keyword: Union[str, None] = None  # this keyword is being used in the toml file
-    default_fields: Dict = {}  # noqa dictionary with default parameters fields
+    itype: Union[
+        str, None
+    ] = None    # identificator from shortcut source (being used by iOS app): WFWorkflowActionIdentifier
+    keyword: Union[str, None] = None    # this keyword is being used in the toml file
+    default_fields: Dict = {}    # noqa dictionary with default parameters fields
     _additional_identifier_field: Union[str, None] = None
     _default_class: Optional[bool] = None
 
@@ -20,7 +22,7 @@ class BaseAction:
             'WFWorkflowActionParameters': {},
         }
 
-        data['WFWorkflowActionParameters'].update(  # type: ignore
+        data['WFWorkflowActionParameters'].update(    # type: ignore
             self._get_parameters(),
         )
 
@@ -94,7 +96,9 @@ class GroupIDField(Field):
 
 class ChoiceField(Field):
     def __init__(self, name, choices, default=None, required=True, capitalize=False, help=''):
-        super().__init__(name=name, required=required, default=default, capitalize=capitalize, help=help)
+        super().__init__(
+            name=name, required=required, default=default, capitalize=capitalize, help=help
+        )
         self.choices = choices
 
     def process_value(self, value):
@@ -179,7 +183,9 @@ class VariablesField(Field):
         if var_type:
             return {
                 'WFSerializationType': 'WFTextTokenAttachment',
-                'Value': {'Type': var_type},
+                'Value': {
+                    'Type': var_type
+                },
             }
 
         return None
@@ -244,7 +250,7 @@ class DictionaryField(VariablesField):
         key = super().process_value(value['key'])
         value = super().process_value(value['value'])
         return {
-            'WFItemType': 0,  # text
+            'WFItemType': 0,    # text
             'WFKey': key,
             'WFValue': value,
         }

@@ -14,7 +14,9 @@ class IfAction(BaseAction):
 
     _additional_identifier_field = 'WFControlFlowMode'
 
-    condition = ChoiceField('WFCondition', choices=IF_CHOICES, capitalize=True, default=IF_CHOICES[0])
+    condition = ChoiceField(
+        'WFCondition', choices=IF_CHOICES, capitalize=True, default=IF_CHOICES[0]
+    )
     compare_with = VariablesField('WFConditionalActionString')
     group_id = GroupIDField('GroupingIdentifier')
 

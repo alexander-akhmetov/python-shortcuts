@@ -13,7 +13,11 @@ class URLAction(BaseAction):
 
 class HTTPMethodField(Field):
     methods = (
-        'GET', 'POST', 'PUT', 'PATCH', 'DELETE',
+        'GET',
+        'POST',
+        'PUT',
+        'PATCH',
+        'DELETE',
     )
 
     def process_value(self, value):
@@ -31,8 +35,8 @@ class GetURLAction(BaseAction):
     advanced = BooleanField('Advanced', required=False)
     method = HTTPMethodField('WFHTTPMethod', required=False)
     headers = DictionaryField('WFHTTPHeaders', required=False)
-    json = DictionaryField('WFJSONValues', required=False)  # todo: array or dict
-    form = DictionaryField('WFFormValues', required=False)  # todo: array or dict
+    json = DictionaryField('WFJSONValues', required=False)    # todo: array or dict
+    form = DictionaryField('WFFormValues', required=False)    # todo: array or dict
 
     def __init__(self, data: Union[Dict, None] = None) -> None:
         self.default_fields = {}
