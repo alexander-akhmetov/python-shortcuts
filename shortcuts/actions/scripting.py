@@ -1,5 +1,6 @@
 from shortcuts.actions.base import BaseAction, BooleanField, ChoiceField, Field, FloatField, GroupIDField, IntegerField
 
+
 class NothingAction(BaseAction):
     '''Nothing'''
     itype = 'is.workflow.actions.nothing'

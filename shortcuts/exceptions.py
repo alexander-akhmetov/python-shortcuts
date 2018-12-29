@@ -4,6 +4,7 @@ class ShortcutsException(Exception):
 
 class UnknownActionError(ShortcutsException):
     '''Action is not supported'''
+
     def __init__(self, itype, action_dict=None):
         message = f'''
             Unknown shortcut action: "{itype}"

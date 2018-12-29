@@ -48,11 +48,13 @@ from shortcuts.actions.out import (
 from shortcuts.actions.photo import CameraAction, GetLastPhotoAction, ImageConvertAction, SelectPhotoAction
 from shortcuts.actions.registry import ActionsRegistry
 from shortcuts.actions.scripting import (
+    ChooseFromListAction,
     ContinueInShortcutAppAction,
     DelayAction,
     GetMyShortcutsAction,
     HashAction,
     NothingAction,
+    OpenAppAction,
     RepeatEachEndAction,
     RepeatEachStartAction,
     RepeatEndAction,
@@ -61,8 +63,6 @@ from shortcuts.actions.scripting import (
     SetItemNameAction,
     ViewContentGraphAction,
     WaitToReturnAction,
-    ChooseFromListAction,
-    OpenAppAction,
 )
 from shortcuts.actions.text import (
     ChangeCaseAction,
@@ -88,9 +88,7 @@ from shortcuts.actions.web import (
 
 # flake8: noqa
 
-
 logger = logging.getLogger(__name__)
-
 
 actions_registry = ActionsRegistry()
 
