@@ -99,6 +99,16 @@ shortcuts https://www.icloud.com/shortcuts/... my_shortcut.toml  # or my_shortcu
 
 And it will download this shortcut and save it in `toml` or `shortcut` format.
 
+### Docker
+
+It's possible to use pre-built Docker container with python-shortcuts inside:
+
+```shell
+# convert s.toml fropm the current directory into s.shortcut
+
+docker run -v $(pwd):/files akhmetov/shortcuts-cli /files/s.toml /files/s.shortcut
+```
+
 ## Development
 
 ### Tests

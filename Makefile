@@ -30,3 +30,8 @@ release-pypi:
 
 isort-fix:
 	isort -rc shortcuts
+
+
+docker-build-cli:
+	test -n "$(TAG)"
+	docker build -t akhmetov/shortcuts-cli:$(TAG) .
