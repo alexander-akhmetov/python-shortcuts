@@ -107,6 +107,21 @@ It's possible to use pre-built Docker container with python-shortcuts inside:
 # convert s.toml fropm the current directory into s.shortcut
 
 docker run -v $(pwd):/files akhmetov/shortcuts-cli /files/s.toml /files/s.shortcut
+
+
+docker run -v $(pwd):/files akhmetov/shortcuts-cli --help
+
+    usage: shortcuts [-h] [--version] [file] [output]
+
+    Shortcuts: Siri shortcuts creator
+
+    positional arguments:
+      file        Input file: *.(toml|shortcut|itunes url)
+      output      Output file: *.(toml|shortcut)
+
+    optional arguments:
+      -h, --help  show this help message and exit
+      --version   Version information
 ```
 
 ## Development
