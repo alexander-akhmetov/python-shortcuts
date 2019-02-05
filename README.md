@@ -104,7 +104,7 @@ And it will download this shortcut and save it in `toml` or `shortcut` format.
 It's possible to use pre-built Docker container with python-shortcuts inside:
 
 ```shell
-# convert s.toml fropm the current directory into s.shortcut
+# convert s.toml from the current directory into s.shortcut
 
 docker run -v $(pwd):/files akhmetov/shortcuts-cli /files/s.toml /files/s.shortcut
 
