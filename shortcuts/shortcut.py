@@ -30,12 +30,12 @@ class Shortcut:
         self.client_version = client_version
         self.minimal_client_version = minimal_client_version
         self.actions = actions if actions else []
-        
+
     def __enter__(self):
-    	return self
-    	
+        return self
+
     def __exit__(self, exc_type, exc_val, exc_tb):
-    	pass
+        pass
 
     @classmethod
     def load(cls, file_object: BinaryIO, file_format: str = FMT_TOML) -> 'Shortcut':
