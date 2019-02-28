@@ -22,6 +22,12 @@ RuntimeError:
         }
 ```
 
+> To convert shortcut file from binary xml format to xml you can you this command on MacOS:
+>
+> ```shell
+> plutil -convert xml1 sc.shortcut
+> ```
+
 So, how to fix this?
 You can create a new action somewhere class in the `src/actions/` directory
 and import it in the `shortcuts/actions/__init__.py`:
