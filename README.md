@@ -99,6 +99,31 @@ shortcuts https://www.icloud.com/shortcuts/... my_shortcut.toml  # or my_shortcu
 
 And it will download this shortcut and save it in `toml` or `shortcut` format.
 
+### Docker
+
+It's possible to use [pre-built Docker container](https://cloud.docker.com/u/akhmetov/repository/docker/akhmetov/shortcuts-cli) with python-shortcuts inside:
+
+```shell
+# convert s.toml from the current directory into s.shortcut
+
+docker run -v $(pwd):/files akhmetov/shortcuts-cli /files/s.toml /files/s.shortcut
+
+
+docker run -v $(pwd):/files akhmetov/shortcuts-cli --help
+
+    usage: shortcuts [-h] [--version] [file] [output]
+
+    Shortcuts: Siri shortcuts creator
+
+    positional arguments:
+      file        Input file: *.(toml|shortcut|itunes url)
+      output      Output file: *.(toml|shortcut)
+
+    optional arguments:
+      -h, --help  show this help message and exit
+      --version   Version information
+```
+
 ## Development
 
 ### Tests
