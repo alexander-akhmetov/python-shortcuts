@@ -48,9 +48,10 @@
         },
         "mypy-extensions": {
             "hashes": [
-                "sha256:a161e3b917053de87dbe469987e173e49fb454eca10ef28b48b384538cc11458"
+                "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d",
+                "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"
             ],
-            "version": "==0.4.2"
+            "version": "==0.4.3"
         },
         "pycodestyle": {
             "hashes": [
@@ -194,11 +195,11 @@
         },
         "mock": {
             "hashes": [
-                "sha256:5ce3c71c5545b472da17b72268978914d0252980348636840bd34a00b5cc96c1",
-                "sha256:b158b6df76edd239b8208d481dc46b6afd45a846b7812ff0ce58971cf5bc8bba"
+                "sha256:83657d894c90d5681d62155c82bda9c1187827525880eda8ff5df4ec813437c3",
+                "sha256:d157e52d4e5b938c550f39eb2fd15610db062441a9c2747d3dbfa9298211d0f8"
             ],
             "index": "pypi",
-            "version": "==2.0.0"
+            "version": "==3.0.5"
         },
         "more-itertools": {
             "hashes": [
@@ -217,16 +218,10 @@
         },
         "mypy-extensions": {
             "hashes": [
-                "sha256:a161e3b917053de87dbe469987e173e49fb454eca10ef28b48b384538cc11458"
+                "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d",
+                "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"
             ],
-            "version": "==0.4.2"
-        },
-        "pbr": {
-            "hashes": [
-                "sha256:2c8e420cd4ed4cec4e7999ee47409e876af575d4c35a45840d59e8b5f3155ab8",
-                "sha256:b32c8ccaac7b1a20c0ce00ce317642e6cf231cf038f9875e0280e28af5bf7ac9"
-            ],
-            "version": "==5.4.3"
+            "version": "==0.4.3"
         },
         "pluggy": {
             "hashes": [
