@@ -206,11 +206,11 @@
         },
         "mock": {
             "hashes": [
-                "sha256:83657d894c90d5681d62155c82bda9c1187827525880eda8ff5df4ec813437c3",
-                "sha256:d157e52d4e5b938c550f39eb2fd15610db062441a9c2747d3dbfa9298211d0f8"
+                "sha256:56358390ebde40c927ec5666626be7d4310a2533ae3aed5c2dd7b55b80687f48",
+                "sha256:8fff3fd7c5796ea78ae2847f32e87ad4e111e03fef6e90d03b5efb4882211d78"
             ],
             "index": "pypi",
-            "version": "==3.0.5"
+            "version": "==4.0.0"
         },
         "more-itertools": {
             "hashes": [
