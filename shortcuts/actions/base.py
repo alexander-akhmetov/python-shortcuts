@@ -17,7 +17,7 @@ class BaseAction:
         self.default_fields = deepcopy(self.default_fields)
 
     def dump(self) -> Dict:
-        data = {
+        data: Dict[str, Any] = {
             'WFWorkflowActionIdentifier': self.itype,
             'WFWorkflowActionParameters': {},
         }
