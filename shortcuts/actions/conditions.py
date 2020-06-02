@@ -9,6 +9,7 @@ IF_CHOICES = (
 
 class IfAction(BaseAction):
     '''If'''
+
     itype = 'is.workflow.actions.conditional'
     keyword = 'if'
 
@@ -27,6 +28,7 @@ class IfAction(BaseAction):
 
 class ElseAction(BaseAction):
     '''Else'''
+
     itype = 'is.workflow.actions.conditional'
     keyword = 'else'
 
@@ -41,6 +43,7 @@ class ElseAction(BaseAction):
 
 class EndIfAction(BaseAction):
     '''EndIf: end a condition'''
+
     itype = 'is.workflow.actions.conditional'
     keyword = 'endif'
 

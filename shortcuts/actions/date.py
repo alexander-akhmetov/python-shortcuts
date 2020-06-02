@@ -3,6 +3,7 @@ from shortcuts.actions.base import BaseAction, ChoiceField, Field, VariablesFiel
 
 class DateAction(BaseAction):
     '''Date'''
+
     itype = 'is.workflow.actions.date'
     keyword = 'date'
 
@@ -11,6 +12,7 @@ class DateAction(BaseAction):
 
 class FormatDateAction(BaseAction):
     '''Format date'''
+
     itype = 'is.workflow.actions.format.date'
     keyword = 'format_date'
 
@@ -23,6 +25,7 @@ class FormatDateAction(BaseAction):
 
 class DetectDateAction(BaseAction):
     '''Detect date'''
+
     itype = 'is.workflow.actions.detect.date'
     keyword = 'detect_date'
 
@@ -41,10 +44,13 @@ DATE_DIFF_UNITS_CHOICES = (
 
 class GetTimeBetweenDates(BaseAction):
     '''Get time difference between dates'''
+
     itype = 'is.workflow.actions.gettimebetweendates'
     keyword = 'get_time_between_dates'
 
     units = ChoiceField(
-        'WFTimeUntilUnit', choices=DATE_DIFF_UNITS_CHOICES, default=DATE_DIFF_UNITS_CHOICES[0]
+        'WFTimeUntilUnit',
+        choices=DATE_DIFF_UNITS_CHOICES,
+        default=DATE_DIFF_UNITS_CHOICES[0],
     )
     custom_date = Field('WFTimeUntilCustomDate', required=False)

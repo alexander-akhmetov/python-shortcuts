@@ -3,6 +3,7 @@ from shortcuts.actions.base import BaseAction
 
 class Base64EncodeAction(BaseAction):
     '''Base64 encode'''
+
     itype = 'is.workflow.actions.base64encode'
     keyword = 'base64_encode'
 
@@ -16,6 +17,7 @@ class Base64EncodeAction(BaseAction):
 
 class Base64DecodeAction(BaseAction):
     '''Base64 decode'''
+
     itype = 'is.workflow.actions.base64encode'
     keyword = 'base64_decode'
 

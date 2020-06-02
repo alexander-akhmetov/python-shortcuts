@@ -1,8 +1,16 @@
-from shortcuts.actions.base import BaseAction, BooleanField, ChoiceField, Field, FloatField, VariablesField
+from shortcuts.actions.base import (
+    BaseAction,
+    BooleanField,
+    ChoiceField,
+    Field,
+    FloatField,
+    VariablesField,
+)
 
 
 class ShowResultAction(BaseAction):
     '''Show result: shows a result'''
+
     itype = 'is.workflow.actions.showresult'
     keyword = 'show_result'
 
@@ -11,6 +19,7 @@ class ShowResultAction(BaseAction):
 
 class ShowAlertAction(BaseAction):
     '''Show alert'''
+
     itype = 'is.workflow.actions.alert'
     keyword = 'alert'
 
@@ -21,6 +30,7 @@ class ShowAlertAction(BaseAction):
 
 class NotificationAction(BaseAction):
     '''Show notification'''
+
     itype = 'is.workflow.actions.notification'
     keyword = 'notification'
 
@@ -31,12 +41,14 @@ class NotificationAction(BaseAction):
 
 class ExitAction(BaseAction):
     '''Exit'''
+
     itype = 'is.workflow.actions.exit'
     keyword = 'exit'
 
 
 class VibrateAction(BaseAction):
     '''Vibrate'''
+
     itype = 'is.workflow.actions.vibrate'
     keyword = 'vibrate'
 
@@ -57,6 +69,7 @@ SPEAK_LANGUAGE_CHOICES = (
 
 class SpeakTextAction(BaseAction):
     '''Speak text'''
+
     itype = 'is.workflow.actions.speaktext'
     keyword = 'speak_text'
 

@@ -3,6 +3,7 @@ from shortcuts.actions.base import BaseAction, VariablesField
 
 class SendMessageAction(BaseAction):
     '''Send Message'''
+
     itype = 'is.workflow.actions.sendmessage'
     keyword = 'send_message'
 

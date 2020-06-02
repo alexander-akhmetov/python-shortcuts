@@ -3,6 +3,7 @@ from shortcuts.actions.base import BaseAction, BooleanField, Field, VariablesFie
 
 class ReadFileAction(BaseAction):
     '''Get file'''
+
     itype = 'is.workflow.actions.documentpicker.open'
     keyword = 'read_file'
 
@@ -13,6 +14,7 @@ class ReadFileAction(BaseAction):
 
 class SaveFileAction(BaseAction):
     '''Save file'''
+
     itype = 'is.workflow.actions.documentpicker.save'
     keyword = 'save_file'
 
@@ -23,6 +25,7 @@ class SaveFileAction(BaseAction):
 
 class AppendFileAction(BaseAction):
     '''Append file'''
+
     itype = 'is.workflow.actions.file.append'
     keyword = 'append_file'
 
@@ -31,6 +34,7 @@ class AppendFileAction(BaseAction):
 
 class CreateFolderAction(BaseAction):
     '''Create folder'''
+
     itype = 'is.workflow.actions.file.createfolder'
     keyword = 'create_folder'
 
@@ -39,5 +43,6 @@ class CreateFolderAction(BaseAction):
 
 class PreviewDocumentAction(BaseAction):
     '''Preview document'''
+
     itype = 'is.workflow.actions.previewdocument'
     keyword = 'preview'

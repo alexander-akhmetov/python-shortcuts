@@ -11,8 +11,8 @@ from shortcuts.actions.base import SYSTEM_VARIABLES_TYPE_TO_VAR
 
 
 if TYPE_CHECKING:
-    from shortcuts import Shortcut    # noqa
-    from shortcuts.actions.base import BaseAction    # noqa
+    from shortcuts import Shortcut  # noqa
+    from shortcuts.actions.base import BaseAction  # noqa
 
 
 class BaseLoader:
@@ -22,7 +22,7 @@ class BaseLoader:
     def load(cls, file_obj: BinaryIO) -> 'Shortcut':
         content = file_obj.read()
 
-        return cls.loads(content)    # type: ignore
+        return cls.loads(content)  # type: ignore
 
     @classmethod
     def loads(cls, string: str) -> 'Shortcut':
@@ -32,7 +32,7 @@ class BaseLoader:
 class TomlLoader(BaseLoader):
     @classmethod
     def loads(cls, string: str) -> 'Shortcut':
-        from shortcuts import Shortcut    # noqa
+        from shortcuts import Shortcut  # noqa
 
         if isinstance(string, (bytearray, bytes)):
             string = string.decode('utf-8')
@@ -57,7 +57,7 @@ class TomlLoader(BaseLoader):
 class PListLoader(BaseLoader):
     @classmethod
     def loads(cls, string: Union[str, bytes]) -> 'Shortcut':
-        from shortcuts import Shortcut    # noqa
+        from shortcuts import Shortcut  # noqa
 
         if isinstance(string, str):
             string = string.encode('utf-8')
@@ -79,15 +79,12 @@ class PListLoader(BaseLoader):
         '''Returns action instance from the dictionary with all necessary parameters'''
         identifier = action_dict['WFWorkflowActionIdentifier']
         action_class = actions_registry.get_by_itype(
-            itype=identifier,
-            action_params=action_dict,
+            itype=identifier, action_params=action_dict,
         )
         shortcut_name_to_field_name = {f.name: f._attr for f in action_class().fields}
         params = {
             shortcut_name_to_field_name[p]: WFDeserializer(v).deserialized_data
-
             for p, v in action_dict['WFWorkflowActionParameters'].items()
-
             if p in shortcut_name_to_field_name
         }
 
@@ -119,7 +116,7 @@ class WFDeserializer:
             'WFTokenAttachmentParameterState': WFTokenAttachmentParameterStateField,
         }
 
-        deserializer = serialization_to_field_map[self._data.get('WFSerializationType')]    # type: ignore
+        deserializer = serialization_to_field_map[self._data.get('WFSerializationType')]  # type: ignore
 
         if deserializer:
             return deserializer(self._data).deserialized_data
@@ -144,7 +141,7 @@ class WFTextTokenAttachmentField(WFDeserializer):
             return '{{%s}}' % SYSTEM_VARIABLES_TYPE_TO_VAR[field_type]
 
         if field_type == 'Variable':
-            return value.get('VariableName')    # todo: #2
+            return value.get('VariableName')  # todo: #2
 
         raise exceptions.UnknownWFTextTokenAttachment(
             f'Unknown token attachment type: {field_type}',
@@ -231,7 +228,11 @@ class WFVariableStringField(WFDeserializer):
         offset = 0
 
         for pos, variable in collections.OrderedDict(sorted(positions.items())).items():
-            value_string = value_string[:pos + offset] + variable + value_string[pos + offset:]
+            value_string = (
+                value_string[: pos + offset]
+                + variable
+                + value_string[pos + offset :]  # noqa
+            )
             offset += len(variable)
 
         return value_string

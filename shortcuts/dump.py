@@ -5,8 +5,8 @@ import toml
 
 
 if TYPE_CHECKING:
-    from shortcuts import Shortcut    # noqa
-    from shortcuts.actions.base import BaseAction    # noqa
+    from shortcuts import Shortcut  # noqa
+    from shortcuts.actions.base import BaseAction  # noqa
 
 
 class BaseDumper:
@@ -21,8 +21,8 @@ class BaseDumper:
         data = self.dumps()
 
         if isinstance(data, str):
-            data = data.encode('utf-8')    # type: ignore
-        file_obj.write(data)    # type: ignore
+            data = data.encode('utf-8')  # type: ignore
+        file_obj.write(data)  # type: ignore
 
     def dumps(self) -> str:
         raise NotImplementedError()
@@ -34,7 +34,7 @@ class PListDumper(BaseDumper):
     binary plist files supported by Apple Shortcuts app
     '''
 
-    def dump(self, file_obj: BinaryIO) -> None:    # type: ignore
+    def dump(self, file_obj: BinaryIO) -> None:  # type: ignore
         binary = plistlib.dumps(  # todo: change dumps to binary and remove this
             plistlib.loads(self.dumps().encode('utf-8')),  # type: ignore
             fmt=plistlib.FMT_BINARY,
@@ -47,7 +47,7 @@ class PListDumper(BaseDumper):
             'WFWorkflowImportQuestions': self.shortcut._get_import_questions(),
             'WFWorkflowClientRelease': self.shortcut.client_release,
             'WFWorkflowClientVersion': self.shortcut.client_version,
-            'WFWorkflowTypes': ['NCWidget', 'WatchKit'],    # todo: change me
+            'WFWorkflowTypes': ['NCWidget', 'WatchKit'],  # todo: change me
             'WFWorkflowIcon': self.shortcut._get_icon(),
             'WFWorkflowInputContentItemClasses': self.shortcut._get_input_content_item_classes(),
         }
@@ -67,8 +67,9 @@ class TomlDumper(BaseDumper):
 
     def _process_action(self, action: Type['BaseAction']) -> Dict[str, Any]:
         data = {
-            f._attr: action.data[f._attr]    # ignore: (mypy/#1465)
-            for f in action.fields if f._attr in action.data    # type: ignore
+            f._attr: action.data[f._attr]
+            for f in action.fields  # type: ignore
+            if f._attr in action.data
         }
         data['type'] = action.keyword
 

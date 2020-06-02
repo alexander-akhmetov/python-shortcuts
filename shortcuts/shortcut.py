@@ -18,12 +18,12 @@ FMT_SHORTCUT = 'shortcut'
 
 class Shortcut:
     def __init__(
-            self,
-            name: str = '',
-            client_release: str = '2.0',
-            client_version: str = '700',
-            minimal_client_version: int = 411,
-            actions: List = None
+        self,
+        name: str = '',
+        client_release: str = '2.0',
+        client_version: str = '700',
+        minimal_client_version: int = 411,
+        actions: List = None,
     ) -> None:
         self.name = name
         self.client_release = client_release
@@ -122,7 +122,7 @@ class Shortcut:
             if control_mode == 0:
                 # 0 means beginning of the group
                 group_id = action.data.get('group_id', str(uuid.uuid4()))
-                action.data['group_id'] = group_id    # if wasn't defined
+                action.data['group_id'] = group_id  # if wasn't defined
                 ids.append(group_id)
             elif control_mode == 1:
                 # 1 - else, so we don't need to remove group_id from the stack

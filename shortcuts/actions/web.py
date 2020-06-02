@@ -5,6 +5,7 @@ from shortcuts.actions.base import BaseAction, BooleanField, DictionaryField, Fi
 
 class URLAction(BaseAction):
     '''URL: returns url as an output'''
+
     itype = 'is.workflow.actions.url'
     keyword = 'url'
 
@@ -23,20 +24,23 @@ class HTTPMethodField(Field):
     def process_value(self, value):
         value = super().process_value(value).upper()
         if value not in self.methods:
-            raise ValueError(f'Unsupported HTTP method: {value}. \nSupported: {self.methods}')
+            raise ValueError(
+                f'Unsupported HTTP method: {value}. \nSupported: {self.methods}'
+            )
         return value
 
 
 class GetURLAction(BaseAction):
     '''Get URL'''
+
     itype = 'is.workflow.actions.downloadurl'
     keyword = 'get_url'
 
     advanced = BooleanField('Advanced', required=False)
     method = HTTPMethodField('WFHTTPMethod', required=False)
     headers = DictionaryField('WFHTTPHeaders', required=False)
-    json = DictionaryField('WFJSONValues', required=False)    # todo: array or dict
-    form = DictionaryField('WFFormValues', required=False)    # todo: array or dict
+    json = DictionaryField('WFJSONValues', required=False)  # todo: array or dict
+    form = DictionaryField('WFFormValues', required=False)  # todo: array or dict
 
     def __init__(self, data: Union[Dict, None] = None) -> None:
         self.default_fields = {}
@@ -53,6 +57,7 @@ class GetURLAction(BaseAction):
 
 class URLEncodeAction(BaseAction):
     '''URL Encode'''
+
     itype = 'is.workflow.actions.urlencode'
     keyword = 'urlencode'
 
@@ -66,6 +71,7 @@ class URLEncodeAction(BaseAction):
 
 class URLDecodeAction(BaseAction):
     '''URL Dencode'''
+
     itype = 'is.workflow.actions.urlencode'
     keyword = 'urldecode'
 
@@ -82,11 +88,13 @@ class ExpandURLAction(BaseAction):
     that have been shortened by a URL shortening
     service like TinyURL or bit.ly
     '''
+
     itype = 'is.workflow.actions.url.expand'
     keyword = 'expand_url'
 
 
 class OpenURLAction(BaseAction):
     '''Open URL from previous action'''
+
     itype = 'is.workflow.actions.openurl'
     keyword = 'open_url'

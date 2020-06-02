@@ -63,7 +63,9 @@ def _get_format(filepath: str) -> str:
 
 def main():
     parser = argparse.ArgumentParser(description='Shortcuts: Siri shortcuts creator')
-    parser.add_argument('file', nargs='?', help='Input file: *.(toml|shortcut|itunes url)')
+    parser.add_argument(
+        'file', nargs='?', help='Input file: *.(toml|shortcut|itunes url)'
+    )
     parser.add_argument('output', nargs='?', help='Output file: *.(toml|shortcut)')
     parser.add_argument('--version', action='store_true', help='Version information')
 

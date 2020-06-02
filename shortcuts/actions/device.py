@@ -3,12 +3,14 @@ from shortcuts.actions.base import BaseAction, BooleanField, ChoiceField, FloatF
 
 class GetBatteryLevelAction(BaseAction):
     '''Get battery level'''
+
     itype = 'is.workflow.actions.getbatterylevel'
     keyword = 'get_battery_level'
 
 
 class GetIPAddressAction(BaseAction):
     '''Get current IP address'''
+
     itype = 'is.workflow.actions.getipaddress'
     keyword = 'get_ip_address'
 
@@ -29,6 +31,7 @@ DEVICE_DETAIL_CHOICES = (
 
 class GetDeviceDetailsAction(BaseAction):
     '''Get device details'''
+
     itype = 'is.workflow.actions.getdevicedetails'
     keyword = 'get_device_details'
 
@@ -37,6 +40,7 @@ class GetDeviceDetailsAction(BaseAction):
 
 class SetAirplaneModeAction(BaseAction):
     '''Set airplane mode'''
+
     itype = 'is.workflow.actions.airplanemode.set'
     keyword = 'set_airplane_mode'
 
@@ -45,6 +49,7 @@ class SetAirplaneModeAction(BaseAction):
 
 class SetBluetoothAction(BaseAction):
     '''Set bluetooth'''
+
     itype = 'is.workflow.actions.bluetooth.set'
     keyword = 'set_bluetooth'
 
@@ -53,6 +58,7 @@ class SetBluetoothAction(BaseAction):
 
 class SetBrightnessAction(BaseAction):
     '''Set brightness'''
+
     itype = 'is.workflow.actions.setbrightness'
     keyword = 'set_brightness'
 
@@ -61,6 +67,7 @@ class SetBrightnessAction(BaseAction):
 
 class SetMobileDataAction(BaseAction):
     '''Set mobile data'''
+
     itype = 'is.workflow.actions.cellulardata.set'
     keyword = 'set_mobile_data'
 
@@ -69,11 +76,12 @@ class SetMobileDataAction(BaseAction):
 
 class SetDoNotDisturbAction(BaseAction):
     '''Set Do Not Disturb'''
+
     itype = 'is.workflow.actions.dnd.set'
     keyword = 'set_do_not_disturb'
 
     default_fields = {
-        'AssertionType': 'Turned Off',    # todo: support more "until"
+        'AssertionType': 'Turned Off',  # todo: support more "until"
     }
 
     enabled = BooleanField('Enabled')
@@ -81,6 +89,7 @@ class SetDoNotDisturbAction(BaseAction):
 
 class SetTorchAction(BaseAction):
     '''Set Torch'''
+
     itype = 'is.workflow.actions.flashlight'
     keyword = 'set_torch'
 
@@ -89,6 +98,7 @@ class SetTorchAction(BaseAction):
 
 class SetLowPowerModeAction(BaseAction):
     '''Set Low Power mode'''
+
     itype = 'is.workflow.actions.lowpowermode.set'
     keyword = 'set_low_power_mode'
 
@@ -97,6 +107,7 @@ class SetLowPowerModeAction(BaseAction):
 
 class SetVolumeAction(BaseAction):
     '''Set volume'''
+
     itype = 'is.workflow.actions.setvolume'
     keyword = 'set_volume'
 
@@ -105,6 +116,7 @@ class SetVolumeAction(BaseAction):
 
 class SetWiFiAction(BaseAction):
     '''Set WiFi'''
+
     itype = 'is.workflow.actions.wifi.set'
     keyword = 'set_wifi'
 

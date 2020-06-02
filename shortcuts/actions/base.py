@@ -6,9 +6,9 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 class BaseAction:
     itype: Union[
         str, None
-    ] = None    # identificator from shortcut source (being used by iOS app): WFWorkflowActionIdentifier
-    keyword: Union[str, None] = None    # this keyword is being used in the toml file
-    default_fields: Dict = {}    # noqa dictionary with default parameters fields
+    ] = None  # identificator from shortcut source (being used by iOS app): WFWorkflowActionIdentifier
+    keyword: Union[str, None] = None  # this keyword is being used in the toml file
+    default_fields: Dict = {}  # noqa dictionary with default parameters fields
     _additional_identifier_field: Union[str, None] = None
     _default_class: Optional[bool] = None
 
@@ -22,7 +22,7 @@ class BaseAction:
             'WFWorkflowActionParameters': {},
         }
 
-        data['WFWorkflowActionParameters'].update(    # type: ignore
+        data['WFWorkflowActionParameters'].update(  # type: ignore
             self._get_parameters(),
         )
 
@@ -48,7 +48,9 @@ class BaseAction:
                 if field.default is not None:
                     data_value = field.default
                 elif field.required:
-                    raise ValueError(f'{self}, Field is required: {field._attr}:{field.name}')
+                    raise ValueError(
+                        f'{self}, Field is required: {field._attr}:{field.name}'
+                    )
                 else:
                     continue
 
@@ -95,9 +97,15 @@ class GroupIDField(Field):
 
 
 class ChoiceField(Field):
-    def __init__(self, name, choices, default=None, required=True, capitalize=False, help=''):
+    def __init__(
+        self, name, choices, default=None, required=True, capitalize=False, help=''
+    ):
         super().__init__(
-            name=name, required=required, default=default, capitalize=capitalize, help=help
+            name=name,
+            required=required,
+            default=default,
+            capitalize=capitalize,
+            help=help,
         )
         self.choices = choices
 
@@ -183,9 +191,7 @@ class VariablesField(Field):
         if var_type:
             return {
                 'WFSerializationType': 'WFTextTokenAttachment',
-                'Value': {
-                    'Type': var_type
-                },
+                'Value': {'Type': var_type},
             }
 
         return None
@@ -197,7 +203,9 @@ class VariablesField(Field):
             'string': string,
         }
 
-    def _get_variables_from_text(self, value: str) -> Tuple[Dict[str, Dict[str, str]], str]:
+    def _get_variables_from_text(
+        self, value: str
+    ) -> Tuple[Dict[str, Dict[str, str]], str]:
         attachments_by_range = {}
         offset = 0
         for m in self._regexp.finditer(value):
@@ -241,7 +249,9 @@ class DictionaryField(VariablesField):
     def process_value(self, value):
         return {
             'Value': {
-                'WFDictionaryFieldValueItems': [self._process_single_value(v) for v in value],
+                'WFDictionaryFieldValueItems': [
+                    self._process_single_value(v) for v in value
+                ],
             },
             'WFSerializationType': 'WFDictionaryFieldValue',
         }
@@ -250,7 +260,7 @@ class DictionaryField(VariablesField):
         key = super().process_value(value['key'])
         value = super().process_value(value['value'])
         return {
-            'WFItemType': 0,    # text
+            'WFItemType': 0,  # text
             'WFKey': key,
             'WFValue': value,
         }

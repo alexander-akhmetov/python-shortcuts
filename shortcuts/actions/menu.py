@@ -26,6 +26,7 @@ class MenuStartAction(BaseAction):
 
     As in other actions which have `group_id` field, you don't need to specify it, it will be generated automatically.
     '''
+
     itype = 'is.workflow.actions.choosefrommenu'
     keyword = 'start_menu'
 
@@ -47,6 +48,7 @@ class MenuItemAction(BaseAction):
     You must specify the title for the item.
     After this action write all actions which you want to be executed when a user selects this option in the menu.
     '''
+
     itype = 'is.workflow.actions.choosefrommenu'
     keyword = 'menu_item'
 
@@ -62,6 +64,7 @@ class MenuItemAction(BaseAction):
 
 class MenuEndAction(BaseAction):
     '''End menu'''
+
     itype = 'is.workflow.actions.choosefrommenu'
     keyword = 'end_menu'
 

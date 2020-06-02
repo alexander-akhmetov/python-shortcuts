@@ -4,7 +4,12 @@ from shortcuts.actions.b64 import Base64DecodeAction, Base64EncodeAction
 from shortcuts.actions.base import BaseAction
 from shortcuts.actions.calculation import CountAction
 from shortcuts.actions.conditions import ElseAction, EndIfAction, IfAction
-from shortcuts.actions.date import DateAction, DetectDateAction, FormatDateAction, GetTimeBetweenDates
+from shortcuts.actions.date import (
+    DateAction,
+    DetectDateAction,
+    FormatDateAction,
+    GetTimeBetweenDates,
+)
 from shortcuts.actions.device import (
     GetBatteryLevelAction,
     GetDeviceDetailsAction,
@@ -45,7 +50,12 @@ from shortcuts.actions.out import (
     SpeakTextAction,
     VibrateAction,
 )
-from shortcuts.actions.photo import CameraAction, GetLastPhotoAction, ImageConvertAction, SelectPhotoAction
+from shortcuts.actions.photo import (
+    CameraAction,
+    GetLastPhotoAction,
+    ImageConvertAction,
+    SelectPhotoAction,
+)
 from shortcuts.actions.registry import ActionsRegistry
 from shortcuts.actions.scripting import (
     ChooseFromListAction,
@@ -75,7 +85,11 @@ from shortcuts.actions.text import (
     SplitTextAction,
     TextAction,
 )
-from shortcuts.actions.variables import AppendVariableAction, GetVariableAction, SetVariableAction
+from shortcuts.actions.variables import (
+    AppendVariableAction,
+    GetVariableAction,
+    SetVariableAction,
+)
 from shortcuts.actions.web import (
     ExpandURLAction,
     GetURLAction,

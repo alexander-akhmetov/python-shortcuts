@@ -38,9 +38,11 @@ def _get_shortcut_uuid(url: str) -> str:
         try:
             uuid.UUID(
                 shortcut_id
-            )    # just for validation, raises an error if it's not a valid UUID
+            )  # just for validation, raises an error if it's not a valid UUID
         except ValueError:
-            raise exceptions.InvalidShortcutURLError(f'Can not find shortcut id in "{url}"')
+            raise exceptions.InvalidShortcutURLError(
+                f'Can not find shortcut id in "{url}"'
+            )
 
         return shortcut_id
 
@@ -80,7 +82,7 @@ def _make_request(url: str):
     '''
     response = urlopen(url)
 
-    if response.status != 200:    # type: ignore
+    if response.status != 200:  # type: ignore
         raise RuntimeError(
             f'Can not get shortcut information from API: response code {response.status}'  # type: ignore
         )

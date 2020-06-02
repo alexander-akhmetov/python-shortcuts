@@ -3,6 +3,7 @@ from shortcuts.actions.base import BaseAction, ChoiceField, Field, VariablesFiel
 
 class CommentAction(BaseAction):
     '''Comment: just a comment'''
+
     itype = 'is.workflow.actions.comment'
     keyword = 'comment'
 
@@ -11,6 +12,7 @@ class CommentAction(BaseAction):
 
 class TextAction(BaseAction):
     '''Text: returns text as an output'''
+
     itype = 'is.workflow.actions.gettext'
     keyword = 'text'
 
@@ -29,6 +31,7 @@ CASE_CHOICES = (
 
 class ChangeCaseAction(BaseAction):
     '''Change case'''
+
     itype = 'is.workflow.actions.text.changecase'
     keyword = 'change_case'
 
@@ -45,6 +48,7 @@ SPLIT_SEPARATOR_CHOICES = (
 
 class SplitTextAction(BaseAction):
     '''Split text'''
+
     itype = 'is.workflow.actions.text.split'
     keyword = 'split_text'
 
@@ -62,12 +66,14 @@ class SplitTextAction(BaseAction):
 
 class DetectLanguageAction(BaseAction):
     '''Detect Language with Microsoft'''
+
     itype = 'is.workflow.actions.detectlanguage'
     keyword = 'detect_language'
 
 
 class GetNameOfEmojiAction(BaseAction):
     '''Get name of emoji'''
+
     itype = 'is.workflow.actions.getnameofemoji'
     keyword = 'get_name_of_emoji'
 
@@ -80,17 +86,20 @@ class GetTextFromInputAction(BaseAction):
     For example, this action can get the name of a photo
     or song, or the text of a web page.
     '''
+
     itype = 'is.workflow.actions.detect.text'
     keyword = 'get_text_from_input'
 
 
 class ScanQRBarCodeAction(BaseAction):
     '''Scan QR/Barcode'''
+
     itype = 'is.workflow.actions.scanbarcode'
     keyword = 'scan_barcode'
 
 
 class ShowDefinitionAction(BaseAction):
     '''Show definition'''
+
     itype = 'is.workflow.actions.showdefinition'
     keyword = 'show_definition'

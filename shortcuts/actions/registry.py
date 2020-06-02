@@ -43,14 +43,20 @@ class ActionsRegistry:
 
     def register_action(self, action_class: Type[BaseAction]) -> None:
         '''Registers action class in the registry'''
-        self._keyword_to_action_map[action_class.keyword] = action_class    # type: ignore
+        self._keyword_to_action_map[action_class.keyword] = action_class  # type: ignore
 
         if action_class._additional_identifier_field:
             self._create_class_field_if_needed(action_class)
-            field_value = action_class.default_fields[action_class._additional_identifier_field]
-            self._itype_to_action_map[action_class.itype]['value'][field_value] = action_class
+            field_value = action_class.default_fields[
+                action_class._additional_identifier_field
+            ]
+            self._itype_to_action_map[action_class.itype]['value'][
+                field_value
+            ] = action_class
             if action_class._default_class:
-                self._itype_to_action_map[action_class.itype]['value'][None] = action_class
+                self._itype_to_action_map[action_class.itype]['value'][
+                    None
+                ] = action_class
         else:
             self._itype_to_action_map[action_class.itype] = {
                 'type': 'class',

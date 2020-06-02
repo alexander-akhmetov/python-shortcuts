@@ -10,6 +10,7 @@ mypy = "*"
 "flake8" = "*"
 isort = "*"
 pytest-cov = "*"
+black = "==19.10b0"
 
 [packages]
 toml = "*"
@@ -17,4 +18,4 @@ toml = "*"
 mypy = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.8"

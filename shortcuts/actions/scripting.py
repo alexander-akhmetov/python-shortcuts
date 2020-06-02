@@ -1,14 +1,24 @@
-from shortcuts.actions.base import BaseAction, BooleanField, ChoiceField, Field, FloatField, GroupIDField, IntegerField
+from shortcuts.actions.base import (
+    BaseAction,
+    BooleanField,
+    ChoiceField,
+    Field,
+    FloatField,
+    GroupIDField,
+    IntegerField,
+)
 
 
 class NothingAction(BaseAction):
     '''Nothing'''
+
     itype = 'is.workflow.actions.nothing'
     keyword = 'nothing'
 
 
 class SetItemNameAction(BaseAction):
     '''Set item name'''
+
     # todo: advanced
     # <dict>
     #   <key>WFWorkflowActionIdentifier</key>
@@ -28,27 +38,35 @@ class SetItemNameAction(BaseAction):
 
 class ViewContentGraphAction(BaseAction):
     '''View content graph'''
+
     itype = 'is.workflow.actions.viewresult'
     keyword = 'view_content_graph'
 
 
 class ContinueInShortcutAppAction(BaseAction):
     '''Continue in shortcut app'''
+
     itype = 'is.workflow.actions.handoff'
     keyword = 'continue_in_shortcut_app'
 
 
 class ChooseFromListAction(BaseAction):
     '''Choose from list'''
+
     itype = 'is.workflow.actions.choosefromlist'
     keyword = 'choose_from_list'
     prompt = Field('WFChooseFromListActionPrompt', required=False)
-    select_multiple = BooleanField('WFChooseFromListActionSelectMultiple', required=False)
-    select_all_initially = BooleanField('WFChooseFromListActionSelectAll', required=False)
+    select_multiple = BooleanField(
+        'WFChooseFromListActionSelectMultiple', required=False
+    )
+    select_all_initially = BooleanField(
+        'WFChooseFromListActionSelectAll', required=False
+    )
 
 
 class DelayAction(BaseAction):
     '''Delay'''
+
     itype = 'is.workflow.actions.delay'
     keyword = 'delay'
 
@@ -57,12 +75,14 @@ class DelayAction(BaseAction):
 
 class WaitToReturnAction(BaseAction):
     '''Wait to return'''
+
     itype = 'is.workflow.actions.waittoreturn'
     keyword = 'wait_to_return'
 
 
 class RepeatStartAction(BaseAction):
     '''Repeat'''
+
     itype = 'is.workflow.actions.repeat.count'
     keyword = 'repeat_start'
 
@@ -78,6 +98,7 @@ class RepeatStartAction(BaseAction):
 
 class RepeatEndAction(BaseAction):
     '''Repeat'''
+
     itype = 'is.workflow.actions.repeat.count'
     keyword = 'repeat_end'
 
@@ -92,6 +113,7 @@ class RepeatEndAction(BaseAction):
 
 class RepeatEachStartAction(BaseAction):
     '''Repeat with each start'''
+
     itype = 'is.workflow.actions.repeat.each'
     keyword = 'repeat_with_each_start'
 
@@ -106,6 +128,7 @@ class RepeatEachStartAction(BaseAction):
 
 class RepeatEachEndAction(BaseAction):
     '''Repeat with each end'''
+
     itype = 'is.workflow.actions.repeat.each'
     keyword = 'repeat_with_each_end'
 
@@ -128,6 +151,7 @@ HASH_CHOICES = (
 
 class HashAction(BaseAction):
     '''Hash action'''
+
     itype = 'is.workflow.actions.hash'
     keyword = 'hash'
 
@@ -136,12 +160,14 @@ class HashAction(BaseAction):
 
 class GetMyShortcutsAction(BaseAction):
     '''Get my shortcuts'''
+
     itype = 'is.workflow.actions.getmyworkflows'
     keyword = 'get_my_shortcuts'
 
 
 class RunShortcutAction(BaseAction):
     '''Run shortcut'''
+
     itype = 'is.workflow.actions.runworkflow'
     keyword = 'run_shortcut'
 
@@ -151,6 +177,7 @@ class RunShortcutAction(BaseAction):
 
 class OpenAppAction(BaseAction):
     '''Opens the specified app.'''
+
     itype = 'is.workflow.actions.openapp'
     keyword = 'open_app'
 
