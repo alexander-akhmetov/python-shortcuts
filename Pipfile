@@ -10,7 +10,7 @@ mypy = "*"
 "flake8" = "*"
 isort = "*"
 pytest-cov = "*"
-black = "==19.10b0"
+black = "==21.12b0"
 
 [packages]
 toml = "*"
