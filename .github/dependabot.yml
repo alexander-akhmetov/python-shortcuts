@@ -9,3 +9,8 @@ updates:
   - alexander-akhmetov
   assignees:
   - alexander-akhmetov
+
+- package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
