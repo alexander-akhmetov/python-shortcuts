@@ -1,5 +1,5 @@
-FROM python:3.7-alpine3.8
+FROM python:3.11.1-slim
 
-RUN pip install python-shortcuts==0.10.0
+RUN pip install python-shortcuts==0.11.0
 
 ENTRYPOINT ["shortcuts"]
