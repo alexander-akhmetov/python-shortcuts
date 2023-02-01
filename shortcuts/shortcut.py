@@ -1,5 +1,4 @@
 import logging
-import plistlib
 import uuid
 from typing import Any, BinaryIO, Dict, List, Type
 
@@ -12,16 +11,16 @@ from shortcuts.loader import BaseLoader, PListLoader, TomlLoader
 
 logger = logging.getLogger(__name__)
 
-FMT_TOML = 'toml'
-FMT_SHORTCUT = 'shortcut'
+FMT_TOML = "toml"
+FMT_SHORTCUT = "shortcut"
 
 
 class Shortcut:
     def __init__(
         self,
-        name: str = '',
-        client_release: str = '2.0',
-        client_version: str = '700',
+        name: str = "",
+        client_release: str = "2.0",
+        client_version: str = "700",
         minimal_client_version: int = 411,
         actions: List = None,
     ) -> None:
@@ -32,25 +31,25 @@ class Shortcut:
         self.actions = actions if actions else []
 
     @classmethod
-    def load(cls, file_object: BinaryIO, file_format: str = FMT_TOML) -> 'Shortcut':
-        '''
+    def load(cls, file_object: BinaryIO, file_format: str = FMT_TOML) -> "Shortcut":
+        """
         Returns a Shortcut instance from given file_object
 
         Params:
             file_object (BinaryIO)
             file_format: format of the string, FMT_TOML by default
-        '''
+        """
         return cls._get_loader_class(file_format).load(file_object)
 
     @classmethod
-    def loads(cls, string: str, file_format: str = FMT_TOML) -> 'Shortcut':
-        '''
+    def loads(cls, string: str, file_format: str = FMT_TOML) -> "Shortcut":
+        """
         Returns a Shortcut instance from given string
 
         Params:
             string: representation of a shortcut in string
             file_format: format of the string, FMT_TOML by default
-        '''
+        """
         return cls._get_loader_class(file_format).loads(string)
 
     @classmethod
@@ -61,28 +60,28 @@ class Shortcut:
             FMT_TOML: TomlLoader,
         }
         if file_format in supported_formats:
-            logger.debug(f'Loading shortcut from file format: {file_format}')
+            logger.debug(f"Loading shortcut from file format: {file_format}")
             return supported_formats[file_format]
 
-        raise RuntimeError(f'Unknown file_format: {file_format}')
+        raise RuntimeError(f"Unknown file_format: {file_format}")
 
     def dump(self, file_object: BinaryIO, file_format: str = FMT_TOML) -> None:
-        '''
+        """
         Dumps the shortcut instance to file_object
 
         Params:
             file_object (BinaryIO)
             file_format: format of the string, FMT_TOML by default
-        '''
+        """
         self._get_dumper_class(file_format)(shortcut=self).dump(file_object)
 
     def dumps(self, file_format: str = FMT_TOML) -> str:
-        '''
+        """
         Dumps the shortcut instance and returns a string representation
 
         Params:
             file_format: format of the string, FMT_TOML by default
-        '''
+        """
         return self._get_dumper_class(file_format)(shortcut=self).dumps()
 
     def _get_dumper_class(self, file_format: str) -> Type[BaseDumper]:
@@ -92,10 +91,10 @@ class Shortcut:
             FMT_TOML: TomlDumper,
         }
         if file_format in supported_formats:
-            logger.debug(f'Dumping shortcut to file format: {file_format}')
+            logger.debug(f"Dumping shortcut to file format: {file_format}")
             return supported_formats[file_format]
 
-        raise RuntimeError(f'Unknown file_format: {file_format}')
+        raise RuntimeError(f"Unknown file_format: {file_format}")
 
     def _get_actions(self) -> List[str]:
         """returns list of all actions"""
@@ -115,30 +114,30 @@ class Shortcut:
         ids = []
         for action in self.actions:
             # if action has GroupIDField, we may need to generate it's value automatically
-            if not isinstance(getattr(action, 'group_id', None), GroupIDField):
+            if not isinstance(getattr(action, "group_id", None), GroupIDField):
                 continue
 
-            control_mode = action.default_fields['WFControlFlowMode']
+            control_mode = action.default_fields["WFControlFlowMode"]
             if control_mode == 0:
                 # 0 means beginning of the group
-                group_id = action.data.get('group_id', str(uuid.uuid4()))
-                action.data['group_id'] = group_id  # if wasn't defined
+                group_id = action.data.get("group_id", str(uuid.uuid4()))
+                action.data["group_id"] = group_id  # if wasn't defined
                 ids.append(group_id)
             elif control_mode == 1:
                 # 1 - else, so we don't need to remove group_id from the stack
                 # we need to just use the latest one
-                action.data['group_id'] = ids[-1]
+                action.data["group_id"] = ids[-1]
             elif control_mode == 2:
                 # end of the group, we must remove group_id
                 try:
-                    action.data['group_id'] = ids.pop()
+                    action.data["group_id"] = ids.pop()
                 except IndexError:
                     # if actions are correct, all groups must be compelted
                     # (group complete if it has start and end actions)
-                    raise exceptions.IncompleteCycleError('Incomplete cycle')
+                    raise exceptions.IncompleteCycleError("Incomplete cycle")
 
     def _set_menu_items(self):
-        '''
+        """
         Menu consists of many items:
             start menu
             menu item 1
@@ -149,19 +148,19 @@ class Shortcut:
         about them to a corresponding "start menu" action.
 
         # todo: move to menu item logic
-        '''
+        """
         menus = []
         for action in self.actions:
             if isinstance(action, MenuStartAction):
-                action.data['menu_items'] = []
+                action.data["menu_items"] = []
                 menus.append(action)
             elif isinstance(action, MenuItemAction):
-                menus[-1].data['menu_items'].append(action.data['title'])
+                menus[-1].data["menu_items"].append(action.data["title"])
             elif isinstance(action, MenuEndAction):
                 try:
                     menus.pop()
                 except IndexError:
-                    raise exceptions.IncompleteCycleError('Incomplete menu cycle')
+                    raise exceptions.IncompleteCycleError("Incomplete menu cycle")
 
     def _get_import_questions(self) -> List:
         # todo: change me
@@ -170,29 +169,29 @@ class Shortcut:
     def _get_icon(self) -> Dict[str, Any]:
         # todo: change me
         return {
-            'WFWorkflowIconGlyphNumber': 59511,
-            'WFWorkflowIconImageData': plistlib.Data(b''),
-            'WFWorkflowIconStartColor': 431817727,
+            "WFWorkflowIconGlyphNumber": 59511,
+            "WFWorkflowIconImageData": b"",
+            "WFWorkflowIconStartColor": 431817727,
         }
 
     def _get_input_content_item_classes(self) -> List[str]:
         # todo: change me
         return [
-            'WFAppStoreAppContentItem',
-            'WFArticleContentItem',
-            'WFContactContentItem',
-            'WFDateContentItem',
-            'WFEmailAddressContentItem',
-            'WFGenericFileContentItem',
-            'WFImageContentItem',
-            'WFiTunesProductContentItem',
-            'WFLocationContentItem',
-            'WFDCMapsLinkContentItem',
-            'WFAVAssetContentItem',
-            'WFPDFContentItem',
-            'WFPhoneNumberContentItem',
-            'WFRichTextContentItem',
-            'WFSafariWebPageContentItem',
-            'WFStringContentItem',
-            'WFURLContentItem',
+            "WFAppStoreAppContentItem",
+            "WFArticleContentItem",
+            "WFContactContentItem",
+            "WFDateContentItem",
+            "WFEmailAddressContentItem",
+            "WFGenericFileContentItem",
+            "WFImageContentItem",
+            "WFiTunesProductContentItem",
+            "WFLocationContentItem",
+            "WFDCMapsLinkContentItem",
+            "WFAVAssetContentItem",
+            "WFPDFContentItem",
+            "WFPhoneNumberContentItem",
+            "WFRichTextContentItem",
+            "WFSafariWebPageContentItem",
+            "WFStringContentItem",
+            "WFURLContentItem",
         ]

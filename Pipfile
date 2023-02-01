@@ -11,6 +11,8 @@ mypy = "*"
 isort = "*"
 pytest-cov = "*"
 black = "==19.10b0"
+types-toml = "*"
+tox-pipenv = "==1.10.1"
 
 [packages]
 toml = "*"
@@ -18,4 +20,4 @@ toml = "*"
 mypy = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.11"
