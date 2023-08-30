@@ -171,7 +171,7 @@ class Shortcut:
         # todo: change me
         return {
             'WFWorkflowIconGlyphNumber': 59511,
-            'WFWorkflowIconImageData': plistlib.Data(b''),
+            'WFWorkflowIconImageData': bytes(b''),
             'WFWorkflowIconStartColor': 431817727,
         }
 
